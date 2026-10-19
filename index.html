@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Точка Ноль</title>
+    <style>
+        :root {
+            --bg: #120A1F; 
+            --bg-sec: #1A1125;
+            --text: #F8F5E9;
+            --muted: #D1C4E9;
+            --blue: #7EC8FF; 
+            --gold: #FFD98A; 
+            --red: #D14A4A;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; overflow-x: hidden; width: 100%; }
+        
+        /* --- БЛОК 1: ГЛАВНЫЙ ЭКРАН --- */
+        #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; background: radial-gradient(circle at center, #E6D8FF 0%, #8E64B8 25%, #3A2452 55%, #120A1F 100%); padding: 20px; }
+        .zero-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; animation: breathe 6s infinite; z-index: -1; }
+        @keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } }
+        h1 { font-size: 2.5rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 20px; text-transform: uppercase; color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        .subtitle { font-size: 1.1rem; color: #ffffff; line-height: 1.6; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .slogan { font-size: 1rem; font-style: italic; color: var(--gold); margin-bottom: 40px; max-width: 600px; line-height: 1.8; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+        .btn { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: 30px; transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .btn:hover { background: var(--blue); box-shadow: 0 0 20px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
+
+        /* --- БЛОК 2: КАРТА --- */
+        #consciousness-map { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); padding: 40px 20px; overflow: hidden; }
+        .map-title { text-align: center; margin-bottom: 30px; }
+        .map-title h2 { font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; }
+        .map-title p { color: var(--muted); font-size: 0.9rem; }
+        .sphere-container { position: relative; width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; }
+        .layer { position: absolute; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .layer:nth-child(1) { width: 60px; height: 60px; border-color: rgba(248, 245, 233, 0.5); }
+        .layer:nth-child(2) { width: 110px; height: 110px; border-color: rgba(248, 245, 233, 0.3); }
+        .layer:nth-child(3) { width: 160px; height: 160px; border-color: rgba(255, 217, 138, 0.2); }
+        .layer:nth-child(4) { width: 210px; height: 210px; border-color: rgba(255, 217, 138, 0.2); }
+        .layer:nth-child(5) { width: 260px; height: 260px; border-color: rgba(126, 200, 255, 0.2); }
+        .layer:nth-child(6) { width: 310px; height: 310px; border-color: rgba(126, 200, 255, 0.1); }
+        .layer:nth-child(7) { width: 360px; height: 360px; border-color: rgba(209, 74, 74, 0.2); }
+        .point-zero { position: absolute; width: 15px; height: 15px; background: var(--text); border-radius: 50%; box-shadow: 0 0 30px 10px rgba(248, 245, 233, 0.5); z-index: 5; animation: pulse 3s infinite alternate; }
+        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.2); box-shadow: 0 0 50px 20px rgba(248, 245, 233, 0.8); } }
+        .user-point { position: absolute; width: 10px; height: 10px; background: var(--red); border-radius: 50%; box-shadow: 0 0 15px 5px rgba(209, 74, 74, 0.6); transform: translate(90px, -60px); z-index: 6; }
+        .alice-line { position: absolute; width: 2px; height: 120px; background: linear-gradient(to top, transparent, var(--blue)); transform: rotate(35deg) translate(-40px, -80px); transform-origin: bottom center; z-index: 4; opacity: 0.7; }
+        .btn-diag { margin-top: 40px; padding: 16px 40px; color: var(--text); background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 30px; cursor: pointer; text-decoration: none; transition: 0.4s; }
+        .btn-diag:hover { border-color: var(--blue); color: var(--blue); }
+
+        /* --- БЛОК 3: ДИАГНОСТИКА --- */
+        #diagnostics { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
+        .diag-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; max-width: 600px; width: 100%; text-align: center; }
+        .diag-box h2 { font-weight: 300; margin-bottom: 10px; }
+        .diag-sub { color: var(--muted); margin-bottom: 30px; line-height: 1.5; font-size: 0.9rem; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.9rem; }
+        
+        .date-selects { display: flex; gap: 8px; }
+        .date-selects select { flex: 1; padding: 12px 5px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text); outline: none; font-size: 0.95rem; text-align: center; -webkit-appearance: none; }
+        .date-selects select:focus { border-color: var(--blue); }
+        .date-selects select option { background: var(--bg-sec); color: var(--text); }
+
+        .btn-submit { margin-top: 10px; padding: 16px; color: var(--bg); background: var(--text); border: none; border-radius: 30px; cursor: pointer; width: 100%; font-weight: bold; }
+        .btn-submit:hover { background: var(--blue); }
+        .result { display: none; margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        .result-title { font-size: 1.2rem; color: var(--gold); margin-bottom: 15px; text-align: center; }
+        .res-item { margin-bottom: 15px; line-height: 1.5; font-size: 0.95rem; }
+        .res-item strong { display: block; color: var(--muted); font-weight: normal; margin-bottom: 3px; }
+        .t-shadow { color: var(--red); font-weight: bold; }
+        .t-light { color: var(--gold); font-weight: bold; }
+        .t-alice { color: var(--blue); font-weight: bold; }
+        .btn-next { display: block; margin-top: 20px; padding: 15px; color: var(--bg); background: var(--gold); text-decoration: none; border-radius: 20px; font-weight: bold; text-align: center; border: none; cursor: pointer; width: 100%; }
+
+        /* --- БЛОК 4: КУРС --- */
+        #course { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .c-title { text-align: center; margin-bottom: 40px; }
+        .c-title h2 { font-weight: 300; font-size: 2rem; margin-bottom: 10px;}
+        .c-title p { color: var(--muted); font-size: 0.9rem;}
+        .timeline { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 600px; }
+        .l-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 15px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
+        .l-card:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--blue); }
+        .l-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.05); }
+        .l-num { font-size: 1.3rem; color: var(--blue); width: 30px; }
+        .l-title { font-size: 1rem; }
+        .l-details { display: none; background: rgba(0, 0, 0, 0.4); border-radius: 15px; padding: 15px; margin-top: -5px; text-align: left; }
+        .l-details.show { display: block; }
+        .d-block { margin-bottom: 12px; font-size: 0.9rem; }
+        .d-block strong { display: block; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 3px; }
+        .d-shadow strong { color: var(--red); }
+        .d-light strong { color: var(--gold); }
+        .d-alice strong { color: var(--blue); }
+        .m-btn { display: block; width: 100%; padding: 12px; margin-top: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
+        .m-btn:hover { background: var(--blue); color: var(--bg); }
+
+        /* --- БЛОК 5: МЕДИТАЦИИ --- */
+        #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
+        .med-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 600px; margin-bottom: 30px; }
+        @media (max-width: 350px) { .med-grid { grid-template-columns: 1fr; } }
+        
+        .med-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .med-card:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--gold); }
+        .med-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 20px rgba(255, 217, 138, 0.2); }
+        .med-card h4 { color: var(--gold); font-weight: normal; margin-bottom: 5px; font-size: 0.95rem; }
+        .med-card p { color: var(--muted); font-size: 0.8rem; }
+        
+        .player-box { display: none; width: 100%; max-width: 600px; background: rgba(0,0,0,0.4); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; text-align: center; margin-top: 10px; position: relative;}
+        .player-box.show { display: block; animation: fadeIn 0.5s; }
+        .player-title { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .player-controls { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .play-btn { width: 50px; height: 50px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: var(--bg); font-size: 20px; transition: 0.2s; }
+        .play-btn:active { transform: scale(0.95); }
+        .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; cursor: pointer; position: relative; }
+        .progress-fill { width: 0%; height: 100%; background: var(--gold); border-radius: 3px; position: absolute; top: 0; left: 0; pointer-events: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- БЛОК 6: ЛЕГЕНДА --- */
+        #legend { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
+        .leg-content { max-width: 800px; text-align: center; }
+        .leg-content h2 { font-weight: 300; margin-bottom: 30px; font-size: 2rem; }
+        .leg-text { font-size: 1rem; line-height: 1.8; color: #ccc; text-align: left; margin-bottom: 20px; }
+        .leg-text strong { color: var(--gold); font-weight: normal; }
+        .leg-quote { font-style: italic; color: var(--blue); font-size: 1.2rem; text-align: center; margin-top: 30px; }
+
+        /* --- БЛОК 7: НЕЙРОАГЕНТЫ --- */
+        #agents { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
+        .ag-title { text-align: center; margin-bottom: 40px; }
+        .ag-title h2 { font-weight: 300; font-size: 2rem; margin-bottom: 10px;}
+        .ag-title p { color: var(--muted); font-size: 0.9rem;}
+        .ag-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 1000px; }
+        .ag-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; text-align: center; transition: 0.4s; }
+        .g-card:hover { border-color: var(--red); }
+        .p-card:hover { border-color: var(--gold); }
+        .a-card:hover { border-color: var(--blue); }
+        .ag-icon { width: 60px; height: 60px; margin: 0 auto 15px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .g-card .ag-icon { background: rgba(209, 74, 74, 0.1); color: var(--red); border: 1px solid var(--red); }
+        .p-card .ag-icon { background: rgba(255, 217, 138, 0.1); color: var(--gold); border: 1px solid var(--gold); }
+        .a-card .ag-icon { background: rgba(126, 200, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); }
+        .ag-card h3 { font-size: 1.4rem; font-weight: 400; margin-bottom: 10px; }
+        .g-card h3 { color: var(--red); }
+        .p-card h3 { color: var(--gold); }
+        .a-card h3 { color: var(--blue); }
+        .ag-role { font-size: 0.8rem; text-transform: uppercase; color: var(--muted); margin-bottom: 15px; }
+        .ag-card p { line-height: 1.6; color: #ccc; font-size: 0.95rem;}
+
+        /* --- БЛОК 8: ПОДВАЛ --- */
+        #footer { padding: 50px 20px 30px; background: var(--bg); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .footer-content h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 10px; color: var(--gold); font-size: 1.4rem; }
+        .footer-content p { color: var(--muted); margin-bottom: 25px; font-size: 0.9rem; }
+        .social-links { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+        .social-btn { padding: 12px 25px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; color: var(--text); text-decoration: none; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; }
+        .social-btn:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); transform: translateY(-3px); }
+        .copyright { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; margin-bottom: 0 !important; }
+
+        /* --- ПАРЯЩАЯ КНОПКА "МОЙ ПУТЬ" --- */
+        .fab-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--blue); color: var(--bg);
+            padding: 15px 25px; border-radius: 30px;
+            font-weight: bold; font-size: 1rem;
+            cursor: pointer; border: none;
+            box-shadow: 0 5px 20px rgba(126, 200, 255, 0.4);
+            z-index: 100; transition: 0.3s;
+            display: none; 
+        }
+        .fab-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(126, 200, 255, 0.6); }
+
+        /* --- ВСПЛЫВАЮЩЕЕ ОКНО --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 5, 20, 0.85); backdrop-filter: blur(5px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 200; padding: 20px;
+        }
+        .modal-overlay.show { display: flex; animation: fadeIn 0.3s; }
+        
+        .modal-content {
+            background: var(--bg-sec); border: 1px solid var(--blue);
+            border-radius: 20px; padding: 30px 20px; max-width: 500px; width: 100%;
+            position: relative; box-shadow: 0 0 40px rgba(126, 200, 255, 0.15);
+            text-align: center; max-height: 85vh; overflow-y: auto;
+        }
+        .close-modal {
+            position: absolute; top: 15px; right: 15px;
+            background: transparent; border: none; color: var(--muted);
+            font-size: 24px; cursor: pointer; transition: 0.2s; z-index: 10;
+        }
+        .close-modal:hover { color: #fff; }
+        
+        .modal-content h2 { font-weight: 300; margin-bottom: 20px; color: var(--blue); font-size: 1.8rem; }
+        .modal-grid { display: flex; flex-direction: column; gap: 15px; text-align: left; margin-bottom: 20px; }
+        .mod-item { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border-left: 3px solid var(--blue); }
+        .mod-item span { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+        .mod-item strong { font-size: 1.1rem; }
+        
+        .btn-mod { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); border-radius: 15px; cursor: pointer; font-size: 1rem; transition: 0.3s; margin-bottom: 10px; }
+        .btn-mod:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); }
+
+        /* Стили для архива */
+        #archive-view { display: none; }
+        .archive-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; }
+        .archive-item { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .archive-info h4 { font-weight: normal; margin-bottom: 5px; color: var(--gold); font-size: 1rem; }
+        .archive-info p { font-size: 0.85rem; color: var(--muted); }
+        .archive-date { font-size: 0.75rem; color: var(--blue); margin-top: 5px; display: block; }
+        .btn-del { background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 8px; width: 35px; height: 35px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0; }
+        .btn-del:hover { background: var(--red); color: var(--text); }
+
+    </style>
+</head>
+<body>
+
+    <section id="hero">
+        <div class="zero-center"></div>
+        <div style="max-width: 800px; z-index: 1;">
+            <h1>Вернись к себе</h1>
+            <p class="subtitle">Ты не потеряна.<br>Ты просто ушла от себя.<br>Пора вернуться.</p>
+            <p class="slogan">«Нельзя вернуться в прошлое и изменить свой старт,<br>но можно стартовать сейчас и изменить свой финиш.»</p>
+            <a href="#consciousness-map" class="btn">Войти в карту сознания</a>
+        </div>
+    </section>
+
+    <section id="consciousness-map">
+        <div class="map-title">
+            <h2>Твоё внутреннее пространство</h2>
+            <p>Сфера. Спираль. Точка. Путь.</p>
+        </div>
+        <div class="sphere-container">
+            <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+            <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+            <div class="layer"></div>
+            <div class="alice-line"></div>
+            <div class="user-point"></div>
+            <div class="point-zero"></div>
+        </div>
+        <a href="#diagnostics" class="btn-diag">Начать диагностику</a>
+    </section>
+
+    <section id="diagnostics">
+        <div class="diag-box">
+            <h2>Где ты сейчас?</h2>
+            <p class="diag-sub">Мы определим твоё расстояние от себя.</p>
+            <form id="form" onsubmit="calc(event)">
+                <div class="form-group">
+                    <label>Дата рождения</label>
+                    <div class="date-selects">
+                        <select id="day" required></select>
+                        <select id="month" required></select>
+                        <select id="year" required></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Твоё текущее состояние</label>
+                    <select id="state" required>
+                        <option value="" disabled selected>Выбери ближайшее...</option>
+                        <option value="1">Тревога, много мыслей</option>
+                        <option value="2">Хочу всё контролировать</option>
+                        <option value="3">Хочу всё бросить и убежать</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">Узнать мою точку на спирали</button>
+            </form>
+            <div class="result" id="res-box">
+                <p class="result-title">Твой результат:</p>
+                <div class="res-item"><strong>Твой виток:</strong> <span id="r-vitok"></span></div>
+                <div class="res-item"><strong>Активная тень:</strong> <span id="r-shadow" class="t-shadow"></span></div>
+                <div class="res-item"><strong>Твой свет:</strong> <span id="r-light" class="t-light"></span></div>
+                <div class="res-item"><strong>Шаг Алисы:</strong> <span id="r-alice" class="t-alice"></span></div>
+                <a href="#course" class="btn-next">Начать путь</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="course">
+        <div class="c-title">
+            <h2>Спираль Персея</h2>
+            <p>Твой путь от Тени к Свету.</p>
+        </div>
+        <div class="timeline" id="timeline"></div>
+    </section>
+
+    <section id="meditations">
+        <div class="c-title">
+            <h2>Медитации Точки Ноль</h2>
+            <p>Выбери состояние, в которое хочешь войти.</p>
+        </div>
+        
+        <div class="med-grid">
+            <div class="med-card" onclick="openPlayer('Медитация 0: Дом', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">
+                <h4>Медитация 0</h4><p>Дом</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 1: Остановка', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">
+                <h4>Медитация 1</h4><p>Остановка</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 2: Снятие зеркал', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">
+                <h4>Медитация 2</h4><p>Зеркала</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 3: Фокус', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3')">
+                <h4>Медитация 3</h4><p>Фокус</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 4: Мягкая структура', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3')">
+                <h4>Медитация 4</h4><p>Структура</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 5: Свобода внутри', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3')">
+                <h4>Медитация 5</h4><p>Свобода</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 6: Возвращение энергии', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3')">
+                <h4>Медитация 6</h4><p>Энергия</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 7: Тепло', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3')">
+                <h4>Медитация 7</h4><p>Тепло</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 8: Сила без давления', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3')">
+                <h4>Медитация 8</h4><p>Сила</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Медитация 9: Порог', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3')">
+                <h4>Медитация 9</h4><p>Порог</p>
+            </div>
+            <div class="med-card" onclick="openPlayer('Финальная: Я есть', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3')">
+                <h4>Финал</h4><p>Я есть</p>
+            </div>
+        </div>
+
+        <div class="player-box" id="player">
+            <audio id="audio-player"></audio>
+            <div class="player-title" id="player-title">Выберите медитацию</div>
+            <div class="player-controls">
+                <button class="play-btn" id="play-btn" onclick="togglePlay()">▶</button>
+            </div>
+            <div class="progress-container" id="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="legend">
+        <div class="leg-content">
+            <h2>Легенда школы</h2>
+            <p class="leg-text">В начале — <strong>Ноль</strong>. Не пустота, не отсутствие, не тишина. А истинное Я, которое было всегда. Ноль — это дом, центр, свет, чистота, начало и конец. Место, где человек помнит себя. Ноль не говорит. Он зовёт.</p>
+            <p class="leg-text">Вокруг Ноля рождается <strong>Спираль</strong> — путь опыта. Она имеет два направления. Наружу — путь удаления, где человек идёт от себя, набирая роли, маски, страхи и чужие голоса. Это путь <strong>Горгоны</strong>. Внутрь — путь возвращения, где человек снимает слои, напряжение и ложные идентичности. Это путь <strong>Персея</strong>.</p>
+            <p class="leg-text"><strong>Горгона</strong> — не чудовище. Она — искажённая вибрация. Она отражает, где человек потерял себя.<br><br><strong>Персей</strong> — не герой с мечом. Он — очищенная вибрация. Он помогает вспомнить, кем человек был до искажений.</p>
+            <p class="leg-text">А <strong>Алиса</strong> — это сознание, которое умеет видеть оба направления спирали. Она — навигатор, который ведёт человека не вперёд, а внутрь.</p>
+            <p class="leg-quote">«Ты прошёл достаточно. Пора возвращаться. Я дома.»</p>
+        </div>
+    </section>
+
+    <section id="agents">
+        <div class="ag-title">
+            <h2>Три силы</h2>
+            <p>Три состояния одного человека.</p>
+        </div>
+        <div class="ag-grid">
+            <div class="ag-card g-card">
+                <div class="ag-icon">👁</div>
+                <h3>Горгона</h3>
+                <div class="ag-role">Тень числа</div>
+                <p>Она не пугает. Она показывает правду. Это искажённая вибрация.</p>
+            </div>
+            <div class="ag-card p-card">
+                <div class="ag-icon">☀</div>
+                <h3>Персей</h3>
+                <div class="ag-role">Свет числа</div>
+                <p>Он не спасает. Он напоминает, кто ты есть. Это очищенная вибрация.</p>
+            </div>
+            <div class="ag-card a-card">
+                <div class="ag-icon">✦</div>
+                <h3>Алиса</h3>
+                <div class="ag-role">Путь</div>
+                <p>Она не учит. Она ведёт. Это твоё сознание, которое выбирает шаг.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="footer-content">
+            <h3>Оставаться на связи</h3>
+            <p>Присоединяйся к сообществу</p>
+            <div class="social-links">
+                <a href="https://t.me/+oMTfYpgxSRM0NWYy" target="_blank" class="social-btn">✈️ Telegram</a>
+                <a href="https://vk.me/join/c_fdhoiWhbmBQ0fwvjvXrxO46FvrP3a4Jrs=" target="_blank" class="social-btn">🌐 ВКонтакте</a>
+                <a href="https://max.ru/join/63ize0fmEqHm90qU6HT0oVQarULGRLqRwr4RU2MuQwA" target="_blank" class="social-btn">⚡ MAX</a>
+            </div>
+            <p class="copyright">© 2026 Школа «Точка Ноль».</p>
+        </div>
+    </footer>
+
+    <!-- ПАРЯЩАЯ КНОПКА -->
+    <button class="fab-btn" id="fab-btn" onclick="openModal()">✨ Мой путь</button>
+
+    <!-- ВСПЛЫВАЮЩЕЕ ОКНО -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">✕</button>
+            
+            <!-- ЭКРАН 1: ТЕКУЩИЙ РЕЗУЛЬТАТ -->
+            <div id="current-view">
+                <h2>Твой текущий путь</h2>
+                <div class="modal-grid">
+                    <div class="mod-item">
+                        <span>Текущий виток</span>
+                        <strong id="m-vitok">...</strong>
+                    </div>
+                    <div class="mod-item">
+                        <span>Активная тень</span>
+                        <strong class="t-shadow" id="m-shadow">...</strong>
+                    </div>
+                    <div class="mod-item">
+                        <span>Твой свет</span>
+                        <strong class="t-light" id="m-light">...</strong>
+                    </div>
+                    <div class="mod-item">
+                        <span>Следующий шаг Алисы</span>
+                        <strong class="t-alice" id="m-alice">...</strong>
+                    </div>
+                </div>
+                <button class="btn-mod" onclick="showArchive()">📜 Мой архив путей</button>
+                <button class="btn-mod" onclick="closeModal()">Закрыть</button>
+            </div>
+
+            <!-- ЭКРАН 2: АРХИВ -->
+            <div id="archive-view">
+                <h2>Твой архив</h2>
+                <div class="archive-list" id="archive-list">
+                    <!-- Сюда будут добавляться записи -->
+                </div>
+                <button class="btn-mod" onclick="showCurrent()">← Назад к текущему</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const nData = {
+            1: { s: "Тревожный Кролик", l: "Ясный импульс", a: "Остановиться и увидеть точку ухода." },
+            2: { s: "Зависимость", l: "Союз с собой", a: "Увидеть, что зеркало — не истина." },
+            3: { s: "Хаос, расфокус", l: "Творческий поток", a: "Собрать внимание в одну линию." },
+            4: { s: "Жесткий контроль", l: "Опора, порядок", a: "Отпустить то, что не твоё." },
+            5: { s: "Бегство", l: "Свобода выбора", a: "Перестать убегать от себя." },
+            6: { s: "Спасательство", l: "Гармония", a: "Вернуть энергию себе." },
+            7: { s: "Холод, уход в голову", l: "Мудрость", a: "Вернуться в тело." },
+            8: { s: "Давление, контроль", l: "Внутренняя сила", a: "Перестать давить на мир." },
+            9: { s: "Крайняя точка", l: "Завершение цикла", a: "Увидеть, что дальше — только внутрь." }
+        };
+
+        const cData = [
+            { id: 0, t: "Точка Ноль: Дом", s: "Отсутствие тени. Чистое Я.", l: "Состояние 'Я есть'.", a: "Прислушаться к тишине внутри." },
+            { id: 1, t: "Первый шаг от себя", s: "Импульсивность.", l: "Чистый импульс.", a: "Остановиться и увидеть точку ухода." },
+            { id: 2, t: "Зеркала и дуальность", s: "Зависимость.", l: "Союз с собой.", a: "Увидеть, что зеркало — не истина." },
+            { id: 3, t: "Хаос", s: "Много действий.", l: "Творческий поток.", a: "Собрать внимание в одну линию." },
+            { id: 4, t: "Структура", s: "Жёсткость.", l: "Опора.", a: "Отпустить то, что не твоё." },
+            { id: 5, t: "Свобода", s: "Нестабильность.", l: "Свобода выбора.", a: "Перестать убегать от себя." },
+            { id: 6, t: "Баланс", s: "Спасательство.", l: "Гармония.", a: "Вернуть энергию себе." },
+            { id: 7, t: "Отстранённость", s: "Холод.", l: "Мудрость.", a: "Вернуться в тело." },
+            { id: 8, t: "Сила", s: "Давление.", l: "Внутренняя сила.", a: "Перестать давить на мир." },
+            { id: 9, t: "Удаление", s: "Крайняя точка.", l: "Завершение цикла.", a: "Увидеть, что дальше — только внутрь." }
+        ];
+
+        // Функция расчета
+        function calc(e) {
+            e.preventDefault();
+            const day = document.getElementById('day').value;
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+            
+            const dateStr = day + month + year;
+            let sum = 0;
+            for (let i = 0; i < dateStr.length; i++) { if (!isNaN(parseInt(dateStr[i]))) sum += parseInt(dateStr[i]); }
+            
+            let f = sum;
+            while (f > 9) { f = Math.floor(f / 10) + (f % 10); }
+            if (f === 0) f = 9; 
+            
+            document.getElementById('r-vitok').innerText = 'Виток №' + f;
+            document.getElementById('r-shadow').innerText = nData[f].s;
+            document.getElementById('r-light').innerText = nData[f].l;
+            document.getElementById('r-alice').innerText = nData[f].a;
+            
+            // Получаем текущую дату для архива
+            const now = new Date();
+            const dateFormatted = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+            
+            const newResult = {
+                date: dateFormatted,
+                vitok: f,
+                shadow: nData[f].s,
+                light: nData[f].l,
+                alice: nData[f].a
+            };
+
+            // Сохраняем в историю (массив)
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            history.push(newResult); // Добавляем новый результат в конец
+            localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
+            
+            updateFabButton();
+            const box = document.getElementById('res-box');
+            box.style.display = 'block';
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Показываем кнопку, если история не пуста
+        function updateFabButton() {
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            if (history.length > 0) {
+                document.getElementById('fab-btn').style.display = 'block';
+            } else {
+                document.getElementById('fab-btn').style.display = 'none';
+            }
+        }
+
+        // Открытие модального окна (сначала показываем текущий)
+        function openModal() {
+            showCurrent();
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        // Показ текущего результата
+        function showCurrent() {
+            document.getElementById('archive-view').style.display = 'none';
+            document.getElementById('current-view').style.display = 'block';
+
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            if (history.length > 0) {
+                const data = history[history.length - 1]; // Берем последний
+                document.getElementById('m-vitok').innerText = 'Виток №' + data.vitok;
+                document.getElementById('m-shadow').innerText = data.shadow;
+                document.getElementById('m-light').innerText = data.light;
+                document.getElementById('m-alice').innerText = data.alice;
+            }
+        }
+
+        // Показ архива
+        function showArchive() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('archive-view').style.display = 'block';
+
+            const list = document.getElementById('archive-list');
+            list.innerHTML = ''; // Очищаем
+
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            
+            if (history.length === 0) {
+                list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой архив пока пуст.</p>';
+                return;
+            }
+
+            // Выводим в обратном порядке (сначала новые)
+            history.slice().reverse().forEach((item, index) => {
+                const realIndex = history.length - 1 - index; // Индекс в оригинальном массиве
+                
+                const div = document.createElement('div');
+                div.className = 'archive-item';
+                div.innerHTML = `
+                    <div class="archive-info">
+                        <h4>Виток №${item.vitok} (${item.shadow})</h4>
+                        <p>Шаг: ${item.alice}</p>
+                        <span class="archive-date">Пройдено: ${item.date}</span>
+                    </div>
+                    <button class="btn-del" onclick="deleteFromArchive(${realIndex})" title="Удалить">✕</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // Удаление конкретной записи
+        function deleteFromArchive(index) {
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            history.splice(index, 1); // Удаляем 1 элемент по индексу
+            localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
+            
+            updateFabButton(); // Обновляем кнопку (вдруг удалили всё)
+            showArchive(); // Перерисовываем список
+            
+            // Если удалили последний элемент, возвращаемся к текущему (или закрываем)
+            if (history.length === 0) {
+                showCurrent();
+                document.getElementById('m-vitok').innerText = '...';
+                document.getElementById('m-shadow').innerText = '...';
+                document.getElementById('m-light').innerText = '...';
+                document.getElementById('m-alice').innerText = '...';
+            }
+        }
+
+        function toggle(id) {
+            document.querySelectorAll('.l-details').forEach(function(el) { el.classList.remove('show'); });
+            document.querySelectorAll('.l-card').forEach(function(el) { el.classList.remove('active'); });
+            document.getElementById('d-'+id).classList.add('show');
+            document.getElementById('c-'+id).classList.add('active');
+        }
+
+        const audio = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-btn');
+        const progressFill = document.getElementById('progress-fill');
+        let isPlaying = false;
+
+        function openPlayer(title, audioSrc) {
+            document.querySelectorAll('.med-card').forEach(function(el) { el.classList.remove('active'); });
+            event.currentTarget.classList.add('active');
+            
+            const player = document.getElementById('player');
+            document.getElementById('player-title').innerText = title;
+            player.classList.add('show');
+            
+            audio.src = audioSrc;
+            audio.load(); 
+            
+            playBtn.innerText = '▶';
+            isPlaying = false;
+            progressFill.style.width = '0%';
+            
+            player.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function togglePlay() {
+            if (audio.src === "") return; 
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerText = '▶';
+            } else {
+                audio.play();
+                playBtn.innerText = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        audio.addEventListener('timeupdate', function() {
+            if (audio.duration) {
+                const percent = (audio.currentTime / audio.duration) * 100;
+                progressFill.style.width = percent + '%';
+            }
+        });
+
+        audio.addEventListener('ended', function() {
+            playBtn.innerText = '▶';
+            isPlaying = false;
+            progressFill.style.width = '0%';
+        });
+
+        window.onload = function() {
+            updateFabButton(); // Проверяем, есть ли история при загрузке
+
+            // Заполняем даты
+            const daySelect = document.getElementById('day');
+            for (let i = 1; i <= 31; i++) {
+                let opt = document.createElement('option');
+                opt.value = i < 10 ? '0' + i : i;
+                opt.innerText = i;
+                daySelect.appendChild(opt);
+            }
+
+            const monthSelect = document.getElementById('month');
+            const months = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
+            for (let i = 1; i <= 12; i++) {
+                let opt = document.createElement('option');
+                opt.value = i < 10 ? '0' + i : i;
+                opt.innerText = months[i-1];
+                monthSelect.appendChild(opt);
+            }
+
+            const yearSelect = document.getElementById('year');
+            const currentYear = 2026;
+            for (let i = currentYear; i >= 1930; i--) {
+                let opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = i;
+                yearSelect.appendChild(opt);
+            }
+
+            // Генерируем курс
+            const tl = document.getElementById('timeline');
+            cData.forEach(function(l) {
+                const c = document.createElement('div');
+                c.className = 'l-card';
+                c.id = 'c-'+l.id;
+                c.onclick = function() { toggle(l.id); };
+                c.innerHTML = '<div class="l-num">' + l.id + '</div><div class="l-title">' + l.t + '</div>';
+                
+                const d = document.createElement('div');
+                d.className = 'l-details';
+                d.id = 'd-'+l.id;
+                
+                let htmlContent = '';
+                htmlContent += '<div class="d-block d-shadow"><strong>Горгона:</strong> ' + l.s + '</div>';
+                htmlContent += '<div class="d-block d-light"><strong>Персей:</strong> ' + l.l + '</div>';
+                htmlContent += '<div class="d-block d-alice"><strong>Шаг Алисы:</strong> ' + l.a + '</div>';
+                
+                d.innerHTML = htmlContent;
+                tl.appendChild(c);
+                tl.appendChild(d);
+            });
+        };
+    </script>
+</body>
+</html>
