@@ -93,24 +93,31 @@
         .m-btn { display: block; width: 100%; padding: 12px; margin-top: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
         .m-btn:hover { background: var(--blue); color: var(--bg); }
 
-        /* --- БЛОК 5: МЕДИТАЦИИ --- */
-        #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
+        /* --- БЛОК 5: МЕДИТАЦИИ (С ФОНОМ!) --- */
+        #meditations { 
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; 
+            /* Добавляем картинку на фон */
+            background-image: linear-gradient(rgba(18, 10, 31, 0.85), rgba(18, 10, 31, 0.95)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
         .med-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 600px; margin-bottom: 30px; }
         @media (max-width: 350px) { .med-grid { grid-template-columns: 1fr; } }
         
-        .med-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .med-card:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--gold); }
-        .med-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 20px rgba(255, 217, 138, 0.2); }
+        .med-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px); }
+        .med-card:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--gold); }
+        .med-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.2); box-shadow: 0 0 20px rgba(255, 217, 138, 0.4); }
         .med-card h4 { color: var(--gold); font-weight: normal; margin-bottom: 5px; font-size: 0.95rem; }
-        .med-card p { color: var(--muted); font-size: 0.8rem; }
+        .med-card p { color: var(--text); font-size: 0.8rem; }
         
-        .player-box { display: none; width: 100%; max-width: 600px; background: rgba(0,0,0,0.4); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; text-align: center; margin-top: 10px; position: relative;}
+        .player-box { display: none; width: 100%; max-width: 600px; background: rgba(0,0,0,0.7); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; text-align: center; margin-top: 10px; position: relative; backdrop-filter: blur(10px); }
         .player-box.show { display: block; animation: fadeIn 0.5s; }
         .player-title { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
         .player-controls { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
         .play-btn { width: 50px; height: 50px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: var(--bg); font-size: 20px; transition: 0.2s; }
         .play-btn:active { transform: scale(0.95); }
-        .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; cursor: pointer; position: relative; }
+        .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; cursor: pointer; position: relative; }
         .progress-fill { width: 0%; height: 100%; background: var(--gold); border-radius: 3px; position: absolute; top: 0; left: 0; pointer-events: none; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -384,15 +391,12 @@
         </div>
     </footer>
 
-    <!-- ПАРЯЩАЯ КНОПКА -->
     <button class="fab-btn" id="fab-btn" onclick="openModal()">✨ Мой путь</button>
 
-    <!-- ВСПЛЫВАЮЩЕЕ ОКНО -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">✕</button>
             
-            <!-- ЭКРАН 1: ТЕКУЩИЙ РЕЗУЛЬТАТ -->
             <div id="current-view">
                 <h2>Твой текущий путь</h2>
                 <div class="modal-grid">
@@ -417,11 +421,9 @@
                 <button class="btn-mod" onclick="closeModal()">Закрыть</button>
             </div>
 
-            <!-- ЭКРАН 2: АРХИВ -->
             <div id="archive-view">
                 <h2>Твой архив</h2>
                 <div class="archive-list" id="archive-list">
-                    <!-- Сюда будут добавляться записи -->
                 </div>
                 <button class="btn-mod" onclick="showCurrent()">← Назад к текущему</button>
             </div>
@@ -455,7 +457,6 @@
             { id: 9, t: "Удаление", s: "Крайняя точка.", l: "Завершение цикла.", a: "Увидеть, что дальше — только внутрь." }
         ];
 
-        // Функция расчета
         function calc(e) {
             e.preventDefault();
             const day = document.getElementById('day').value;
@@ -475,7 +476,6 @@
             document.getElementById('r-light').innerText = nData[f].l;
             document.getElementById('r-alice').innerText = nData[f].a;
             
-            // Получаем текущую дату для архива
             const now = new Date();
             const dateFormatted = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
             
@@ -487,9 +487,8 @@
                 alice: nData[f].a
             };
 
-            // Сохраняем в историю (массив)
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            history.push(newResult); // Добавляем новый результат в конец
+            history.push(newResult); 
             localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
             
             updateFabButton();
@@ -498,7 +497,6 @@
             box.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        // Показываем кнопку, если история не пуста
         function updateFabButton() {
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             if (history.length > 0) {
@@ -508,7 +506,6 @@
             }
         }
 
-        // Открытие модального окна (сначала показываем текущий)
         function openModal() {
             showCurrent();
             document.getElementById('modal').classList.add('show');
@@ -518,14 +515,13 @@
             document.getElementById('modal').classList.remove('show');
         }
 
-        // Показ текущего результата
         function showCurrent() {
             document.getElementById('archive-view').style.display = 'none';
             document.getElementById('current-view').style.display = 'block';
 
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             if (history.length > 0) {
-                const data = history[history.length - 1]; // Берем последний
+                const data = history[history.length - 1];
                 document.getElementById('m-vitok').innerText = 'Виток №' + data.vitok;
                 document.getElementById('m-shadow').innerText = data.shadow;
                 document.getElementById('m-light').innerText = data.light;
@@ -533,13 +529,12 @@
             }
         }
 
-        // Показ архива
         function showArchive() {
             document.getElementById('current-view').style.display = 'none';
             document.getElementById('archive-view').style.display = 'block';
 
             const list = document.getElementById('archive-list');
-            list.innerHTML = ''; // Очищаем
+            list.innerHTML = '';
 
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             
@@ -548,9 +543,8 @@
                 return;
             }
 
-            // Выводим в обратном порядке (сначала новые)
             history.slice().reverse().forEach((item, index) => {
-                const realIndex = history.length - 1 - index; // Индекс в оригинальном массиве
+                const realIndex = history.length - 1 - index;
                 
                 const div = document.createElement('div');
                 div.className = 'archive-item';
@@ -566,16 +560,14 @@
             });
         }
 
-        // Удаление конкретной записи
         function deleteFromArchive(index) {
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            history.splice(index, 1); // Удаляем 1 элемент по индексу
+            history.splice(index, 1);
             localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
             
-            updateFabButton(); // Обновляем кнопку (вдруг удалили всё)
-            showArchive(); // Перерисовываем список
+            updateFabButton();
+            showArchive();
             
-            // Если удалили последний элемент, возвращаемся к текущему (или закрываем)
             if (history.length === 0) {
                 showCurrent();
                 document.getElementById('m-vitok').innerText = '...';
@@ -641,9 +633,8 @@
         });
 
         window.onload = function() {
-            updateFabButton(); // Проверяем, есть ли история при загрузке
+            updateFabButton();
 
-            // Заполняем даты
             const daySelect = document.getElementById('day');
             for (let i = 1; i <= 31; i++) {
                 let opt = document.createElement('option');
@@ -670,7 +661,6 @@
                 yearSelect.appendChild(opt);
             }
 
-            // Генерируем курс
             const tl = document.getElementById('timeline');
             cData.forEach(function(l) {
                 const c = document.createElement('div');
