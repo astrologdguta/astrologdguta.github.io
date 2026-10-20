@@ -93,21 +93,62 @@
         .m-btn { display: block; width: 100%; padding: 12px; margin-top: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
         .m-btn:hover { background: var(--blue); color: var(--bg); }
 
-        /* --- НОВЫЙ БЛОК: ТВОЯ ТОЧКА СБОРКИ (ПОЛЗУНКИ) --- */
-        #balance { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
-        .balance-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; max-width: 600px; width: 100%; }
+        /* --- НОВЫЙ БЛОК: ТВОЯ ТОЧКА СБОРКИ (3D ЛУЧИ) --- */
+        #balance { 
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; 
+            position: relative; overflow: hidden;
+            background: radial-gradient(circle at center, #1A1125 0%, #0A0A0F 100%);
+        }
+        
+        /* Контейнер для 3D-лучей */
+        .rays-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            perspective: 800px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 0; pointer-events: none;
+        }
+        
+        /* Сами лучи (линии) */
+        .ray {
+            position: absolute;
+            width: 2px;
+            height: 200vmax; /* Очень длинные, чтобы уходили за край экрана */
+            background: linear-gradient(to top, rgba(126, 200, 255, 0.4), transparent);
+            transform-origin: bottom center;
+            bottom: 50%;
+            left: 50%;
+            transition: transform 0.5s ease-out, opacity 0.5s;
+            opacity: 0.3;
+        }
+
+        /* Светящиеся точки на лучах */
+        .ray-point {
+            position: absolute;
+            width: 6px; height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold);
+            top: 20%; /* Положение точки на луче */
+            left: -2px;
+        }
+
+        .balance-box { 
+            background: rgba(18, 10, 31, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 20px; padding: 30px 20px; max-width: 600px; width: 100%; 
+            position: relative; z-index: 10; backdrop-filter: blur(10px);
+        }
+        
         .balance-item { margin-bottom: 25px; }
         .balance-item label { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--muted); font-size: 1rem; }
         .balance-item span { color: var(--text); font-weight: bold; }
         
-        /* Стилизация ползунков */
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
         input[type=range]:focus { outline: none; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; cursor: pointer; background: rgba(255, 255, 255, 0.1); border-radius: 5px; }
         input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radius: 50%; background: var(--blue); cursor: pointer; -webkit-appearance: none; margin-top: -6px; box-shadow: 0 0 10px var(--blue); transition: 0.2s; }
         input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
-        .balance-result { margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 15px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s; }
+        .balance-result { margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 15px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s; }
         .balance-result h3 { font-weight: 300; margin-bottom: 10px; font-size: 1.3rem; }
         .balance-result p { font-size: 0.95rem; line-height: 1.5; }
         
@@ -311,9 +352,14 @@
         <div class="timeline" id="timeline"></div>
     </section>
 
-    <!-- НОВЫЙ БЛОК: ТОЧКА СБОРКИ (ПОЛЗУНКИ) -->
+    <!-- ОБНОВЛЕННЫЙ БЛОК: ТОЧКА СБОРКИ С 3D ЛУЧАМИ -->
     <section id="balance">
-        <div class="c-title">
+        <!-- Контейнер для фоновых лучей -->
+        <div class="rays-container" id="rays-container">
+            <!-- Лучи будут сгенерированы через JS -->
+        </div>
+
+        <div class="c-title" style="position: relative; z-index: 10;">
             <h2>Твоя точка сборки</h2>
             <p>Настрой три вектора и посмотри на свой баланс.</p>
         </div>
@@ -639,100 +685,28 @@
             document.getElementById('c-'+id).classList.add('active');
         }
 
-        // НОВАЯ ЛОГИКА ДЛЯ ПОЛЗУНКОВ (ТОЧКА СБОРКИ)
-        function updateBalance() {
-            const x = parseInt(document.getElementById('slider-logic').value);
-            const y = parseInt(document.getElementById('slider-emotion').value);
-            const z = parseInt(document.getElementById('slider-state').value);
-
-            // Обновляем цифры рядом с ползунками
-            document.getElementById('val-logic').innerText = x;
-            document.getElementById('val-emotion').innerText = y;
-            document.getElementById('val-state').innerText = z;
-
-            const resultBox = document.getElementById('balance-result');
-            const title = document.getElementById('balance-title');
-            const text = document.getElementById('balance-text');
-
-            // Проверяем баланс: разница между максимальным и минимальным значением не должна превышать 1
-            const maxVal = Math.max(x, y, z);
-            const minVal = Math.min(x, y, z);
-
-            if (maxVal - minVal <= 1) {
-                // Идеальный баланс
-                title.innerText = "Ты в Точке Ноль";
-                text.innerText = "Твои векторы в идеальном балансе. Логика, эмоции и состояние сливаются воедино. Пребывай в этом состоянии.";
-                resultBox.className = "balance-result state-ideal";
-            } else {
-                // Есть перекос
-                title.innerText = "Отклонение от центра";
-                resultBox.className = "balance-result state-unbalance";
-                
-                // Определяем, где самый сильный перекос
-                let advice = "";
-                if (maxVal === x && minVal === z) advice = "Ты слишком много анализируешь, но не хватает энергии состояния. Заземлись, верни вибрацию.";
-                else if (maxVal === y && minVal === z) advice = "Эмоции зашкаливают, но вибрация просела. Вернись в тело, успокой сердце.";
-                else if (maxVal === x && minVal === y) advice = "Холодная логика подавила эмоции. Позволь себе чувствовать.";
-                else if (maxVal === y && minVal === x) advice = "Эмоции затопили разум. Сделай вдох и включи осознанность.";
-                else if (maxVal === z && minVal === x) advice = "Высокая вибрация, но ум спит. Добавь ясности и структуры.";
-                else if (maxVal === z && minVal === y) advice = "Ты на высокой вибрации, но чувства закрыты. Открой сердце.";
-                else advice = "Твои векторы разбалансированы. Найди шаг, чтобы уравновесить их.";
-
-                text.innerText = `Твой перекос: Логика ${x}, Эмоции ${y}, Состояние ${z}. Шаг Алисы: ${advice}`;
-            }
-        }
-
-        const audio = document.getElementById('audio-player');
-        const playBtn = document.getElementById('play-btn');
-        const progressFill = document.getElementById('progress-fill');
-        let isPlaying = false;
-
-        function openPlayer(title, audioSrc) {
-            document.querySelectorAll('.med-card').forEach(function(el) { el.classList.remove('active'); });
-            event.currentTarget.classList.add('active');
-            
-            const player = document.getElementById('player');
-            document.getElementById('player-title').innerText = title;
-            player.classList.add('show');
-            
-            audio.src = audioSrc;
-            audio.load(); 
-            
-            playBtn.innerText = '▶';
-            isPlaying = false;
-            progressFill.style.width = '0%';
-            
-            player.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function togglePlay() {
-            if (audio.src === "") return; 
-            if (isPlaying) {
-                audio.pause();
-                playBtn.innerText = '▶';
-            } else {
-                audio.play();
-                playBtn.innerText = '⏸';
-            }
-            isPlaying = !isPlaying;
-        }
-
-        audio.addEventListener('timeupdate', function() {
-            if (audio.duration) {
-                const percent = (audio.currentTime / audio.duration) * 100;
-                progressFill.style.width = percent + '%';
-            }
-        });
-
-        audio.addEventListener('ended', function() {
-            playBtn.innerText = '▶';
-            isPlaying = false;
-            progressFill.style.width = '0%';
-        });
-
+        // ГЕНЕРАЦИЯ 3D ЛУЧЕЙ ПРИ ЗАГРУЗКЕ
         window.onload = function() {
             updateFabButton();
             updateBalance(); // Инициализация ползунков при загрузке
+            
+            // Создаем лучи
+            const raysContainer = document.getElementById('rays-container');
+            const numRays = 12; // Количество лучей (можно больше)
+            for (let i = 0; i < numRays; i++) {
+                const ray = document.createElement('div');
+                ray.className = 'ray';
+                // Распределяем лучи по кругу (360 градусов)
+                const angle = (360 / numRays) * i;
+                ray.style.transform = `rotate(${angle}deg)`;
+                
+                // Добавляем светящуюся точку на луч
+                const point = document.createElement('div');
+                point.className = 'ray-point';
+                ray.appendChild(point);
+                
+                raysContainer.appendChild(ray);
+            }
 
             const daySelect = document.getElementById('day');
             for (let i = 1; i <= 31; i++) {
@@ -782,6 +756,110 @@
                 tl.appendChild(d);
             });
         };
+
+        function updateBalance() {
+            const x = parseInt(document.getElementById('slider-logic').value);
+            const y = parseInt(document.getElementById('slider-emotion').value);
+            const z = parseInt(document.getElementById('slider-state').value);
+
+            document.getElementById('val-logic').innerText = x;
+            document.getElementById('val-emotion').innerText = y;
+            document.getElementById('val-state').innerText = z;
+
+            const resultBox = document.getElementById('balance-result');
+            const title = document.getElementById('balance-title');
+            const text = document.getElementById('balance-text');
+
+            const maxVal = Math.max(x, y, z);
+            const minVal = Math.min(x, y, z);
+
+            if (maxVal - minVal <= 1) {
+                title.innerText = "Ты в Точке Ноль";
+                text.innerText = "Твои векторы в идеальном балансе. Логика, эмоции и состояние сливаются воедино. Пребывай в этом состоянии.";
+                resultBox.className = "balance-result state-ideal";
+            } else {
+                title.innerText = "Отклонение от центра";
+                resultBox.className = "balance-result state-unbalance";
+                
+                let advice = "";
+                if (maxVal === x && minVal === z) advice = "Ты слишком много анализируешь, но не хватает энергии состояния. Заземлись, верни вибрацию.";
+                else if (maxVal === y && minVal === z) advice = "Эмоции зашкаливают, но вибрация просела. Вернись в тело, успокой сердце.";
+                else if (maxVal === x && minVal === y) advice = "Холодная логика подавила эмоции. Позволь себе чувствовать.";
+                else if (maxVal === y && minVal === x) advice = "Эмоции затопили разум. Сделай вдох и включи осознанность.";
+                else if (maxVal === z && minVal === x) advice = "Высокая вибрация, но ум спит. Добавь ясности и структуры.";
+                else if (maxVal === z && minVal === y) advice = "Ты на высокой вибрации, но чувства закрыты. Открой сердце.";
+                else advice = "Твои векторы разбалансированы. Найди шаг, чтобы уравновесить их.";
+
+                text.innerText = `Твой перекос: Логика ${x}, Эмоции ${y}, Состояние ${z}. Шаг Алисы: ${advice}`;
+            }
+
+            // Анимация лучей (наклон в сторону перекоса)
+            const rays = document.querySelectorAll('.ray');
+            const diffX = (x - 5) * 1.5; // Смещение по X
+            const diffY = (y - 5) * 1.5; // Смещение по Y
+            
+            rays.forEach(ray => {
+                // Базовый угол луча + динамическое смещение от ползунков
+                const baseAngle = parseFloat(ray.style.transform.replace('rotate(', '').replace('deg)', ''));
+                const newAngle = baseAngle + diffX + diffY;
+                ray.style.transform = `rotate(${newAngle}deg)`;
+                
+                // Меняем прозрачность, если баланс нарушен
+                if (maxVal - minVal > 3) {
+                    ray.style.opacity = 0.6; // Ярче, если перекос сильный
+                } else {
+                    ray.style.opacity = 0.3; // Тусклее в балансе
+                }
+            });
+        }
+
+        const audio = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-btn');
+        const progressFill = document.getElementById('progress-fill');
+        let isPlaying = false;
+
+        function openPlayer(title, audioSrc) {
+            document.querySelectorAll('.med-card').forEach(function(el) { el.classList.remove('active'); });
+            event.currentTarget.classList.add('active');
+            
+            const player = document.getElementById('player');
+            document.getElementById('player-title').innerText = title;
+            player.classList.add('show');
+            
+            audio.src = audioSrc;
+            audio.load(); 
+            
+            playBtn.innerText = '▶';
+            isPlaying = false;
+            progressFill.style.width = '0%';
+            
+            player.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function togglePlay() {
+            if (audio.src === "") return; 
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerText = '▶';
+            } else {
+                audio.play();
+                playBtn.innerText = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        audio.addEventListener('timeupdate', function() {
+            if (audio.duration) {
+                const percent = (audio.currentTime / audio.duration) * 100;
+                progressFill.style.width = percent + '%';
+            }
+        });
+
+        audio.addEventListener('ended', function() {
+            playBtn.innerText = '▶';
+            isPlaying = false;
+            progressFill.style.width = '0%';
+        });
     </script>
 </body>
 </html>
