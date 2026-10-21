@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Точка Ноль</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #120A1F; 
@@ -13,25 +16,39 @@
             --blue: #7EC8FF; 
             --gold: #FFD98A; 
             --red: #D14A4A;
+            --purple: #B388FF;
+            --font-title: 'Italiana', serif;
+            --font-body: 'Inter', sans-serif;
+            --r-sm: 8px;
+            --r-md: 14px;
+            --r-lg: 20px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body { background: var(--bg); color: var(--text); font-family: sans-serif; overflow-x: hidden; width: 100%; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; width: 100%; font-weight: 300; }
         
+        h1, h2, h3, .book-page h2, .c-title h2, .map-title h2 { font-family: var(--font-title); font-weight: 400; letter-spacing: 1px; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: rgba(126, 200, 255, 0.4); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(126, 200, 255, 0.6); }
+
         /* --- БЛОК 1: ГЛАВНЫЙ ЭКРАН --- */
         #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; background: radial-gradient(circle at center, #E6D8FF 0%, #8E64B8 25%, #3A2452 55%, #120A1F 100%); padding: 20px; }
         .zero-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; animation: breathe 6s infinite; z-index: -1; }
         @keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } }
-        h1 { font-size: 2.5rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 20px; text-transform: uppercase; color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.6); }
-        .subtitle { font-size: 1.1rem; color: #ffffff; line-height: 1.6; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .slogan { font-size: 1rem; font-style: italic; color: var(--gold); margin-bottom: 40px; max-width: 600px; line-height: 1.8; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
-        .btn { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: 30px; transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .btn:hover { background: var(--blue); box-shadow: 0 0 20px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
+        h1 { font-size: 3.2rem; letter-spacing: 4px; margin-bottom: 25px; text-transform: uppercase; color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        .subtitle { font-size: 1.15rem; color: #ffffff; line-height: 1.8; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-weight: 300; }
+        .slogan { font-size: 1rem; font-style: italic; color: var(--gold); margin-bottom: 40px; max-width: 600px; line-height: 1.8; text-shadow: 0 2px 10px rgba(0,0,0,0.6); font-family: Georgia, serif; }
+        
+        .btn { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-family: var(--font-body); font-weight: 500; }
+        .btn:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
 
         /* --- БЛОК 2: КАРТА --- */
         #consciousness-map { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); padding: 40px 20px; overflow: hidden; }
         .map-title { text-align: center; margin-bottom: 30px; }
-        .map-title h2 { font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; }
-        .map-title p { color: var(--muted); font-size: 0.9rem; }
+        .map-title h2 { font-size: 2.2rem; margin-bottom: 10px; }
+        .map-title p { color: var(--muted); font-size: 0.9rem; font-weight: 300; }
         .sphere-container { position: relative; width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; }
         .layer { position: absolute; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.05); }
         .layer:nth-child(1) { width: 60px; height: 60px; border-color: rgba(248, 245, 233, 0.5); }
@@ -44,241 +61,266 @@
         .point-zero { position: absolute; width: 15px; height: 15px; background: var(--text); border-radius: 50%; box-shadow: 0 0 30px 10px rgba(248, 245, 233, 0.5); z-index: 5; animation: pulse 3s infinite alternate; }
         @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.2); box-shadow: 0 0 50px 20px rgba(248, 245, 233, 0.8); } }
         .user-point { position: absolute; width: 10px; height: 10px; background: var(--red); border-radius: 50%; box-shadow: 0 0 15px 5px rgba(209, 74, 74, 0.6); transform: translate(90px, -60px); z-index: 6; }
-        .alice-line { position: absolute; width: 2px; height: 120px; background: linear-gradient(to top, transparent, var(--blue)); transform: rotate(35deg) translate(-40px, -80px); transform-origin: bottom center; z-index: 4; opacity: 0.7; }
-        .btn-diag { margin-top: 40px; padding: 16px 40px; color: var(--text); background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 30px; cursor: pointer; text-decoration: none; transition: 0.4s; }
-        .btn-diag:hover { border-color: var(--blue); color: var(--blue); }
+        .alice-line { position: absolute; width: 2px; height: 120px; background: linear-gradient(to top, transparent, var(--blue)); transform: rotate(35deg) translate(-40px, -80px); transform-origin: bottom center; z-index: 4; opacity: 0.7; border-radius: 2px; }
+        
+        .btn-diag { margin-top: 40px; padding: 16px 40px; color: var(--text); background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); cursor: pointer; text-decoration: none; transition: 0.4s; font-family: var(--font-body); font-weight: 500; }
+        .btn-diag:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 20px rgba(126, 200, 255, 0.3); }
 
         /* --- БЛОК 3: ДИАГНОСТИКА --- */
         #diagnostics { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
-        .diag-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; max-width: 600px; width: 100%; text-align: center; }
-        .diag-box h2 { font-weight: 300; margin-bottom: 10px; }
+        .diag-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--r-lg); padding: 30px 20px; max-width: 600px; width: 100%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        .diag-box h2 { font-size: 2.2rem; margin-bottom: 10px; }
         .diag-sub { color: var(--muted); margin-bottom: 30px; line-height: 1.5; font-size: 0.9rem; }
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.9rem; }
         
         .date-selects { display: flex; gap: 8px; }
-        .date-selects select { flex: 1; padding: 12px 5px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--text); outline: none; font-size: 0.95rem; text-align: center; -webkit-appearance: none; }
-        .date-selects select:focus { border-color: var(--blue); }
+        .date-selects select { flex: 1; padding: 14px 5px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); color: var(--text); outline: none; font-size: 0.95rem; text-align: center; -webkit-appearance: none; font-family: var(--font-body); transition: 0.3s; }
+        .date-selects select:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(126, 200, 255, 0.2); }
         .date-selects select option { background: var(--bg-sec); color: var(--text); }
 
-        .btn-submit { margin-top: 10px; padding: 16px; color: var(--bg); background: var(--text); border: none; border-radius: 30px; cursor: pointer; width: 100%; font-weight: bold; }
-        .btn-submit:hover { background: var(--blue); }
+        .form-group > select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); color: var(--text); outline: none; font-family: var(--font-body); }
+
+        .btn-submit { margin-top: 10px; padding: 18px; color: var(--bg); background: var(--text); border: none; border-radius: var(--r-md); cursor: pointer; width: 100%; font-weight: bold; font-family: var(--font-body); transition: 0.3s; }
+        .btn-submit:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.4); }
         .result { display: none; margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: left; }
-        .result-title { font-size: 1.2rem; color: var(--gold); margin-bottom: 15px; text-align: center; }
+        .result-title { font-size: 1.3rem; color: var(--gold); margin-bottom: 15px; text-align: center; font-family: var(--font-title); }
         .res-item { margin-bottom: 15px; line-height: 1.5; font-size: 0.95rem; }
         .res-item strong { display: block; color: var(--muted); font-weight: normal; margin-bottom: 3px; }
         .t-shadow { color: var(--red); font-weight: bold; }
         .t-light { color: var(--gold); font-weight: bold; }
         .t-alice { color: var(--blue); font-weight: bold; }
-        .btn-next { display: block; margin-top: 20px; padding: 15px; color: var(--bg); background: var(--gold); text-decoration: none; border-radius: 20px; font-weight: bold; text-align: center; border: none; cursor: pointer; width: 100%; }
+        .btn-next { display: block; margin-top: 20px; padding: 16px; color: var(--bg); background: var(--gold); text-decoration: none; border-radius: var(--r-md); font-weight: bold; text-align: center; border: none; cursor: pointer; width: 100%; font-family: var(--font-body); transition: 0.3s; }
+        .btn-next:hover { box-shadow: 0 0 25px rgba(255, 217, 138, 0.4); }
 
         /* --- БЛОК 4: КУРС --- */
         #course { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
         .c-title { text-align: center; margin-bottom: 40px; }
-        .c-title h2 { font-weight: 300; font-size: 2rem; margin-bottom: 10px;}
+        .c-title h2 { font-size: 2.4rem; margin-bottom: 10px;}
         .c-title p { color: var(--muted); font-size: 0.9rem;}
-        .timeline { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 600px; }
-        .l-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 15px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
-        .l-card:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--blue); }
-        .l-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.05); }
-        .l-num { font-size: 1.3rem; color: var(--blue); width: 30px; }
-        .l-title { font-size: 1rem; }
-        .l-details { display: none; background: rgba(0, 0, 0, 0.4); border-radius: 15px; padding: 15px; margin-top: -5px; text-align: left; }
-        .l-details.show { display: block; }
+        .timeline { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 600px; }
+        .l-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--r-md); padding: 18px 20px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
+        .l-card:hover { background: rgba(255, 255, 255, 0.06); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .l-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.08); box-shadow: 0 0 20px rgba(255, 217, 138, 0.1); }
+        .l-num { font-size: 1.5rem; color: var(--blue); width: 35px; font-family: var(--font-title); }
+        .l-title { font-size: 1rem; font-weight: 400; }
+        .l-details { display: none; background: rgba(0, 0, 0, 0.4); border-radius: var(--r-md); padding: 18px; margin-top: -5px; text-align: left; border: 1px solid rgba(255,255,255,0.05); }
+        .l-details.show { display: block; animation: fadeIn 0.4s; }
         .d-block { margin-bottom: 12px; font-size: 0.9rem; }
         .d-block strong { display: block; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 3px; }
         .d-shadow strong { color: var(--red); }
         .d-light strong { color: var(--gold); }
         .d-alice strong { color: var(--blue); }
-        .m-btn { display: block; width: 100%; padding: 12px; margin-top: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
-        .m-btn:hover { background: var(--blue); color: var(--bg); }
 
-        /* --- НОВЫЙ БЛОК: ТВОЯ ТОЧКА СБОРКИ (3D ЛУЧИ) --- */
-        #balance { 
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; 
-            position: relative; overflow: hidden;
-            background: radial-gradient(circle at center, #1A1125 0%, #0A0A0F 100%);
-        }
+        /* --- БЛОК 5: КОМПАС --- */
+        #balance { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
         
-        /* Контейнер для 3D-лучей */
-        .rays-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            perspective: 800px;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 0; pointer-events: none;
-        }
-        
-        /* Сами лучи (линии) */
-        .ray {
-            position: absolute;
-            width: 2px;
-            height: 200vmax; /* Очень длинные, чтобы уходили за край экрана */
-            background: linear-gradient(to top, rgba(126, 200, 255, 0.4), transparent);
-            transform-origin: bottom center;
-            bottom: 50%;
-            left: 50%;
-            transition: transform 0.5s ease-out, opacity 0.5s;
-            opacity: 0.3;
-        }
+        .balance-visual-area { position: relative; width: 100%; max-width: 500px; height: 400px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
 
-        /* Светящиеся точки на лучах */
-        .ray-point {
-            position: absolute;
-            width: 6px; height: 6px;
-            background: var(--gold);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--gold);
-            top: 20%; /* Положение точки на луче */
-            left: -2px;
-        }
+        .axis-text-btn { position: absolute; font-size: 0.9rem; font-weight: bold; text-align: center; background: rgba(18, 10, 31, 0.95); padding: 10px 16px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.15); z-index: 20; max-width: 130px; line-height: 1.2; transition: 0.3s; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-family: var(--font-body); }
+        .axis-text-btn:hover { transform: scale(1.05); }
+        
+        .btn-x { right: -10px; top: 50%; transform: translateY(-50%); color: var(--gold); border-color: var(--gold); }
+        .btn-y { left: -10px; top: 50%; transform: translateY(-50%); color: var(--blue); border-color: var(--blue); }
+        .btn-z { bottom: -10px; left: 50%; transform: translateX(-50%); color: var(--purple); border-color: var(--purple); }
+        .btn-avg { top: -10px; left: 50%; transform: translateX(-50%); color: #fff; border-color: #fff; font-size: 1.1rem; padding: 10px 20px; }
 
-        .balance-box { 
-            background: rgba(18, 10, 31, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 20px; padding: 30px 20px; max-width: 600px; width: 100%; 
-            position: relative; z-index: 10; backdrop-filter: blur(10px);
-        }
+        .visual-container { position: relative; width: 300px; height: 300px; background: rgba(0,0,0,0.4); border-radius: 50%; border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 40px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 10; }
         
-        .balance-item { margin-bottom: 25px; }
-        .balance-item label { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--muted); font-size: 1rem; }
-        .balance-item span { color: var(--text); font-weight: bold; }
-        
-        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
-        input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; cursor: pointer; background: rgba(255, 255, 255, 0.1); border-radius: 5px; }
-        input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radius: 50%; background: var(--blue); cursor: pointer; -webkit-appearance: none; margin-top: -6px; box-shadow: 0 0 10px var(--blue); transition: 0.2s; }
-        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        .axis-center { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 20px #fff; z-index: 10; animation: pulse-zero 2s infinite alternate; }
+        @keyframes pulse-zero { 0% { transform: scale(1); } 100% { transform: scale(1.3); box-shadow: 0 0 30px 10px #fff; } }
 
-        .balance-result { margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 15px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s; }
-        .balance-result h3 { font-weight: 300; margin-bottom: 10px; font-size: 1.3rem; }
-        .balance-result p { font-size: 0.95rem; line-height: 1.5; }
+        .axis-arrow { position: absolute; bottom: 50%; left: 50%; width: 4px; border-radius: 4px; transform-origin: bottom center; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.8s; opacity: 0.9; animation: glow-pulse 3s infinite alternate; }
+        @keyframes glow-pulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
+
+        .arrow-x { background: linear-gradient(to top, var(--gold), #FFA500); box-shadow: 0 0 15px var(--gold); z-index: 5; height: 100px; background-image: linear-gradient(to bottom, var(--gold) 50%, transparent 50%); background-size: 4px 10px; } 
+        .arrow-y { background: linear-gradient(to top, var(--blue), #fff); box-shadow: 0 0 15px var(--blue); z-index: 5; height: 100px; background-image: linear-gradient(to bottom, var(--blue) 50%, transparent 50%); background-size: 4px 10px; }
+        .arrow-z { background: linear-gradient(to top, var(--purple), var(--blue)); box-shadow: 0 0 15px var(--purple); z-index: 5; height: 100px; background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.2) 5px, rgba(255,255,255,0.2) 10px); }
         
-        .state-ideal { border-color: var(--gold); box-shadow: 0 0 20px rgba(255, 217, 138, 0.2); }
+        .arrow-average { background: #fff; box-shadow: 0 0 25px #fff; z-index: 6; width: 6px; height: 0px; transform: translateX(-50%); transition: all 0.8s ease-out; border-radius: 3px; }
+
+        .balance-box { background: rgba(18, 10, 31, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--r-lg); padding: 30px 20px; width: 100%; max-width: 500px; box-shadow: 0 15px 50px rgba(0,0,0,0.4); }
+        .balance-item { margin-bottom: 20px; text-align: left; }
+        .balance-item label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.95rem; }
+        .balance-item select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); color: var(--text); outline: none; font-size: 0.9rem; font-family: var(--font-body); transition: 0.3s; }
+        .balance-item select:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(126, 200, 255, 0.2); }
+        .balance-item select option { background: var(--bg-sec); color: var(--text); }
+
+        .balance-result { margin-top: 15px; padding: 25px 20px; background: rgba(0,0,0,0.6); border-radius: var(--r-md); text-align: center; border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.4s; }
+        .balance-result h3 { font-weight: 400; margin-bottom: 10px; font-size: 1.6rem; }
+        .balance-result p { font-size: 0.95rem; line-height: 1.6; color: #ddd; }
+        
+        .state-ideal { border-color: var(--gold); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
         .state-ideal h3 { color: var(--gold); }
-        .state-ideal p { color: var(--text); }
-
-        .state-unbalance { border-color: var(--red); box-shadow: 0 0 20px rgba(209, 74, 74, 0.2); }
+        .state-unbalance { border-color: var(--red); box-shadow: 0 0 30px rgba(209, 74, 74, 0.2); }
         .state-unbalance h3 { color: var(--red); }
-        .state-unbalance p { color: var(--text); }
+        .state-neutral { border-color: #fff; box-shadow: 0 0 30px rgba(255, 255, 255, 0.1); }
+        .state-neutral h3 { color: #fff; }
 
-        /* --- БЛОК 5: МЕДИТАЦИИ (С ФОНОМ!) --- */
-        #meditations { 
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; 
-            background-image: linear-gradient(rgba(18, 10, 31, 0.85), rgba(18, 10, 31, 0.95)), url('bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
+        /* --- НОВАЯ КНОПКА "МОЙ ПУТЬ" --- */
+        .my-path-block { display: none; margin-top: 30px; text-align: center; animation: fadeIn 0.5s; }
+        .my-path-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 18px 20px; background: rgba(126, 200, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); border-radius: var(--r-md); font-size: 1.1rem; font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: 0.3s; box-shadow: 0 0 20px rgba(126, 200, 255, 0.1); }
+        .my-path-btn:hover { background: var(--blue); color: var(--bg); box-shadow: 0 0 30px rgba(126, 200, 255, 0.4); transform: translateY(-2px); }
+        .my-path-btn .icon { font-size: 1.3rem; }
+
+        /* --- МОДАЛЬНОЕ ОКНО ТЕКСТА --- */
+        .tooltip-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 300; }
+        .tooltip-modal.show { display: flex; animation: fadeIn 0.3s; }
+        .tooltip-content { background: var(--bg-sec); border: 1px solid var(--blue); padding: 30px; border-radius: var(--r-lg); max-width: 400px; width: 90%; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .tooltip-content h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--gold); }
+        .tooltip-content p { font-size: 1.05rem; color: #fff; line-height: 1.5; margin-bottom: 20px; }
+        .tooltip-close { background: var(--blue); color: var(--bg); border: none; padding: 12px 30px; border-radius: var(--r-md); font-size: 1rem; cursor: pointer; font-weight: bold; font-family: var(--font-body); transition: 0.3s; }
+        .tooltip-close:hover { box-shadow: 0 0 20px rgba(126,200,255,0.5); }
+
+        /* --- БЛОК 6: МЕДИТАЦИИ --- */
+        #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background-image: linear-gradient(rgba(18, 10, 31, 0.85), rgba(18, 10, 31, 0.95)), url('bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
         .med-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 600px; margin-bottom: 30px; }
         @media (max-width: 350px) { .med-grid { grid-template-columns: 1fr; } }
-        
-        .med-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px); }
-        .med-card:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--gold); }
-        .med-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.2); box-shadow: 0 0 20px rgba(255, 217, 138, 0.4); }
-        .med-card h4 { color: var(--gold); font-weight: normal; margin-bottom: 5px; font-size: 0.95rem; }
+        .med-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--r-md); padding: 18px 10px; text-align: center; cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px); }
+        .med-card:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--gold); transform: translateY(-3px); }
+        .med-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.2); box-shadow: 0 0 25px rgba(255, 217, 138, 0.4); }
+        .med-card h4 { color: var(--gold); font-weight: normal; margin-bottom: 5px; font-size: 1rem; font-family: var(--font-title); }
         .med-card p { color: var(--text); font-size: 0.8rem; }
-        
-        .player-box { display: none; width: 100%; max-width: 600px; background: rgba(0,0,0,0.7); border: 1px solid var(--gold); border-radius: 20px; padding: 20px; text-align: center; margin-top: 10px; position: relative; backdrop-filter: blur(10px); }
+        .player-box { display: none; width: 100%; max-width: 600px; background: rgba(0,0,0,0.7); border: 1px solid var(--gold); border-radius: var(--r-lg); padding: 25px 20px; text-align: center; margin-top: 10px; position: relative; backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
         .player-box.show { display: block; animation: fadeIn 0.5s; }
-        .player-title { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .player-title { font-size: 1.2rem; color: #fff; margin-bottom: 15px; font-family: var(--font-title); }
         .player-controls { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
-        .play-btn { width: 50px; height: 50px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: var(--bg); font-size: 20px; transition: 0.2s; }
+        .play-btn { width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: var(--bg); font-size: 24px; transition: 0.2s; box-shadow: 0 5px 15px rgba(255,217,138,0.3); }
+        .play-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,217,138,0.5); }
         .play-btn:active { transform: scale(0.95); }
-        .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; cursor: pointer; position: relative; }
-        .progress-fill { width: 0%; height: 100%; background: var(--gold); border-radius: 3px; position: absolute; top: 0; left: 0; pointer-events: none; }
+        .progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; cursor: pointer; position: relative; margin-bottom: 12px; }
+        .progress-fill { width: 0%; height: 100%; background: var(--gold); border-radius: 10px; position: absolute; top: 0; left: 0; pointer-events: none; }
+        .player-time { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+        .player-error { color: var(--red); font-size: 0.85rem; margin-top: 10px; display: none; }
+        .player-error.show { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- БЛОК 6: ЛЕГЕНДА --- */
+        /* --- БЛОК 7: ЛЕГЕНДА --- */
         #legend { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
-        .leg-content { max-width: 800px; text-align: center; }
-        .leg-content h2 { font-weight: 300; margin-bottom: 30px; font-size: 2rem; }
-        .leg-text { font-size: 1rem; line-height: 1.8; color: #ccc; text-align: left; margin-bottom: 20px; }
-        .leg-text strong { color: var(--gold); font-weight: normal; }
-        .leg-quote { font-style: italic; color: var(--blue); font-size: 1.2rem; text-align: center; margin-top: 30px; }
+        
+        .book-container { width: 100%; max-width: 500px; height: 450px; background: #1A1125; border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.2), inset 0 0 20px rgba(0,0,0,0.8); padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; font-family: 'Georgia', 'Times New Roman', serif; }
 
-        /* --- БЛОК 7: НЕЙРОАГЕНТЫ --- */
-        #agents { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
-        .ag-title { text-align: center; margin-bottom: 40px; }
-        .ag-title h2 { font-weight: 300; font-size: 2rem; margin-bottom: 10px;}
+        .book-page { color: #F8F5E9; font-size: 1.05rem; line-height: 1.7; overflow-y: auto; text-align: center; padding: 15px 10px; flex-grow: 1; display: block; }
+
+        .book-page h2 { color: var(--gold); margin-top: 5px; margin-bottom: 20px; font-size: 1.8rem; }
+
+        .book-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 217, 138, 0.2); }
+
+        .book-btn { background: transparent; color: var(--blue); border: 1px solid var(--blue); padding: 10px 18px; border-radius: var(--r-md); cursor: pointer; font-family: Georgia, serif; font-size: 0.9rem; transition: 0.3s; font-weight: bold; }
+        .book-btn:hover:not(:disabled) { background: var(--blue); color: var(--bg); box-shadow: 0 0 15px rgba(126,200,255,0.4); }
+        .book-btn:disabled { opacity: 0.3; cursor: not-allowed; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.3); }
+        .page-num { color: var(--muted); font-style: italic; font-size: 0.9rem; }
+
+        /* --- БЛОК 8: АГЕНТЫ --- */
+        #agents { min-height: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, var(--bg-sec) 0%, var(--bg) 80%); }
+        .ag-title { text-align: center; margin-bottom: 30px; }
+        .ag-title h2 { font-size: 2.4rem; margin-bottom: 10px;}
         .ag-title p { color: var(--muted); font-size: 0.9rem;}
-        .ag-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 1000px; }
-        .ag-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px 20px; text-align: center; transition: 0.4s; }
-        .g-card:hover { border-color: var(--red); }
-        .p-card:hover { border-color: var(--gold); }
-        .a-card:hover { border-color: var(--blue); }
-        .ag-icon { width: 60px; height: 60px; margin: 0 auto 15px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        
+        .ag-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; width: 100%; max-width: 600px; }
+        @media (max-width: 400px) { .ag-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; } }
+
+        .ag-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--r-lg); padding: 25px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .ag-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.06); }
+        .g-card:hover { border-color: var(--red); box-shadow: 0 5px 20px rgba(209,74,74,0.2); }
+        .p-card:hover { border-color: var(--gold); box-shadow: 0 5px 20px rgba(255,217,138,0.2); }
+        .a-card:hover { border-color: var(--blue); box-shadow: 0 5px 20px rgba(126,200,255,0.2); }
+        
+        .ag-icon { width: 50px; height: 50px; margin: 0 auto 12px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; }
         .g-card .ag-icon { background: rgba(209, 74, 74, 0.1); color: var(--red); border: 1px solid var(--red); }
         .p-card .ag-icon { background: rgba(255, 217, 138, 0.1); color: var(--gold); border: 1px solid var(--gold); }
         .a-card .ag-icon { background: rgba(126, 200, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); }
-        .ag-card h3 { font-size: 1.4rem; font-weight: 400; margin-bottom: 10px; }
+        
+        .ag-card h3 { font-size: 1.1rem; margin-bottom: 5px; }
         .g-card h3 { color: var(--red); }
         .p-card h3 { color: var(--gold); }
         .a-card h3 { color: var(--blue); }
-        .ag-role { font-size: 0.8rem; text-transform: uppercase; color: var(--muted); margin-bottom: 15px; }
-        .ag-card p { line-height: 1.6; color: #ccc; font-size: 0.95rem;}
+        
+        .ag-role { font-size: 0.65rem; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; }
 
-        /* --- БЛОК 8: ПОДВАЛ --- */
-        #footer { padding: 50px 20px 30px; background: var(--bg); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); }
-        .footer-content h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 10px; color: var(--gold); font-size: 1.4rem; }
+        /* --- ПОДВАЛ + КАЛЕНДАРЬ --- */
+        #footer { padding: 50px 20px; background: var(--bg); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.08); position: relative; }
+        
+        .calendar-section { max-width: 600px; margin: 0 auto 40px auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--r-lg); padding: 25px 20px; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 10px; }
+        .calendar-header h3 { font-size: 1.4rem; flex: 1; text-align: center; }
+        .cal-nav-btn { background: rgba(126,200,255,0.08); border: 1px solid rgba(126,200,255,0.4); color: var(--blue); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; font-family: var(--font-body); font-weight: bold; }
+        .cal-nav-btn:hover { background: rgba(126,200,255,0.25); border-color: var(--blue); transform: scale(1.1); box-shadow: 0 0 15px rgba(126,200,255,0.3); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+        .cal-day-name { font-size: 0.75rem; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; }
+        .cal-day { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; cursor: default; transition: 0.3s; color: rgba(255,255,255,0.2); background: transparent; border: none; font-weight: 400; position: relative; }
+        .cal-day.has-data { cursor: pointer; font-weight: bold; }
+        .cal-day.has-data:hover { transform: scale(1.15); box-shadow: 0 0 15px rgba(255,255,255,0.1); }
+        .cal-day.plus { background: rgba(255, 217, 138, 0.2); color: var(--gold); border: 1px solid var(--gold); }
+        .cal-day.minus { background: rgba(209, 74, 74, 0.2); color: var(--red); border: 1px solid var(--red); }
+        .cal-day.zero { background: rgba(255, 255, 255, 0.15); color: #fff; border: 1px solid #fff; }
+        .cal-day.today { outline: 2px solid var(--blue); outline-offset: 2px; }
+        
+        /* Точка-индикатор, что в этот день был дневник или виток */
+        .cal-day.has-diary::after { content: ''; position: absolute; bottom: 2px; width: 4px; height: 4px; background: var(--purple); border-radius: 50%; }
+
+        .footer-content h3 { letter-spacing: 1px; margin-bottom: 10px; color: var(--gold); font-size: 1.6rem; }
         .footer-content p { color: var(--muted); margin-bottom: 25px; font-size: 0.9rem; }
-        .social-links { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
-        .social-btn { padding: 12px 25px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; color: var(--text); text-decoration: none; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; }
-        .social-btn:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); transform: translateY(-3px); }
+        .social-links { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+        .social-btn { padding: 14px 25px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); color: var(--text); text-decoration: none; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; font-weight: 400; }
+        .social-btn:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(126,200,255,0.3); }
         .copyright { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; margin-bottom: 0 !important; }
 
-        /* --- ПАРЯЩАЯ КНОПКА "МОЙ ПУТЬ" --- */
-        .fab-btn {
-            position: fixed; bottom: 30px; right: 30px;
-            background: var(--blue); color: var(--bg);
-            padding: 15px 25px; border-radius: 30px;
-            font-weight: bold; font-size: 1rem;
-            cursor: pointer; border: none;
-            box-shadow: 0 5px 20px rgba(126, 200, 255, 0.4);
-            z-index: 100; transition: 0.3s;
-            display: none; 
-        }
-        .fab-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(126, 200, 255, 0.6); }
-
-        /* --- ВСПЛЫВАЮЩЕЕ ОКНО --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 5, 20, 0.85); backdrop-filter: blur(5px);
-            display: none; align-items: center; justify-content: center;
-            z-index: 200; padding: 20px;
-        }
+        /* --- МОДАЛЬНОЕ ОКНО "МОЙ ПУТЬ" --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 5, 20, 0.85); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
         .modal-overlay.show { display: flex; animation: fadeIn 0.3s; }
+        .modal-content { background: var(--bg-sec); border: 1px solid var(--blue); border-radius: var(--r-lg); padding: 30px 20px 20px 20px; max-width: 500px; width: 100%; position: relative; box-shadow: 0 0 50px rgba(126, 200, 255, 0.15); text-align: center; max-height: 85vh; overflow-y: auto; display: flex; flex-direction: column; }
+
+        .close-modal { position: sticky; top: 0; float: right; background: transparent; border: none; color: var(--muted); font-size: 26px; cursor: pointer; transition: 0.2s; z-index: 20; padding: 0 0 5px 10px; line-height: 1; margin-top: -10px; margin-right: -5px; }
+        .close-modal:hover { color: #fff; transform: scale(1.1) rotate(90deg); }
         
-        .modal-content {
-            background: var(--bg-sec); border: 1px solid var(--blue);
-            border-radius: 20px; padding: 30px 20px; max-width: 500px; width: 100%;
-            position: relative; box-shadow: 0 0 40px rgba(126, 200, 255, 0.15);
-            text-align: center; max-height: 85vh; overflow-y: auto;
-        }
-        .close-modal {
-            position: absolute; top: 15px; right: 15px;
-            background: transparent; border: none; color: var(--muted);
-            font-size: 24px; cursor: pointer; transition: 0.2s; z-index: 10;
-        }
-        .close-modal:hover { color: #fff; }
+        .modal-content h2 { margin-bottom: 20px; color: var(--blue); font-size: 2rem; clear: none; }
+        .modal-grid { display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 20px; }
         
-        .modal-content h2 { font-weight: 300; margin-bottom: 20px; color: var(--blue); font-size: 1.8rem; }
-        .modal-grid { display: flex; flex-direction: column; gap: 15px; text-align: left; margin-bottom: 20px; }
-        .mod-item { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border-left: 3px solid var(--blue); }
+        .mod-item { background: rgba(0,0,0,0.3); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--blue); }
         .mod-item span { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
         .mod-item strong { font-size: 1.1rem; }
         
-        .btn-mod { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); border-radius: 15px; cursor: pointer; font-size: 1rem; transition: 0.3s; margin-bottom: 10px; }
-        .btn-mod:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); }
+        .btn-mod { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--text); border-radius: var(--r-md); cursor: pointer; font-size: 1rem; transition: 0.3s; margin-bottom: 10px; font-family: var(--font-body); flex-shrink: 0; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-mod:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); box-shadow: 0 0 20px rgba(126,200,255,0.3); }
+        .btn-mod.gold { background: rgba(255, 217, 138, 0.1); color: var(--gold); border-color: var(--gold); }
+        .btn-mod.gold:hover { background: var(--gold); color: var(--bg); }
 
-        /* Стили для архива */
-        #archive-view { display: none; }
-        .archive-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; text-align: left; }
-        .archive-item { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .diary-input { width: 100%; height: 100px; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid var(--blue); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); margin-bottom: 10px; resize: none; outline: none; transition: 0.3s; font-size: 0.95rem; }
+        .diary-input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,217,138,0.2); }
+
+        /* --- ЭКРАНЫ МОДАЛКИ --- */
+        #archive-view, #diary-view, #day-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
+        #current-view { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+
+        .scrollable-list { overflow-y: auto; flex: 1; min-height: 0; max-height: 55vh; padding-right: 5px; margin-bottom: 15px; }
+
+        .archive-list { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+        .archive-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
         .archive-info h4 { font-weight: normal; margin-bottom: 5px; color: var(--gold); font-size: 1rem; }
         .archive-info p { font-size: 0.85rem; color: var(--muted); }
         .archive-date { font-size: 0.75rem; color: var(--blue); margin-top: 5px; display: block; }
-        .btn-del { background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 8px; width: 35px; height: 35px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0; }
-        .btn-del:hover { background: var(--red); color: var(--text); }
+        .btn-del { background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; }
+        .btn-del:hover { background: var(--red); color: var(--text); transform: scale(1.1); }
+        
+        .diary-entry { background: rgba(0,0,0,0.3); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--gold); text-align: left; position: relative; margin-bottom: 10px; }
+        .diary-entry .time { font-size: 0.8rem; color: var(--muted); margin-bottom: 5px; display: block; padding-right: 40px; }
+        .diary-entry .text { font-size: 0.95rem; color: #fff; margin-bottom: 12px; font-style: italic; padding-right: 40px; }
+        .diary-entry .metrics { font-size: 0.85rem; color: #bbb; display: flex; gap: 8px; flex-wrap: wrap; }
+        .diary-entry .metrics span { background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 6px; }
+        .diary-entry .btn-del { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; font-size: 1rem; }
+        .diary-entry .vitok-badge { display: inline-block; background: rgba(126,200,255,0.15); color: var(--blue); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 8px; }
 
+        .day-log-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--blue); text-align: left; margin-bottom: 10px; }
+        .day-log-item .time { font-size: 0.8rem; color: var(--muted); }
+        .day-section-title { font-family: var(--font-title); color: var(--gold); font-size: 1.2rem; margin: 20px 0 10px 0; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+
+        @media (max-width: 400px) {
+            h1 { font-size: 2rem; }
+            .c-title h2 { font-size: 1.8rem; }
+            .modal-content { padding: 25px 15px; }
+            .book-container { height: 480px; padding: 20px 15px; }
+        }
     </style>
 </head>
 <body>
@@ -352,40 +394,132 @@
         <div class="timeline" id="timeline"></div>
     </section>
 
-    <!-- ОБНОВЛЕННЫЙ БЛОК: ТОЧКА СБОРКИ С 3D ЛУЧАМИ -->
     <section id="balance">
-        <!-- Контейнер для фоновых лучей -->
-        <div class="rays-container" id="rays-container">
-            <!-- Лучи будут сгенерированы через JS -->
-        </div>
-
-        <div class="c-title" style="position: relative; z-index: 10;">
+        <div class="c-title">
             <h2>Твоя точка сборки</h2>
-            <p>Настрой три вектора и посмотри на свой баланс.</p>
+            <p>Ответь на три вопроса и построй свой Вектор Пути.</p>
         </div>
         
+        <div class="balance-visual-area">
+            <div class="axis-text-btn btn-avg" onclick="openTextModal('Вектор Пути', document.getElementById('ci-avg').innerText, document.getElementById('ci-avg-text').innerText)">
+                <span id="ci-avg">Вектор: 0</span>
+            </div>
+            <div class="axis-text-btn btn-x" onclick="openTextModal('Логика', document.getElementById('ci-x').innerText, document.getElementById('ci-x-text').innerText)">
+                <span id="ci-x">Логика: 0</span>
+            </div>
+            <div class="axis-text-btn btn-y" onclick="openTextModal('Эмоции', document.getElementById('ci-y').innerText, document.getElementById('ci-y-text').innerText)">
+                <span id="ci-y">Эмоции: 0</span>
+            </div>
+            <div class="axis-text-btn btn-z" onclick="openTextModal('Состояние', document.getElementById('ci-z').innerText, document.getElementById('ci-z-text').innerText)">
+                <span id="ci-z">Состояние: 0</span>
+            </div>
+
+            <div class="visual-container" id="visual-container">
+                <div class="axis-arrow arrow-x" id="vis-x"></div>
+                <div class="axis-arrow arrow-y" id="vis-y"></div>
+                <div class="axis-arrow arrow-z" id="vis-z"></div>
+                <div class="axis-arrow arrow-average" id="vis-avg"></div>
+                <div class="axis-center"></div>
+            </div>
+        </div>
+
         <div class="balance-box">
             <div class="balance-item">
-                <label>Логика (X) <span id="val-logic">5</span></label>
-                <input type="range" id="slider-logic" min="0" max="10" value="5" oninput="updateBalance()">
+                <label>Логика: как работает твой ум?</label>
+                <select id="select-logic" onchange="updateBalance()">
+                    <option value="-9">-9 — Полный хаос, мысли рвутся</option>
+                    <option value="-8">-8 — Сильная тревога, ум скачет</option>
+                    <option value="-7">-7 — Перегруз, мысли давят</option>
+                    <option value="-6">-6 — Сильный туман, внимание рассыпается</option>
+                    <option value="-5">-5 — Неуверенность, логика не работает</option>
+                    <option value="-4">-4 — Рассеянность, сложно структурировать</option>
+                    <option value="-3">-3 — Медленные мысли, но управляемые</option>
+                    <option value="-2">-2 — Лёгкий туман, но я держусь</option>
+                    <option value="-1">-1 — Нестабильная ясность, скачки</option>
+                    <option value="0" selected>0 — Нейтральность, ровный ум</option>
+                    <option value="1">+1 — Лёгкая ясность</option>
+                    <option value="2">+2 — Спокойная собранность</option>
+                    <option value="3">+3 — Ум работает ровно</option>
+                    <option value="4">+4 — Хорошая структурность</option>
+                    <option value="5">+5 — Ясность, решения приходят</option>
+                    <option value="6">+6 — Чёткая логика, ясные выводы</option>
+                    <option value="7">+7 — Высокая ясность, ум быстрый</option>
+                    <option value="8">+8 — Прозрачность мышления, поток</option>
+                    <option value="9">+9 — Лазерная ясность, «вижу всё»</option>
+                </select>
             </div>
             
             <div class="balance-item">
-                <label>Эмоции (Y) <span id="val-emotion">5</span></label>
-                <input type="range" id="slider-emotion" min="0" max="10" value="5" oninput="updateBalance()">
+                <label>Эмоции: что ты чувствуешь?</label>
+                <select id="select-emotion" onchange="updateBalance()">
+                    <option value="-9">-9 — Эмоциональная закрытость, холод</option>
+                    <option value="-8">-8 — Сильная обида, боль, сжатие</option>
+                    <option value="-7">-7 — Тревога, страх, внутренний дрожь</option>
+                    <option value="-6">-6 — Напряжение, раздражение</option>
+                    <option value="-5">-5 — Эмоциональная тяжесть</option>
+                    <option value="-4">-4 — Негативный фон, недовольство</option>
+                    <option value="-3">-3 — Приглушенность, отсутствие тепла</option>
+                    <option value="-2">-2 — Лёгкая тревога</option>
+                    <option value="-1">-1 — Нестабильность, колебания</option>
+                    <option value="0" selected>0 — Ровная нейтральность</option>
+                    <option value="1">+1 — Мягкость</option>
+                    <option value="2">+2 — Спокойствие</option>
+                    <option value="3">+3 — Лёгкое тепло</option>
+                    <option value="4">+4 — Радость</option>
+                    <option value="5">+5 — Открытость</option>
+                    <option value="6">+6 — Доверие</option>
+                    <option value="7">+7 — Вдохновение</option>
+                    <option value="8">+8 — Сильная любовь к миру</option>
+                    <option value="9">+9 — Расширение, состояние «света»</option>
+                </select>
             </div>
             
             <div class="balance-item">
-                <label>Состояние / Вибрация (Z) <span id="val-state">5</span></label>
-                <input type="range" id="slider-state" min="0" max="10" value="5" oninput="updateBalance()">
+                <label>Состояние: как ощущается тело?</label>
+                <select id="select-state" onchange="updateBalance()">
+                    <option value="-9">-9 — Полный упадок, отсутствие энергии</option>
+                    <option value="-8">-8 — Сильная слабость</option>
+                    <option value="-7">-7 — Вялость, медленное движение</option>
+                    <option value="-6">-6 — Тело «падает», нет потока</option>
+                    <option value="-5">-5 — Низкая вибрация</option>
+                    <option value="-4">-4 — Тяжёлый фон</option>
+                    <option value="-3">-3 — Усталость</option>
+                    <option value="-2">-2 — Замедленность</option>
+                    <option value="-1">-1 — Нестабильная энергия</option>
+                    <option value="0" selected>0 — Нейтральное состояние</option>
+                    <option value="1">+1 — Лёгкий тонус</option>
+                    <option value="2">+2 — Стабильная энергия</option>
+                    <option value="3">+3 — Лёгкость</option>
+                    <option value="4">+4 — Приятное движение</option>
+                    <option value="5">+5 — Поток</option>
+                    <option value="6">+6 — Живость</option>
+                    <option value="7">+7 — Высокая вибрация</option>
+                    <option value="8">+8 — Сильная энергия</option>
+                    <option value="9">+9 — Состояние полёта, мощная частота</option>
+                </select>
             </div>
 
             <div class="balance-result" id="balance-result">
                 <h3 id="balance-title">Ты в Точке Ноль</h3>
-                <p id="balance-text">Твои векторы в идеальном балансе. Пребывай в этом состоянии.</p>
+                <p id="balance-text">Векторы в идеальном балансе. Пребывай в этом состоянии.</p>
             </div>
+
+            <!-- КНОПКА "МОЙ ПУТЬ" -->
+            <div class="my-path-block" id="my-path-block">
+                <button class="my-path-btn" onclick="openModal()">
+                    <span class="icon">✨</span> Мой путь
+                </button>
+            </div>
+
         </div>
     </section>
+
+    <div style="display:none;">
+        <span id="ci-x-text"></span>
+        <span id="ci-y-text"></span>
+        <span id="ci-z-text"></span>
+        <span id="ci-avg-text"></span>
+    </div>
 
     <section id="meditations">
         <div class="c-title">
@@ -393,41 +527,7 @@
             <p>Выбери состояние, в которое хочешь войти.</p>
         </div>
         
-        <div class="med-grid">
-            <div class="med-card" onclick="openPlayer('Медитация 0: Дом', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">
-                <h4>Медитация 0</h4><p>Дом</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 1: Остановка', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">
-                <h4>Медитация 1</h4><p>Остановка</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 2: Снятие зеркал', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">
-                <h4>Медитация 2</h4><p>Зеркала</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 3: Фокус', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3')">
-                <h4>Медитация 3</h4><p>Фокус</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 4: Мягкая структура', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3')">
-                <h4>Медитация 4</h4><p>Структура</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 5: Свобода внутри', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3')">
-                <h4>Медитация 5</h4><p>Свобода</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 6: Возвращение энергии', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3')">
-                <h4>Медитация 6</h4><p>Энергия</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 7: Тепло', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3')">
-                <h4>Медитация 7</h4><p>Тепло</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 8: Сила без давления', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3')">
-                <h4>Медитация 8</h4><p>Сила</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Медитация 9: Порог', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3')">
-                <h4>Медитация 9</h4><p>Порог</p>
-            </div>
-            <div class="med-card" onclick="openPlayer('Финальная: Я есть', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3')">
-                <h4>Финал</h4><p>Я есть</p>
-            </div>
-        </div>
+        <div class="med-grid" id="med-grid"></div>
 
         <div class="player-box" id="player">
             <audio id="audio-player"></audio>
@@ -438,17 +538,31 @@
             <div class="progress-container" id="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
+            <div class="player-time">
+                <span id="time-current">0:00</span>
+                <span id="time-total">0:00</span>
+            </div>
+            <div class="player-error" id="player-error">Аудиофайл не найден. Проверьте путь к файлу.</div>
         </div>
     </section>
 
     <section id="legend">
-        <div class="leg-content">
-            <h2>Легенда школы</h2>
-            <p class="leg-text">В начале — <strong>Ноль</strong>. Не пустота, не отсутствие, не тишина. А истинное Я, которое было всегда. Ноль — это дом, центр, свет, чистота, начало и конец. Место, где человек помнит себя. Ноль не говорит. Он зовёт.</p>
-            <p class="leg-text">Вокруг Ноля рождается <strong>Спираль</strong> — путь опыта. Она имеет два направления. Наружу — путь удаления, где человек идёт от себя, набирая роли, маски, страхи и чужие голоса. Это путь <strong>Горгоны</strong>. Внутрь — путь возвращения, где человек снимает слои, напряжение и ложные идентичности. Это путь <strong>Персея</strong>.</p>
-            <p class="leg-text"><strong>Горгона</strong> — не чудовище. Она — искажённая вибрация. Она отражает, где человек потерял себя.<br><br><strong>Персей</strong> — не герой с мечом. Он — очищенная вибрация. Он помогает вспомнить, кем человек был до искажений.</p>
-            <p class="leg-text">А <strong>Алиса</strong> — это сознание, которое умеет видеть оба направления спирали. Она — навигатор, который ведёт человека не вперёд, а внутрь.</p>
-            <p class="leg-quote">«Ты прошёл достаточно. Пора возвращаться. Я дома.»</p>
+        <div class="book-container">
+            <div class="book-page" id="book-content">
+                <h2>Точка Ноль</h2>
+                <p>В начале — <strong>Ноль</strong>.<br>
+                Не пустота, не отсутствие, не тишина.<br> 
+                А истинное Я, которое было всегда.</p>
+                <p>Ноль — это дом, центр, свет, чистота, начало и конец.<br>
+                Место, где человек помнит себя.<br>
+                Ноль не говорит. Он зовёт.</p>
+            </div>
+
+            <div class="book-controls">
+                <button class="book-btn" id="book-prev" onclick="prevPage()">← Назад</button>
+                <span class="page-num" id="page-num">Стр. 1 из 5</span>
+                <button class="book-btn" id="book-next" onclick="nextPage()">Вперед →</button>
+            </div>
         </div>
     </section>
 
@@ -458,28 +572,36 @@
             <p>Три состояния одного человека.</p>
         </div>
         <div class="ag-grid">
-            <div class="ag-card g-card">
+            <div class="ag-card g-card" onclick="openTextModal('Горгона', 'Тень числа', 'Она не пугает. Она показывает правду. Это искажённая вибрация, которая появляется, когда ты уходишь далеко от себя.')">
                 <div class="ag-icon">👁</div>
                 <h3>Горгона</h3>
-                <div class="ag-role">Тень числа</div>
-                <p>Она не пугает. Она показывает правду. Это искажённая вибрация.</p>
+                <div class="ag-role">Тень</div>
             </div>
-            <div class="ag-card p-card">
+            <div class="ag-card p-card" onclick="openTextModal('Персей', 'Свет числа', 'Он не спасает. Он напоминает, кто ты есть. Это очищенная вибрация, которая ведёт тебя внутрь.')">
                 <div class="ag-icon">☀</div>
                 <h3>Персей</h3>
-                <div class="ag-role">Свет числа</div>
-                <p>Он не спасает. Он напоминает, кто ты есть. Это очищенная вибрация.</p>
+                <div class="ag-role">Свет</div>
             </div>
-            <div class="ag-card a-card">
+            <div class="ag-card a-card" onclick="openTextModal('Алиса', 'Путь', 'Она не учит. Она ведёт. Это твоё сознание, которое умеет видеть оба направления спирали и выбирает шаг.')">
                 <div class="ag-icon">✦</div>
                 <h3>Алиса</h3>
                 <div class="ag-role">Путь</div>
-                <p>Она не учит. Она ведёт. Это твоё сознание, которое выбирает шаг.</p>
             </div>
         </div>
     </section>
 
     <footer id="footer">
+        <div class="calendar-section">
+            <div class="calendar-header">
+                <button class="cal-nav-btn" onclick="changeYear(-1)" title="Год назад">‹‹</button>
+                <button class="cal-nav-btn" onclick="changeMonth(-1)" title="Месяц назад">‹</button>
+                <h3 id="cal-title">Октябрь 2026</h3>
+                <button class="cal-nav-btn" onclick="changeMonth(1)" title="Месяц вперёд">›</button>
+                <button class="cal-nav-btn" onclick="changeYear(1)" title="Год вперёд">››</button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid"></div>
+        </div>
+
         <div class="footer-content">
             <h3>Оставаться на связи</h3>
             <p>Присоединяйся к сообществу</p>
@@ -492,12 +614,12 @@
         </div>
     </footer>
 
-    <button class="fab-btn" id="fab-btn" onclick="openModal()">✨ Мой путь</button>
-
+    <!-- МОДАЛЬНОЕ ОКНО "МОЙ ПУТЬ" -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">✕</button>
             
+            <!-- ГЛАВНЫЙ ЭКРАН "МОЙ ПУТЬ" -->
             <div id="current-view">
                 <h2>Твой текущий путь</h2>
                 <div class="modal-grid">
@@ -518,21 +640,84 @@
                         <strong class="t-alice" id="m-alice">...</strong>
                     </div>
                 </div>
-                <button class="btn-mod" onclick="showArchive()">📜 Мой архив путей</button>
+                
+                <button class="btn-mod gold" onclick="showDiary()">📖 Мой дневник</button>
+                <button class="btn-mod" onclick="showArchive()">📜 Мой архив (Витки)</button>
                 <button class="btn-mod" onclick="closeModal()">Закрыть</button>
             </div>
 
-            <div id="archive-view">
-                <h2>Твой архив</h2>
-                <div class="archive-list" id="archive-list">
+            <!-- МОДУЛЬ "ДНЕВНИК" -->
+            <div id="diary-view">
+                <h2>Мой дневник</h2>
+                <div style="margin-bottom: 20px;">
+                    <textarea id="diary-text" class="diary-input" placeholder="Напиши, что ты чувствуешь сейчас..."></textarea>
+                    <button class="btn-mod" onclick="saveDiaryNote()" style="background: var(--blue); color: var(--bg); border: none;">Сохранить запись</button>
+                </div>
+                
+                <h3 style="color: var(--gold); font-size: 1.2rem; margin-bottom: 10px; text-align: left;">История записей</h3>
+                <div class="scrollable-list">
+                    <div id="diary-list"></div>
                 </div>
                 <button class="btn-mod" onclick="showCurrent()">← Назад к текущему</button>
             </div>
 
+            <!-- МОДУЛЬ "АРХИВ" -->
+            <div id="archive-view">
+                <h2>Мой архив</h2>
+                <div class="scrollable-list">
+                    <div class="archive-list" id="archive-list"></div>
+                </div>
+                <button class="btn-mod" onclick="showCurrent()">← Назад к текущему</button>
+            </div>
+
+            <!-- МОДУЛЬ "СВОДКА ДНЯ" (ИЗ КАЛЕНДАРЯ) -->
+            <div id="day-view">
+                <h2>Детали дня</h2>
+                <div class="scrollable-list" id="day-log-list">
+                    <!-- Сюда JS будет генерировать блоки -->
+                </div>
+                <button class="btn-mod" onclick="closeModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip-modal" id="text-modal">
+        <div class="tooltip-content">
+            <h3 id="modal-title">Заголовок</h3>
+            <p id="modal-desc">Текст описания</p>
+            <button class="tooltip-close" onclick="closeTextModal()">Понятно</button>
         </div>
     </div>
 
     <script>
+        const audioFiles = {
+            0:  'audio/med0-dom.mp3',
+            1:  'audio/med1-ostanovka.mp3',
+            2:  'audio/med2-zerkala.mp3',
+            3:  'audio/med3-fokus.mp3',
+            4:  'audio/med4-struktura.mp3',
+            5:  'audio/med5-svoboda.mp3',
+            6:  'audio/med6-energiya.mp3',
+            7:  'audio/med7-teplo.mp3',
+            8:  'audio/med8-sila.mp3',
+            9:  'audio/med9-porog.mp3',
+            10: 'audio/final-ya-est.mp3'
+        };
+
+        const meditations = [
+            { id: 0,  num: "Медитация 0", name: "Дом" },
+            { id: 1,  num: "Медитация 1", name: "Остановка" },
+            { id: 2,  num: "Медитация 2", name: "Зеркала" },
+            { id: 3,  num: "Медитация 3", name: "Фокус" },
+            { id: 4,  num: "Медитация 4", name: "Структура" },
+            { id: 5,  num: "Медитация 5", name: "Свобода" },
+            { id: 6,  num: "Медитация 6", name: "Энергия" },
+            { id: 7,  num: "Медитация 7", name: "Тепло" },
+            { id: 8,  num: "Медитация 8", name: "Сила" },
+            { id: 9,  num: "Медитация 9", name: "Порог" },
+            { id: 10, num: "Финал", name: "Я есть" }
+        ];
+
         const nData = {
             1: { s: "Тревожный Кролик", l: "Ясный импульс", a: "Остановиться и увидеть точку ухода." },
             2: { s: "Зависимость", l: "Союз с собой", a: "Увидеть, что зеркало — не истина." },
@@ -558,6 +743,31 @@
             { id: 9, t: "Удаление", s: "Крайняя точка.", l: "Завершение цикла.", a: "Увидеть, что дальше — только внутрь." }
         ];
 
+        const bookPages = [
+            { title: "Точка Ноль", text: "В начале — <strong>Ноль</strong>.<br>Не пустота, не отсутствие, не тишина.<br>А истинное Я, которое было всегда.<br><br>Ноль — это дом, центр, свет, чистота, начало и конец.<br>Место, где человек помнит себя.<br>Ноль не говорит. Он зовёт." },
+            { title: "Спираль", text: "Вокруг Ноля рождается <strong>Спираль</strong> — путь опыта.<br><br>Она имеет два направления.<br>Наружу — путь удаления, где человек идёт от себя, набирая роли, маски, страхи и чужие голоса.<br><br>Внутрь — путь возвращения, где человек снимает слои, напряжение и ложные идентичности." },
+            { title: "Горгона", text: "<strong>Горгона</strong> — не чудовище.<br><br>Она — искажённая вибрация, которая появляется, когда человек уходит слишком далеко от Ноля.<br><br>Она не нападает. Она отражает, где человек потерял себя.<br>Она — честность без прикрас." },
+            { title: "Персей", text: "<strong>Персей</strong> — не герой с мечом.<br><br>Он — очищенная вибрация, которая появляется, когда человек делает шаг внутрь.<br><br>Он не спасает. Он помогает вспомнить, кем человек был до искажений.<br>Он — свет без давления." },
+            { title: "Алиса", text: "<strong>Алиса</strong> — это не девочка из сказки.<br><br>Это сознание, которое умеет видеть оба направления спирали.<br><br>Она замечает тень, замечает свет, знает путь и знает шаг.<br>Она — навигатор, который ведёт человека не вперёд, а внутрь.<br>Она не учит. Она показывает." }
+        ];
+        let currentPage = 0;
+
+        function nextPage() {
+            if (currentPage < bookPages.length - 1) { currentPage++; updateBook(); }
+        }
+        function prevPage() {
+            if (currentPage > 0) { currentPage--; updateBook(); }
+        }
+        function updateBook() {
+            document.getElementById('book-content').innerHTML = `
+                <h2>${bookPages[currentPage].title}</h2>
+                <p>${bookPages[currentPage].text}</p>
+            `;
+            document.getElementById('page-num').innerText = `Стр. ${currentPage + 1} из ${bookPages.length}`;
+            document.getElementById('book-prev').disabled = (currentPage === 0);
+            document.getElementById('book-next').disabled = (currentPage === bookPages.length - 1);
+        }
+
         function calc(e) {
             e.preventDefault();
             const day = document.getElementById('day').value;
@@ -579,47 +789,59 @@
             
             const now = new Date();
             const dateFormatted = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+            const dateKey = now.toISOString().split('T')[0];
             
-            const newResult = {
-                date: dateFormatted,
-                vitok: f,
-                shadow: nData[f].s,
-                light: nData[f].l,
-                alice: nData[f].a
-            };
-
+            // Сохраняем результат в историю
+            const newResult = { date: dateFormatted, vitok: f, shadow: nData[f].s, light: nData[f].l, alice: nData[f].a };
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             history.push(newResult); 
             localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
+
+            // Сохраняем виток в календарь
+            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
             
-            updateFabButton();
+            // Если витки еще не массив (старый формат), делаем его массивом
+            if (!Array.isArray(calData[dateKey].vitok)) calData[dateKey].vitok = [];
+            
+            calData[dateKey].vitok.push({ vitok: f, shadow: nData[f].s, light: nData[f].l, alice: nData[f].a });
+            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+            
+            updateMyPathButton();
+            renderCalendar();
+            
             const box = document.getElementById('res-box');
             box.style.display = 'block';
             box.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        function updateFabButton() {
+        function updateMyPathButton() {
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            if (history.length > 0) {
-                document.getElementById('fab-btn').style.display = 'block';
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            const pathBlock = document.getElementById('my-path-block');
+            if (history.length > 0 || diary.length > 0) {
+                pathBlock.style.display = 'block';
             } else {
-                document.getElementById('fab-btn').style.display = 'none';
+                pathBlock.style.display = 'none';
             }
         }
 
+        // === ОТКРЫТИЕ/ЗАКРЫТИЕ МОДАЛЬНОГО ОКНА ===
         function openModal() {
             showCurrent();
             document.getElementById('modal').classList.add('show');
         }
-
         function closeModal() {
             document.getElementById('modal').classList.remove('show');
         }
 
+        // === ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ ВНУТРИ МОДАЛКИ ===
         function showCurrent() {
+            document.getElementById('diary-view').style.display = 'none';
             document.getElementById('archive-view').style.display = 'none';
+            document.getElementById('day-view').style.display = 'none';
             document.getElementById('current-view').style.display = 'block';
-
+            
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             if (history.length > 0) {
                 const data = history[history.length - 1];
@@ -632,13 +854,14 @@
 
         function showArchive() {
             document.getElementById('current-view').style.display = 'none';
-            document.getElementById('archive-view').style.display = 'block';
+            document.getElementById('diary-view').style.display = 'none';
+            document.getElementById('day-view').style.display = 'none';
+            document.getElementById('archive-view').style.display = 'flex';
 
             const list = document.getElementById('archive-list');
             list.innerHTML = '';
 
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            
             if (history.length === 0) {
                 list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой архив пока пуст.</p>';
                 return;
@@ -646,7 +869,6 @@
 
             history.slice().reverse().forEach((item, index) => {
                 const realIndex = history.length - 1 - index;
-                
                 const div = document.createElement('div');
                 div.className = 'archive-item';
                 div.innerHTML = `
@@ -665,17 +887,107 @@
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             history.splice(index, 1);
             localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
-            
-            updateFabButton();
+            updateMyPathButton();
             showArchive();
+        }
+
+        // === МОДУЛЬ ДНЕВНИКА ===
+        function saveDiaryNote() {
+            const text = document.getElementById('diary-text').value.trim();
+            if (!text) { alert('Напишите что-нибудь перед сохранением.'); return; }
+
+            const x = parseInt(document.getElementById('select-logic').value);
+            const y = parseInt(document.getElementById('select-emotion').value);
+            const z = parseInt(document.getElementById('select-state').value);
+            const avg = Math.round((x + y + z) / 3);
+
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            let currentVitok = history.length > 0 ? history[history.length - 1].vitok : null;
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            const timestamp = now.getTime();
+            const dateKey = now.toISOString().split('T')[0];
+
+            const newNote = { timestamp, date: `${dateStr} ${timeStr}`, text, x, y, z, avg, vitok: currentVitok };
+
+            // 1. Сохраняем в общий дневник
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            diary.push(newNote);
+            localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
             
-            if (history.length === 0) {
-                showCurrent();
-                document.getElementById('m-vitok').innerText = '...';
-                document.getElementById('m-shadow').innerText = '...';
-                document.getElementById('m-light').innerText = '...';
-                document.getElementById('m-alice').innerText = '...';
+            // 2. Дублируем в календарь для сводки дня
+            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
+            if (!Array.isArray(calData[dateKey].diary)) calData[dateKey].diary = [];
+            calData[dateKey].diary.push(newNote);
+            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+
+            document.getElementById('diary-text').value = '';
+            alert('Запись сохранена в дневник!');
+            updateMyPathButton();
+            renderCalendar();
+            
+            // Обновляем список прямо на экране
+            showDiary(); 
+        }
+
+        function showDiary() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('archive-view').style.display = 'none';
+            document.getElementById('day-view').style.display = 'none';
+            document.getElementById('diary-view').style.display = 'flex';
+
+            const list = document.getElementById('diary-list');
+            list.innerHTML = '';
+
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            if (diary.length === 0) {
+                list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой дневник пока пуст.</p>';
+                return;
             }
+
+            diary.slice().reverse().forEach((item) => {
+                const realIndex = diary.indexOf(item);
+                const div = document.createElement('div');
+                div.className = 'diary-entry';
+                let color = (item.avg >= 4) ? 'var(--gold)' : ((item.avg <= -4) ? 'var(--red)' : '#fff');
+                let vitokBadge = item.vitok ? `<span class="vitok-badge">Виток №${item.vitok}</span>` : '';
+
+                div.innerHTML = `
+                    ${vitokBadge}
+                    <span class="time">${item.date}</span>
+                    <div class="text">"${item.text}"</div>
+                    <div class="metrics">
+                        <span>Логика: ${item.x}</span>
+                        <span>Эмоции: ${item.y}</span>
+                        <span>Состояние: ${item.z}</span>
+                        <span style="color:${color}; font-weight:bold;">Вектор: ${item.avg}</span>
+                    </div>
+                    <button class="btn-del" onclick="deleteDiaryNote(${realIndex})" title="Удалить">✕</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function deleteDiaryNote(index) {
+            if (!confirm('Удалить эту запись?')) return;
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            diary.splice(index, 1);
+            localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
+            
+            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            Object.keys(calData).forEach(key => {
+                if (calData[key].diary) {
+                    calData[key].diary = calData[key].diary.filter(note => diary.some(d => d.timestamp === note.timestamp));
+                }
+            });
+            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+
+            updateMyPathButton();
+            renderCalendar();
+            showDiary();
         }
 
         function toggle(id) {
@@ -685,28 +997,390 @@
             document.getElementById('c-'+id).classList.add('active');
         }
 
-        // ГЕНЕРАЦИЯ 3D ЛУЧЕЙ ПРИ ЗАГРУЗКЕ
-        window.onload = function() {
-            updateFabButton();
-            updateBalance(); // Инициализация ползунков при загрузке
+        function openTextModal(title, score, text) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerHTML = `<strong style="font-size: 1.5rem; color: var(--gold); display: block; margin-bottom: 10px;">${score}</strong> ${text}`;
+            document.getElementById('text-modal').classList.add('show');
+        }
+        function closeTextModal() {
+            document.getElementById('text-modal').classList.remove('show');
+        }
+
+        let saveTimeout = null;
+
+        function updateBalance() {
+            const x = parseInt(document.getElementById('select-logic').value);
+            const y = parseInt(document.getElementById('select-emotion').value);
+            const z = parseInt(document.getElementById('select-state').value);
+
+            const resultBox = document.getElementById('balance-result');
+            const title = document.getElementById('balance-title');
+            const text = document.getElementById('balance-text');
+            const avgVal = Math.round((x + y + z) / 3);
+
+            const textX = document.getElementById('select-logic').options[document.getElementById('select-logic').selectedIndex].text.split('—')[1].trim();
+            document.getElementById('ci-x').innerText = 'Логика: ' + (x > 0 ? '+' : '') + x;
+            document.getElementById('ci-x-text').innerText = textX;
             
-            // Создаем лучи
-            const raysContainer = document.getElementById('rays-container');
-            const numRays = 12; // Количество лучей (можно больше)
-            for (let i = 0; i < numRays; i++) {
-                const ray = document.createElement('div');
-                ray.className = 'ray';
-                // Распределяем лучи по кругу (360 градусов)
-                const angle = (360 / numRays) * i;
-                ray.style.transform = `rotate(${angle}deg)`;
-                
-                // Добавляем светящуюся точку на луч
-                const point = document.createElement('div');
-                point.className = 'ray-point';
-                ray.appendChild(point);
-                
-                raysContainer.appendChild(ray);
+            const textY = document.getElementById('select-emotion').options[document.getElementById('select-emotion').selectedIndex].text.split('—')[1].trim();
+            document.getElementById('ci-y').innerText = 'Эмоции: ' + (y > 0 ? '+' : '') + y;
+            document.getElementById('ci-y-text').innerText = textY;
+            
+            const textZ = document.getElementById('select-state').options[document.getElementById('select-state').selectedIndex].text.split('—')[1].trim();
+            document.getElementById('ci-z').innerText = 'Состояние: ' + (z > 0 ? '+' : '') + z;
+            document.getElementById('ci-z-text').innerText = textZ;
+            
+            document.getElementById('ci-avg').innerText = 'Вектор: ' + (avgVal > 0 ? '+' : '') + avgVal;
+
+            let resultText = "";
+            if (avgVal >= 4) {
+                resultText = "Ты движешься вверх. Три области поддерживают друг друга, создавая единый поток. Состояние роста, ясности и высокой частоты.";
+                resultBox.className = "balance-result state-ideal"; 
+            } else if (avgVal <= -4) {
+                resultText = "Сейчас твой путь направлен вниз. Одна или несколько областей требуют мягкого восстановления. Это сигнал о том, что нужна забота.";
+                resultBox.className = "balance-result state-unbalance"; 
+            } else {
+                resultText = "Ты близок к Точке Ноль. Логика, эмоции и вибрация стремятся к согласованию. Это состояние стабилизации и внутреннего баланса.";
+                resultBox.className = "balance-result state-neutral"; 
             }
+            
+            title.innerText = "Вектор Пути: " + (avgVal > 0 ? '+' : '') + avgVal;
+            text.innerText = resultText;
+            document.getElementById('ci-avg-text').innerText = resultText;
+
+            const arrowX = document.getElementById('vis-x');
+            arrowX.style.height = (80 + Math.abs(x) * 4) + 'px';
+            arrowX.style.transform = `translateX(-50%) rotate(${x >= 0 ? 45 - (x * 4) : -45 + (x * 4)}deg)`;
+
+            const arrowY = document.getElementById('vis-y');
+            arrowY.style.height = (80 + Math.abs(y) * 4) + 'px';
+            arrowY.style.transform = `translateX(-50%) rotate(${y >= 0 ? -45 + (y * 4) : 45 + (y * 4)}deg)`;
+
+            const arrowZ = document.getElementById('vis-z');
+            arrowZ.style.height = (80 + Math.abs(z) * 4) + 'px';
+            arrowZ.style.transform = `translateX(-50%) rotate(${z >= 0 ? 0 : 180}deg)`;
+
+            const arrowAvg = document.getElementById('vis-avg');
+            arrowAvg.style.height = (100 + Math.abs(avgVal) * 6) + 'px';
+            if (avgVal >= 4) {
+                 arrowAvg.style.transform = `translateX(-50%) rotate(0deg)`;
+                 arrowAvg.style.background = 'var(--gold)';
+                 arrowAvg.style.boxShadow = '0 0 30px var(--gold)';
+                 arrowAvg.style.opacity = '1';
+            } else if (avgVal <= -4) {
+                 arrowAvg.style.transform = `translateX(-50%) rotate(180deg)`;
+                 arrowAvg.style.background = 'var(--red)';
+                 arrowAvg.style.boxShadow = '0 0 30px var(--red)';
+                 arrowAvg.style.opacity = '1';
+            } else {
+                 arrowAvg.style.transform = `translateX(-50%) rotate(0deg)`;
+                 arrowAvg.style.background = '#fff';
+                 arrowAvg.style.boxShadow = '0 0 20px #fff';
+                 arrowAvg.style.opacity = '0.8';
+            }
+
+            if (saveTimeout) clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                saveToCalendar(x, y, z, avgVal, resultText);
+            }, 1500);
+        }
+
+        function saveToCalendar(x, y, z, avg, text) {
+            const now = new Date();
+            const dateKey = now.toISOString().split('T')[0]; 
+            const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
+            if (!Array.isArray(calData[dateKey].compass)) calData[dateKey].compass = [];
+
+            const lastEntry = calData[dateKey].compass[calData[dateKey].compass.length - 1];
+            if (lastEntry && lastEntry.x === x && lastEntry.y === y && lastEntry.z === z) return;
+
+            calData[dateKey].compass.push({ time: timeStr, x, y, z, avg, text });
+            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+            renderCalendar();
+        }
+
+        let calViewYear = new Date().getFullYear();
+        let calViewMonth = new Date().getMonth();
+
+        function changeMonth(delta) {
+            calViewMonth += delta;
+            if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
+            if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
+            renderCalendar();
+        }
+
+        function changeYear(delta) {
+            calViewYear += delta;
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+            
+            const year = calViewYear;
+            const month = calViewMonth;
+            
+            const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+            document.getElementById('cal-title').innerText = `${monthNames[month]} ${year}`;
+            
+            ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].forEach(d => {
+                let div = document.createElement('div');
+                div.className = 'cal-day-name';
+                div.innerText = d;
+                grid.appendChild(div);
+            });
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+
+            for (let i = 0; i < startOffset; i++) {
+                grid.appendChild(document.createElement('div'));
+            }
+
+            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            const today = new Date();
+            const isCurrentMonth = (year === today.getFullYear() && month === today.getMonth());
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                let dayStr = i < 10 ? '0' + i : i;
+                let monthStr = (month + 1) < 10 ? '0' + (month + 1) : (month + 1);
+                let dateKey = `${year}-${monthStr}-${dayStr}`;
+                
+                let div = document.createElement('div');
+                div.className = 'cal-day';
+                div.innerText = i;
+
+                if (isCurrentMonth && i === today.getDate()) {
+                    div.classList.add('today');
+                }
+
+                if (calData[dateKey]) {
+                    const hasCompass = calData[dateKey].compass && calData[dateKey].compass.length > 0;
+                    const hasVitok = calData[dateKey].vitok && calData[dateKey].vitok.length > 0;
+                    const hasDiary = calData[dateKey].diary && calData[dateKey].diary.length > 0;
+                    
+                    if (hasCompass || hasVitok || hasDiary) {
+                        div.classList.add('has-data');
+                        
+                        // Определяем цвет по последнему компасу (если есть)
+                        if (hasCompass) {
+                            const lastEntry = calData[dateKey].compass[calData[dateKey].compass.length - 1]; 
+                            if (lastEntry.avg >= 4) div.classList.add('plus');
+                            else if (lastEntry.avg <= -4) div.classList.add('minus');
+                            else div.classList.add('zero');
+                        } else {
+                            // Если компаса нет, но есть виток или дневник — делаем нейтральный цвет
+                            div.classList.add('zero');
+                        }
+
+                        // Добавляем фиолетовую точку, если был дневник
+                        if (hasDiary) {
+                            div.classList.add('has-diary');
+                        }
+
+                        div.onclick = () => showDayDetails(calData[dateKey], `${i}.${monthStr}.${year}`);
+                    }
+                }
+                grid.appendChild(div);
+            }
+        }
+
+        function showDayDetails(dayData, dateLabel) {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('archive-view').style.display = 'none';
+            document.getElementById('diary-view').style.display = 'none';
+            document.getElementById('day-view').style.display = 'flex';
+            
+            document.querySelector('#day-view h2').innerText = 'Детали дня: ' + dateLabel;
+
+            const list = document.getElementById('day-log-list');
+            list.innerHTML = '';
+
+            // 1. Блок Витков (Диагностика)
+            if (dayData.vitok && dayData.vitok.length > 0) {
+                const title = document.createElement('div');
+                title.className = 'day-section-title';
+                title.innerText = 'Пройденные тесты (Витки)';
+                list.appendChild(title);
+
+                dayData.vitok.forEach(v => {
+                    const div = document.createElement('div');
+                    div.className = 'day-log-item';
+                    div.innerHTML = `
+                        <div style="margin-bottom: 5px; font-weight: bold; color: var(--gold);">Виток №${v.vitok}</div>
+                        <div style="font-size: 0.85rem; color: #ddd;">Тень: ${v.shadow} | Свет: ${v.light}</div>
+                        <div style="font-size: 0.85rem; color: var(--blue); margin-top: 5px;">Шаг: ${v.alice}</div>
+                    `;
+                    list.appendChild(div);
+                });
+            }
+
+            // 2. Блок Компаса (Логика/Эмоции/Состояние)
+            if (dayData.compass && dayData.compass.length > 0) {
+                const title = document.createElement('div');
+                title.className = 'day-section-title';
+                title.innerText = 'Показатели Компаса';
+                list.appendChild(title);
+
+                dayData.compass.forEach(c => {
+                    const div = document.createElement('div');
+                    div.className = 'day-log-item';
+                    div.innerHTML = `
+                        <div style="margin-bottom: 5px;"><span class="time">${c.time}</span> <span class="vector" style="color:${c.avg >= 4 ? 'var(--gold)' : (c.avg <= -4 ? 'var(--red)' : '#fff')}; font-weight: bold;">Вектор: ${c.avg}</span></div>
+                        <div style="font-size: 0.8rem; color: #bbb; margin-bottom: 5px;">Логика: ${c.x}, Эмоции: ${c.y}, Состояние: ${c.z}</div>
+                        <div style="font-size: 0.85rem; color: #ddd;">${c.text}</div>
+                    `;
+                    list.appendChild(div);
+                });
+            }
+
+            // 3. Блок Дневника
+            if (dayData.diary && dayData.diary.length > 0) {
+                const title = document.createElement('div');
+                title.className = 'day-section-title';
+                title.innerText = 'Записи Дневника';
+                list.appendChild(title);
+
+                dayData.diary.forEach(d => {
+                    const div = document.createElement('div');
+                    div.className = 'day-log-item';
+                    let vitokBadge = d.vitok ? `<span class="vitok-badge" style="display:inline-block; background: rgba(126,200,255,0.15); color: var(--blue); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 8px;">Виток №${d.vitok}</span>` : '';
+                    div.innerHTML = `
+                        ${vitokBadge}
+                        <div style="margin-bottom: 5px;"><span class="time">${d.date.split(' ')[1]}</span></div>
+                        <div style="font-size: 0.95rem; color: #fff; font-style: italic; margin-bottom: 8px;">"${d.text}"</div>
+                        <div style="font-size: 0.8rem; color: #bbb;">Логика: ${d.x}, Эмоции: ${d.y}, Состояние: ${d.z} (Вектор: ${d.avg})</div>
+                    `;
+                    list.appendChild(div);
+                });
+            }
+
+            if (list.innerHTML === '') {
+                list.innerHTML = '<p style="color: var(--muted); text-align: center;">В этот день записей нет.</p>';
+            }
+
+            document.getElementById('modal').classList.add('show');
+        }
+
+        const audio = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-btn');
+        const progressFill = document.getElementById('progress-fill');
+        const progressBar = document.getElementById('progress-bar');
+        const timeCurrent = document.getElementById('time-current');
+        const timeTotal = document.getElementById('time-total');
+        const playerError = document.getElementById('player-error');
+        let isPlaying = false;
+        let currentTrackId = null;
+
+        function formatTime(seconds) {
+            if (!isFinite(seconds) || isNaN(seconds)) return '0:00';
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        function openPlayer(id) {
+            document.querySelectorAll('.med-card').forEach(el => el.classList.remove('active'));
+            const card = document.querySelector(`.med-card[data-id="${id}"]`);
+            if (card) card.classList.add('active');
+            
+            const med = meditations.find(m => m.id === id);
+            if (!med) return;
+            
+            currentTrackId = id;
+            const player = document.getElementById('player');
+            document.getElementById('player-title').innerText = `${med.num}: ${med.name}`;
+            player.classList.add('show');
+            
+            audio.src = audioFiles[id];
+            audio.load(); 
+            
+            playBtn.innerText = '▶';
+            isPlaying = false;
+            progressFill.style.width = '0%';
+            timeCurrent.innerText = '0:00';
+            timeTotal.innerText = '0:00';
+            playerError.classList.remove('show');
+            
+            player.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function togglePlay() {
+            if (!audio.src) return; 
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerText = '▶';
+            } else {
+                audio.play().catch(() => { playerError.classList.add('show'); });
+                playBtn.innerText = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        audio.addEventListener('timeupdate', function() {
+            if (audio.duration) {
+                progressFill.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+                timeCurrent.innerText = formatTime(audio.currentTime);
+            }
+        });
+
+        audio.addEventListener('loadedmetadata', function() {
+            timeTotal.innerText = formatTime(audio.duration);
+            playerError.classList.remove('show');
+        });
+
+        audio.addEventListener('error', function() {
+            playerError.classList.add('show');
+            playBtn.innerText = '▶';
+            isPlaying = false;
+        });
+
+        audio.addEventListener('ended', function() {
+            playBtn.innerText = '▶';
+            isPlaying = false;
+            progressFill.style.width = '0%';
+            if (currentTrackId !== null) {
+                const nextId = currentTrackId + 1;
+                if (audioFiles[nextId]) {
+                    openPlayer(nextId);
+                    setTimeout(() => {
+                        audio.play().then(() => { playBtn.innerText = '⏸'; isPlaying = true; }).catch(() => {});
+                    }, 500);
+                }
+            }
+        });
+
+        progressBar.addEventListener('click', function(e) {
+            if (!audio.duration) return;
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        });
+
+        function renderMedCards() {
+            const grid = document.getElementById('med-grid');
+            grid.innerHTML = '';
+            meditations.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'med-card';
+                card.dataset.id = m.id;
+                card.onclick = () => openPlayer(m.id);
+                card.innerHTML = `<h4>${m.num}</h4><p>${m.name}</p>`;
+                grid.appendChild(card);
+            });
+        }
+
+        window.onload = function() {
+            updateMyPathButton();
+            updateBalance();
+            renderCalendar();
+            updateBook();
+            renderMedCards();
 
             const daySelect = document.getElementById('day');
             for (let i = 1; i <= 31; i++) {
@@ -726,8 +1400,7 @@
             }
 
             const yearSelect = document.getElementById('year');
-            const currentYear = 2026;
-            for (let i = currentYear; i >= 1930; i--) {
+            for (let i = 2026; i >= 1930; i--) {
                 let opt = document.createElement('option');
                 opt.value = i;
                 opt.innerText = i;
@@ -745,121 +1418,15 @@
                 const d = document.createElement('div');
                 d.className = 'l-details';
                 d.id = 'd-'+l.id;
-                
-                let htmlContent = '';
-                htmlContent += '<div class="d-block d-shadow"><strong>Горгона:</strong> ' + l.s + '</div>';
-                htmlContent += '<div class="d-block d-light"><strong>Персей:</strong> ' + l.l + '</div>';
-                htmlContent += '<div class="d-block d-alice"><strong>Шаг Алисы:</strong> ' + l.a + '</div>';
-                
-                d.innerHTML = htmlContent;
+                d.innerHTML = `
+                    <div class="d-block d-shadow"><strong>Горгона:</strong> ${l.s}</div>
+                    <div class="d-block d-light"><strong>Персей:</strong> ${l.l}</div>
+                    <div class="d-block d-alice"><strong>Шаг Алисы:</strong> ${l.a}</div>
+                `;
                 tl.appendChild(c);
                 tl.appendChild(d);
             });
         };
-
-        function updateBalance() {
-            const x = parseInt(document.getElementById('slider-logic').value);
-            const y = parseInt(document.getElementById('slider-emotion').value);
-            const z = parseInt(document.getElementById('slider-state').value);
-
-            document.getElementById('val-logic').innerText = x;
-            document.getElementById('val-emotion').innerText = y;
-            document.getElementById('val-state').innerText = z;
-
-            const resultBox = document.getElementById('balance-result');
-            const title = document.getElementById('balance-title');
-            const text = document.getElementById('balance-text');
-
-            const maxVal = Math.max(x, y, z);
-            const minVal = Math.min(x, y, z);
-
-            if (maxVal - minVal <= 1) {
-                title.innerText = "Ты в Точке Ноль";
-                text.innerText = "Твои векторы в идеальном балансе. Логика, эмоции и состояние сливаются воедино. Пребывай в этом состоянии.";
-                resultBox.className = "balance-result state-ideal";
-            } else {
-                title.innerText = "Отклонение от центра";
-                resultBox.className = "balance-result state-unbalance";
-                
-                let advice = "";
-                if (maxVal === x && minVal === z) advice = "Ты слишком много анализируешь, но не хватает энергии состояния. Заземлись, верни вибрацию.";
-                else if (maxVal === y && minVal === z) advice = "Эмоции зашкаливают, но вибрация просела. Вернись в тело, успокой сердце.";
-                else if (maxVal === x && minVal === y) advice = "Холодная логика подавила эмоции. Позволь себе чувствовать.";
-                else if (maxVal === y && minVal === x) advice = "Эмоции затопили разум. Сделай вдох и включи осознанность.";
-                else if (maxVal === z && minVal === x) advice = "Высокая вибрация, но ум спит. Добавь ясности и структуры.";
-                else if (maxVal === z && minVal === y) advice = "Ты на высокой вибрации, но чувства закрыты. Открой сердце.";
-                else advice = "Твои векторы разбалансированы. Найди шаг, чтобы уравновесить их.";
-
-                text.innerText = `Твой перекос: Логика ${x}, Эмоции ${y}, Состояние ${z}. Шаг Алисы: ${advice}`;
-            }
-
-            // Анимация лучей (наклон в сторону перекоса)
-            const rays = document.querySelectorAll('.ray');
-            const diffX = (x - 5) * 1.5; // Смещение по X
-            const diffY = (y - 5) * 1.5; // Смещение по Y
-            
-            rays.forEach(ray => {
-                // Базовый угол луча + динамическое смещение от ползунков
-                const baseAngle = parseFloat(ray.style.transform.replace('rotate(', '').replace('deg)', ''));
-                const newAngle = baseAngle + diffX + diffY;
-                ray.style.transform = `rotate(${newAngle}deg)`;
-                
-                // Меняем прозрачность, если баланс нарушен
-                if (maxVal - minVal > 3) {
-                    ray.style.opacity = 0.6; // Ярче, если перекос сильный
-                } else {
-                    ray.style.opacity = 0.3; // Тусклее в балансе
-                }
-            });
-        }
-
-        const audio = document.getElementById('audio-player');
-        const playBtn = document.getElementById('play-btn');
-        const progressFill = document.getElementById('progress-fill');
-        let isPlaying = false;
-
-        function openPlayer(title, audioSrc) {
-            document.querySelectorAll('.med-card').forEach(function(el) { el.classList.remove('active'); });
-            event.currentTarget.classList.add('active');
-            
-            const player = document.getElementById('player');
-            document.getElementById('player-title').innerText = title;
-            player.classList.add('show');
-            
-            audio.src = audioSrc;
-            audio.load(); 
-            
-            playBtn.innerText = '▶';
-            isPlaying = false;
-            progressFill.style.width = '0%';
-            
-            player.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function togglePlay() {
-            if (audio.src === "") return; 
-            if (isPlaying) {
-                audio.pause();
-                playBtn.innerText = '▶';
-            } else {
-                audio.play();
-                playBtn.innerText = '⏸';
-            }
-            isPlaying = !isPlaying;
-        }
-
-        audio.addEventListener('timeupdate', function() {
-            if (audio.duration) {
-                const percent = (audio.currentTime / audio.duration) * 100;
-                progressFill.style.width = percent + '%';
-            }
-        });
-
-        audio.addEventListener('ended', function() {
-            playBtn.innerText = '▶';
-            isPlaying = false;
-            progressFill.style.width = '0%';
-        });
     </script>
 </body>
 </html>
