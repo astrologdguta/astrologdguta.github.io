@@ -26,14 +26,12 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
-        /* --- ФОН НА ВЕСЬ САЙТ (ВОЗВРАЩАЕМ ПЛОТНОСТЬ И FIXED) --- */
+        /* --- ФОН НА ВЕСЬ САЙТ (БЕЗ FIXED, ПЛОТНЫЙ) --- */
         body { 
             background-color: var(--bg);
-            /* Вернули плотный градиент (0.85 и 0.95), чтобы картинка не слепила */
             background-image: linear-gradient(rgba(18, 10, 31, 0.85), rgba(18, 10, 31, 0.95)), url('bg.jpg');
             background-size: cover;
             background-position: center top;
-            background-attachment: fixed; /* Вернули фиксацию для компа */
             background-repeat: no-repeat;
             color: var(--text); 
             font-family: var(--font-body); 
