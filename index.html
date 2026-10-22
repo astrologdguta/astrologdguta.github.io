@@ -28,7 +28,7 @@
         
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
-        /* ФОН ДЛЯ ТЕЛЕФОНОВ (по умолчанию) */
+        /* ФОН: Просто глубокий темный цвет, без картинок */
         body { 
             background-color: var(--bg); 
             color: var(--text); 
@@ -36,18 +36,6 @@
             overflow-x: hidden; 
             width: 100%; 
             font-weight: 300; 
-        }
-
-        /* ФОН ДЛЯ КОМПЬЮТЕРОВ И ПЛАНШЕТОВ (экран от 768px) */
-        @media (min-width: 768px) {
-            body {
-                /* Здесь картинка бабочек. Затемнение сделано легким (0.6 и 0.8), чтобы бабочек было видно */
-                background-image: linear-gradient(rgba(18, 10, 31, 0.6), rgba(18, 10, 31, 0.8)), url('bg.jpg');
-                background-size: cover;
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-attachment: fixed; /* Бабочки не уезжают при прокрутке */
-            }
         }
         
         h1, h2, h3 { font-family: var(--font-title); font-weight: 400; letter-spacing: 1px; }
@@ -59,7 +47,7 @@
 
         /* --- 1. ГЛАВНЫЙ ЭКРАН --- */
         #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; background: radial-gradient(circle at center, rgba(230, 216, 255, 0.1) 0%, rgba(18, 10, 31, 0.5) 100%); padding: 20px; }
-        .zero-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; animation: breathe 6s infinite; z-index: -1; }
+        .zero-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; animation: breathe 6s infinite; z-index: -1; }
         @keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } }
         h1 { font-size: 3.2rem; letter-spacing: 4px; margin-bottom: 25px; text-transform: uppercase; color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
         .subtitle { font-size: 1.15rem; color: #ffffff; line-height: 1.8; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); font-weight: 300; }
@@ -68,9 +56,17 @@
         .btn-main { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: var(--font-body); font-weight: 500; }
         .btn-main:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
 
-        /* --- 2. ВВОДНЫЙ ТЕКСТ --- */
+        /* --- 2. ВВОДНЫЙ ТЕКСТ (Прозрачность 75%) --- */
         #intro { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
-        .intro-box { max-width: 800px; text-align: center; background: rgba(18, 10, 31, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 40px 25px; }
+        .intro-box { 
+            max-width: 800px; 
+            text-align: center; 
+            background: rgba(26, 17, 37, 0.75); /* Вот здесь та самая прозрачность 75% */
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: var(--r-lg); 
+            padding: 40px 25px; 
+        }
         .intro-box h2 { font-size: 2.2rem; margin-bottom: 20px; color: var(--gold); }
         .intro-box p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; color: #e0d8ec; }
         .intro-box p strong { color: #fff; }
@@ -81,7 +77,7 @@
         .section-title h2 { font-size: 2.4rem; color: var(--gold); margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .section-title p { color: var(--muted); font-size: 1rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
         
-        .book-container { width: 100%; max-width: 600px; background: rgba(26, 17, 37, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.2), inset 0 0 20px rgba(0,0,0,0.8); padding: 30px 25px; display: flex; flex-direction: column; font-family: 'Georgia', 'Times New Roman', serif; margin-bottom: 40px; }
+        .book-container { width: 100%; max-width: 600px; background: rgba(26, 17, 37, 0.9); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.2), inset 0 0 20px rgba(0,0,0,0.8); padding: 30px 25px; display: flex; flex-direction: column; font-family: 'Georgia', 'Times New Roman', serif; margin-bottom: 40px; }
         .toc { display: flex; flex-direction: column; gap: 10px; }
         .toc-btn { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--text); padding: 15px 20px; border-radius: var(--r-md); cursor: pointer; text-align: left; font-family: var(--font-body); font-size: 1rem; font-weight: 500; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
         .toc-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--muted); }
