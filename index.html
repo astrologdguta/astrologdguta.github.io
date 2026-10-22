@@ -26,7 +26,6 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
-        /* --- ФОН НА ВЕСЬ САЙТ (БЕЗ FIXED, ПЛОТНЫЙ) --- */
         body { 
             background-color: var(--bg);
             background-image: linear-gradient(rgba(18, 10, 31, 0.85), rgba(18, 10, 31, 0.95)), url('bg.jpg');
@@ -58,7 +57,111 @@
         .btn { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: var(--font-body); font-weight: 500; }
         .btn:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
 
-        /* --- БЛОК 2: КАРТА --- */
+        /* --- БЛОК 2: ВВОДНЫЙ ТЕКСТ --- */
+        #intro { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
+        .intro-box { max-width: 800px; text-align: center; background: rgba(18, 10, 31, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 40px 25px; }
+        .intro-box h2 { font-size: 2.2rem; margin-bottom: 20px; color: var(--gold); }
+        .intro-box p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; color: #e0d8ec; }
+        .intro-box p strong { color: #fff; }
+
+        /* --- БЛОК 3: ТРИ СИЛЫ (АККОРДЕОНЫ) --- */
+        #agents { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, rgba(26, 17, 37, 0.8) 0%, rgba(18, 10, 31, 0.9) 100%); }
+        .ag-title { text-align: center; margin-bottom: 40px; }
+        .ag-title h2 { font-size: 2.4rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .ag-title p { color: var(--muted); font-size: 0.9rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        
+        .ag-grid { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 800px; }
+
+        .ag-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--r-lg); padding: 25px 20px; cursor: pointer; transition: 0.3s; }
+        .ag-card:hover { background: rgba(18, 10, 31, 0.95); }
+        .g-card:hover { border-color: var(--red); box-shadow: 0 5px 25px rgba(209,74,74,0.2); }
+        .p-card:hover { border-color: var(--gold); box-shadow: 0 5px 25px rgba(255,217,138,0.2); }
+        .a-card:hover { border-color: var(--blue); box-shadow: 0 5px 25px rgba(126,200,255,0.2); }
+        
+        .ag-header { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+        .ag-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+        .g-card .ag-icon { background: rgba(209, 74, 74, 0.2); color: var(--red); border: 1px solid var(--red); }
+        .p-card .ag-icon { background: rgba(255, 217, 138, 0.2); color: var(--gold); border: 1px solid var(--gold); }
+        .a-card .ag-icon { background: rgba(126, 200, 255, 0.2); color: var(--blue); border: 1px solid var(--blue); }
+        
+        .ag-header-text { text-align: left; }
+        .ag-card h3 { font-size: 1.3rem; margin-bottom: 2px; }
+        .g-card h3 { color: var(--red); }
+        .p-card h3 { color: var(--gold); }
+        .a-card h3 { color: var(--blue); }
+        .ag-role { font-size: 0.75rem; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; }
+
+        .ag-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; text-align: left; }
+        .ag-content.open { max-height: 500px; }
+        .ag-text { font-size: 0.95rem; line-height: 1.6; color: #ddd; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 15px; }
+        .ag-text strong { color: #fff; }
+        .toggle-icon { margin-left: auto; font-size: 1.2rem; color: var(--muted); transition: transform 0.3s; }
+        .ag-card.open .toggle-icon { transform: rotate(180deg); }
+
+        /* --- БЛОК 4: ТОЧКА НОЛЬ (БИРЮЗОВЫЙ АККОРДЕОН) --- */
+        #zero-point { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
+        
+        .zero-trigger { 
+            max-width: 800px; width: 100%; 
+            background: rgba(18, 10, 31, 0.85); 
+            border: 1px solid var(--gold); 
+            border-radius: var(--r-lg); 
+            padding: 25px 20px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .zero-trigger:hover { background: rgba(18, 10, 31, 0.95); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
+        .zero-trigger h2 { font-size: 2rem; color: var(--gold); margin: 0; }
+        .zero-trigger .icon { font-size: 1.5rem; color: var(--gold); transition: transform 0.3s; }
+        .zero-trigger.open .icon { transform: rotate(180deg); }
+
+        .zero-content-wrapper {
+            max-width: 800px; width: 100%;
+            background: linear-gradient(to bottom, #E0F7FA, #B2EBF2); 
+            color: #004D40; 
+            border-radius: var(--r-lg); 
+            margin-top: 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-out, padding 0.6s ease-out;
+            padding: 0 20px;
+        }
+        .zero-content-wrapper.open {
+            max-height: 1200px;
+            padding: 40px 20px;
+        }
+
+        .zero-inner { text-align: center; }
+        .zero-inner h2 { font-size: 2.2rem; margin-bottom: 20px; color: #004D40; font-weight: 400; }
+        .zero-inner p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; color: #00695C; }
+        
+        /* Визуал: Спирали Архимеда */
+        .zero-visual { 
+            width: 250px; 
+            height: 250px; 
+            position: relative; 
+            margin: 20px auto; 
+        }
+        
+        .zero-svg { width: 100%; height: 100%; overflow: visible; }
+        
+        .spiral-path { fill: none; stroke-width: 3; stroke-linecap: round; }
+        .spiral-out { stroke: #004D40; } 
+        .spiral-in { stroke: #009688; } 
+        
+        .center-dot { fill: #FFFFFF; stroke: #004D40; stroke-width: 2; }
+        
+        .arrow-out { fill: #004D40; }
+        .arrow-in { fill: #009688; }
+
+        .btn-zero { display: inline-block; padding: 16px 40px; font-size: 1rem; color: #FFFFFF; background: #009688; text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0, 150, 136, 0.3); font-family: var(--font-body); font-weight: 600; margin-top: 20px; }
+        .btn-zero:hover { background: #00796B; box-shadow: 0 0 25px rgba(0, 150, 136, 0.5); transform: translateY(-2px); }
+
+        /* --- БЛОК 5: КАРТА --- */
         #consciousness-map { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: transparent; padding: 40px 20px; overflow: hidden; }
         .map-title { text-align: center; margin-bottom: 30px; }
         .map-title h2 { font-size: 2.2rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
@@ -80,7 +183,7 @@
         .btn-diag { margin-top: 40px; padding: 16px 40px; color: var(--text); background: rgba(18, 10, 31, 0.6); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: var(--r-md); cursor: pointer; text-decoration: none; transition: 0.4s; font-family: var(--font-body); font-weight: 500; backdrop-filter: blur(5px); }
         .btn-diag:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 20px rgba(126, 200, 255, 0.4); }
 
-        /* --- БЛОК 3: ДИАГНОСТИКА --- */
+        /* --- БЛОК 6: ДИАГНОСТИКА --- */
         #diagnostics { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; background: transparent; }
         .diag-box { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-lg); padding: 30px 20px; max-width: 600px; width: 100%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .diag-box h2 { font-size: 2.2rem; margin-bottom: 10px; }
@@ -88,12 +191,9 @@
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.9rem; }
         
-        .date-selects { display: flex; gap: 8px; }
-        .date-selects select { flex: 1; padding: 14px 5px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); outline: none; font-size: 0.95rem; text-align: center; -webkit-appearance: none; font-family: var(--font-body); transition: 0.3s; }
-        .date-selects select:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(126, 200, 255, 0.3); }
-        .date-selects select option { background: var(--bg-sec); color: var(--text); }
-
-        .form-group > select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); outline: none; font-family: var(--font-body); }
+        .form-group > select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); outline: none; font-family: var(--font-body); font-size: 0.95rem; -webkit-appearance: none; }
+        .form-group > select:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(126, 200, 255, 0.3); }
+        .form-group > select option { background: var(--bg-sec); color: var(--text); }
 
         .btn-submit { margin-top: 10px; padding: 18px; color: var(--bg); background: var(--text); border: none; border-radius: var(--r-md); cursor: pointer; width: 100%; font-weight: bold; font-family: var(--font-body); transition: 0.3s; }
         .btn-submit:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.4); }
@@ -104,11 +204,12 @@
         .t-shadow { color: var(--red); font-weight: bold; }
         .t-light { color: var(--gold); font-weight: bold; }
         .t-alice { color: var(--blue); font-weight: bold; }
-        .btn-next { display: block; margin-top: 20px; padding: 16px; color: var(--bg); background: var(--gold); text-decoration: none; border-radius: var(--r-md); font-weight: bold; text-align: center; border: none; cursor: pointer; width: 100%; font-family: var(--font-body); transition: 0.3s; }
-        .btn-next:hover { box-shadow: 0 0 25px rgba(255, 217, 138, 0.4); }
+        
+        .btn-show-shield { display: block; margin-top: 20px; padding: 16px; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: var(--r-md); font-weight: bold; text-align: center; cursor: pointer; width: 100%; font-family: var(--font-body); transition: 0.3s; font-size: 1rem; }
+        .btn-show-shield:hover { background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 25px rgba(255, 217, 138, 0.2); }
 
-        /* --- БЛОК 4: КУРС --- */
-        #course { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
+        /* --- БЛОК 7: ЩИТ ПЕРСЕЯ --- */
+        #course { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; display: none; }
         .c-title { text-align: center; margin-bottom: 40px; }
         .c-title h2 { font-size: 2.4rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .c-title p { color: var(--muted); font-size: 0.9rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
@@ -116,7 +217,9 @@
         .l-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--r-md); padding: 18px 20px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
         .l-card:hover { background: rgba(18, 10, 31, 0.95); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .l-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 20px rgba(255, 217, 138, 0.2); }
-        .l-num { font-size: 1.5rem; color: var(--blue); width: 35px; font-family: var(--font-title); }
+        
+        .l-num { font-size: 1.2rem; font-weight: 600; color: var(--blue); width: 30px; font-family: var(--font-body); }
+        
         .l-title { font-size: 1rem; font-weight: 400; }
         .l-details { display: none; background: rgba(0, 0, 0, 0.5); border-radius: var(--r-md); padding: 18px; margin-top: -5px; text-align: left; border: 1px solid rgba(255,255,255,0.1); }
         .l-details.show { display: block; animation: fadeIn 0.4s; }
@@ -126,7 +229,7 @@
         .d-light strong { color: var(--gold); }
         .d-alice strong { color: var(--blue); }
 
-        /* --- БЛОК 5: КОМПАС --- */
+        /* --- БЛОК 8: КОМПАС --- */
         #balance { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
         
         .balance-visual-area { position: relative; width: 100%; max-width: 500px; height: 400px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
@@ -142,8 +245,7 @@
         .visual-container { position: relative; width: 300px; height: 300px; background: rgba(0,0,0,0.5); border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 0 40px rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 10; }
         
         .axis-center { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 20px #fff; z-index: 10; animation: pulse-zero 2s infinite alternate; }
-        @keyframes pulse-zero { 0% { transform: scale(1); } 100% { transform: scale(1.3); box-shadow: 0 0 30px 10px #fff; } }
-
+        
         .axis-arrow { position: absolute; bottom: 50%; left: 50%; width: 4px; border-radius: 4px; transform-origin: bottom center; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.8s; opacity: 0.9; animation: glow-pulse 3s infinite alternate; }
         @keyframes glow-pulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
 
@@ -156,7 +258,7 @@
         .balance-box { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-lg); padding: 30px 20px; width: 100%; max-width: 500px; box-shadow: 0 15px 50px rgba(0,0,0,0.5); }
         .balance-item { margin-bottom: 20px; text-align: left; }
         .balance-item label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.95rem; }
-        .balance-item select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); outline: none; font-size: 0.9rem; font-family: var(--font-body); transition: 0.3s; }
+        .balance-item select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); outline: none; font-size: 0.9rem; font-family: var(--font-body); transition: 0.3s; -webkit-appearance: none; }
         .balance-item select:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(126, 200, 255, 0.2); }
         .balance-item select option { background: var(--bg-sec); color: var(--text); }
 
@@ -171,7 +273,7 @@
         .state-neutral { border-color: #fff; box-shadow: 0 0 30px rgba(255, 255, 255, 0.1); }
         .state-neutral h3 { color: #fff; }
 
-        /* --- БЛОК "МОЙ ПУТЬ" --- */
+        /* --- БЛОК 9: МОЙ ПУТЬ --- */
         #my-path-section { width: 100%; display: flex; justify-content: center; padding: 40px 20px; background: transparent; }
         .my-path-btn-container { max-width: 500px; width: 100%; text-align: center; }
         .my-path-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 20px; background: linear-gradient(135deg, rgba(126, 200, 255, 0.2), rgba(255, 217, 138, 0.2)); color: var(--blue); border: 1px solid var(--blue); border-radius: var(--r-lg); font-size: 1.2rem; font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: 0.3s; box-shadow: 0 0 30px rgba(126, 200, 255, 0.2); text-transform: uppercase; letter-spacing: 2px; backdrop-filter: blur(5px); }
@@ -187,7 +289,7 @@
         .tooltip-close { background: var(--blue); color: var(--bg); border: none; padding: 12px 30px; border-radius: var(--r-md); font-size: 1rem; cursor: pointer; font-weight: bold; font-family: var(--font-body); transition: 0.3s; }
         .tooltip-close:hover { box-shadow: 0 0 20px rgba(126,200,255,0.5); }
 
-        /* --- БЛОК 6: МЕДИТАЦИИ --- */
+        /* --- БЛОК 10: МЕДИТАЦИИ --- */
         #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
         .med-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 600px; margin-bottom: 30px; }
         @media (max-width: 350px) { .med-grid { grid-template-columns: 1fr; } }
@@ -210,7 +312,7 @@
         .player-error.show { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- БЛОК 7: ЛЕГЕНДА --- */
+        /* --- БЛОК 11: ЛЕГЕНДА --- */
         #legend { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
         
         .book-container { width: 100%; max-width: 500px; height: 450px; background: rgba(26, 17, 37, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.3), inset 0 0 20px rgba(0,0,0,0.8); padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; font-family: 'Georgia', 'Times New Roman', serif; }
@@ -226,33 +328,6 @@
         .book-btn:disabled { opacity: 0.3; cursor: not-allowed; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.3); }
         .page-num { color: var(--muted); font-style: italic; font-size: 0.9rem; }
 
-        /* --- БЛОК 8: АГЕНТЫ --- */
-        #agents { min-height: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
-        .ag-title { text-align: center; margin-bottom: 30px; }
-        .ag-title h2 { font-size: 2.4rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .ag-title p { color: var(--muted); font-size: 0.9rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-        
-        .ag-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; width: 100%; max-width: 600px; }
-        @media (max-width: 400px) { .ag-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; } }
-
-        .ag-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--r-lg); padding: 25px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .ag-card:hover { transform: translateY(-4px); background: rgba(18, 10, 31, 0.95); }
-        .g-card:hover { border-color: var(--red); box-shadow: 0 5px 20px rgba(209,74,74,0.3); }
-        .p-card:hover { border-color: var(--gold); box-shadow: 0 5px 20px rgba(255,217,138,0.3); }
-        .a-card:hover { border-color: var(--blue); box-shadow: 0 5px 20px rgba(126,200,255,0.3); }
-        
-        .ag-icon { width: 50px; height: 50px; margin: 0 auto 12px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-        .g-card .ag-icon { background: rgba(209, 74, 74, 0.2); color: var(--red); border: 1px solid var(--red); }
-        .p-card .ag-icon { background: rgba(255, 217, 138, 0.2); color: var(--gold); border: 1px solid var(--gold); }
-        .a-card .ag-icon { background: rgba(126, 200, 255, 0.2); color: var(--blue); border: 1px solid var(--blue); }
-        
-        .ag-card h3 { font-size: 1.1rem; margin-bottom: 5px; }
-        .g-card h3 { color: var(--red); }
-        .p-card h3 { color: var(--gold); }
-        .a-card h3 { color: var(--blue); }
-        
-        .ag-role { font-size: 0.65rem; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; }
-
         /* --- ПОДВАЛ + КАЛЕНДАРЬ --- */
         #footer { padding: 50px 20px; background: rgba(18, 10, 31, 0.95); backdrop-filter: blur(10px); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); position: relative; }
         
@@ -263,9 +338,14 @@
         .cal-nav-btn:hover { background: rgba(126,200,255,0.3); border-color: var(--blue); transform: scale(1.1); box-shadow: 0 0 15px rgba(126,200,255,0.4); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
         .cal-day-name { font-size: 0.75rem; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; }
-        .cal-day { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; cursor: default; transition: 0.3s; color: rgba(255,255,255,0.2); background: transparent; border: none; font-weight: 400; position: relative; }
+        
+        .cal-day { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; cursor: default; transition: 0.3s; color: rgba(255,255,255,0.2); background: transparent; border: none; font-weight: 400; position: relative; font-family: var(--font-body); }
+        
         .cal-day.has-data { cursor: pointer; font-weight: bold; }
         .cal-day.has-data:hover { transform: scale(1.15); box-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        .cal-day:not(.has-data) { cursor: pointer; }
+        .cal-day:not(.has-data):hover { background: rgba(255,255,255,0.05); }
+        
         .cal-day.plus { background: rgba(255, 217, 138, 0.3); color: var(--gold); border: 1px solid var(--gold); }
         .cal-day.minus { background: rgba(209, 74, 74, 0.3); color: var(--red); border: 1px solid var(--red); }
         .cal-day.zero { background: rgba(255, 255, 255, 0.2); color: #fff; border: 1px solid #fff; }
@@ -302,7 +382,7 @@
         .diary-input { width: 100%; height: 100px; padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid var(--blue); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); margin-bottom: 10px; resize: none; outline: none; transition: 0.3s; font-size: 0.95rem; }
         .diary-input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,217,138,0.2); }
 
-        #archive-view, #diary-view, #path-view, #day-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
+        #archive-view, #diary-view, #path-view, #day-view, #numerology-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
         #current-view { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 
         .scrollable-list { overflow-y: auto; flex: 1; min-height: 0; max-height: 55vh; padding-right: 5px; margin-bottom: 15px; }
@@ -332,6 +412,7 @@
             .c-title h2 { font-size: 1.8rem; }
             .modal-content { padding: 25px 15px; }
             .book-container { height: 480px; padding: 20px 15px; }
+            .zero-visual { width: 200px; height: 200px; }
         }
     </style>
 </head>
@@ -343,46 +424,164 @@
             <h1>Вернись к себе</h1>
             <p class="subtitle">Ты не потеряна.<br>Ты просто ушла от себя.<br>Пора вернуться.</p>
             <p class="slogan">«Нельзя вернуться в прошлое и изменить свой старт,<br>но можно стартовать сейчас и изменить свой финиш.»</p>
-            <a href="#consciousness-map" class="btn">Войти в карту сознания</a>
+            <a href="#intro" class="btn">Понять, где я сейчас</a>
         </div>
     </section>
 
-    <section id="consciousness-map">
-        <div class="map-title">
-            <h2>Твоё внутреннее пространство</h2>
-            <p>Сфера. Спираль. Точка. Путь.</p>
+    <section id="intro">
+        <div class="intro-box">
+            <h2>Три силы внутри нас</h2>
+            <p>Мы привыкли смотреть на свою жизнь линейно: прошлое → настоящее → будущее. Но внутри нас всё устроено иначе.</p>
+            <p>Каждый человек одновременно живёт в трёх состояниях: <strong>в том, что тянет назад</strong>, <strong>в том, что ведёт вперёд</strong>, и <strong>в том, что показывает путь</strong>.</p>
+            <p>Чтобы объяснить эти внутренние силы, мы используем три архетипа: Горгона, Персей и Алиса.</p>
+            <p><strong>Это не сказка — это способ увидеть себя честно, без страха и без самообмана.</strong></p>
         </div>
-        <div class="sphere-container">
-            <div class="layer"></div><div class="layer"></div><div class="layer"></div>
-            <div class="layer"></div><div class="layer"></div><div class="layer"></div>
-            <div class="layer"></div>
-            <div class="alice-line"></div>
-            <div class="user-point"></div>
-            <div class="point-zero"></div>
-        </div>
-        <a href="#diagnostics" class="btn-diag">Начать диагностику</a>
     </section>
 
+    <section id="agents">
+        <div class="ag-title">
+            <h2>Три силы</h2>
+            <p>Прошлое, ясность и путь.</p>
+        </div>
+        <div class="ag-grid">
+            <!-- ГОРГОНА -->
+            <div class="ag-card g-card" onclick="toggleAgent(this)">
+                <div class="ag-header">
+                    <div class="ag-icon">👁</div>
+                    <div class="ag-header-text">
+                        <h3>Горгона</h3>
+                        <div class="ag-role">Прошлое</div>
+                    </div>
+                    <div class="toggle-icon">🔽</div>
+                </div>
+                <div class="ag-content">
+                    <div class="ag-text">
+                        <p><strong>Горгона — это не чудовище.</strong> Это то, что держит нас в прошлом: страхи, обиды, ошибки, старые роли, привычные реакции.</p>
+                        <p>Она не даёт повернуться назад полностью. Потому что прямой взгляд в прошлое парализует — превращает человека в камень.</p>
+                        <p>Но если смотреть на прошлое как в отражение, через понимание, через честность, через движение вперёд — оно теряет власть.</p>
+                        <p><strong>Горгона напоминает: прошлое можно видеть, но нельзя жить в нём.</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПЕРСЕЙ -->
+            <div class="ag-card p-card" onclick="toggleAgent(this)">
+                <div class="ag-header">
+                    <div class="ag-icon">☀</div>
+                    <div class="ag-header-text">
+                        <h3>Персей</h3>
+                        <div class="ag-role">Ясность</div>
+                    </div>
+                    <div class="toggle-icon">🔽</div>
+                </div>
+                <div class="ag-content">
+                    <div class="ag-text">
+                        <p><strong>Персей — это внутренняя сила, которая умеет смотреть на страхи не напрямую, а через зеркало.</strong></p>
+                        <p>Он победил Горгону не мечом. Он победил её ясностью. Он увидел свои страхи как отражение, а не как реальность — и в этот момент они потеряли власть.</p>
+                        <p>Персей — это момент, когда человек говорит: «Я вижу, что меня держит. И я больше не хочу это тащить».</p>
+                        <p><strong>Это и есть настоящая свобода: свобода от негатива, от старых установок, от привычных сценариев.</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- АЛИСА -->
+            <div class="ag-card a-card" onclick="toggleAgent(this)">
+                <div class="ag-header">
+                    <div class="ag-icon">✦</div>
+                    <div class="ag-header-text">
+                        <h3>Алиса</h3>
+                        <div class="ag-role">Путь</div>
+                    </div>
+                    <div class="toggle-icon">🔽</div>
+                </div>
+                <div class="ag-content">
+                    <div class="ag-text">
+                        <p><strong>Алиса — это архетип человека, который прошёл через страхи, через тень, через хаос — и вышел победителем.</strong></p>
+                        <p>Она знает путь. Она знает, как выйти из старых сценариев. Она знает, как не попасть в негатив снова.</p>
+                        <p>Алиса — оптимистка по жизни, но не наивная. Она видела тьму и знает, как из неё выходить.</p>
+                        <p><strong>Она — внутренний голос, который говорит: «Ты можешь начать заново. И я покажу тебе дорогу».</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#zero-point" class="btn-diag" style="margin-top: 50px;">Дальше: Точка Ноль</a>
+    </section>
+
+    <!-- БЛОК 4: ТОЧКА НОЛЬ (БИРЮЗОВЫЙ АККОРДЕОН) -->
+    <section id="zero-point">
+        <div class="zero-trigger" id="zero-trigger" onclick="toggleZero()">
+            <h2>Точка Ноль</h2>
+            <span class="icon">🔽</span>
+        </div>
+        
+        <div class="zero-content-wrapper" id="zero-content">
+            <div class="zero-inner">
+                <h2>Точка Ноль</h2>
+                <p>Точка Ноль — это не пустота. Это состояние, где нет старых страхов, ролей, привычек и убеждений.</p>
+                <p>Это момент, когда человек обнуляется, чтобы выбрать новое направление — чистое, честное, своё.</p>
+                <p>Персей освобождается от прошлого. Алиса показывает путь. Горгона остаётся позади — только как отражение, а не как реальность.</p>
+                <p><strong>Только из Точки Ноль можно начать новый путь, который действительно ведёт вперёд.</strong></p>
+                
+                <div class="zero-visual">
+                    <svg class="zero-svg" viewBox="0 0 200 200">
+                        <!-- Спираль наружу (Уход от себя) - 5 витков, закручивается по часовой стрелке -->
+                        <path class="spiral-path spiral-out" d="
+                            M 100 100 
+                            C 115 100, 115 115, 100 115 
+                            C 75 115, 75 85, 100 85 
+                            C 135 85, 135 135, 100 135 
+                            C 55 135, 55 65, 100 65 
+                            C 155 65, 155 155, 100 155
+                            C 30 155, 30 45, 100 45
+                            C 170 45, 170 170, 95 175
+                        " />
+                        <!-- Стрелка наружу -->
+                        <polygon class="arrow-out" points="95,175 85,165 100,160" />
+
+                        <!-- Спираль внутрь (Возврат к себе) - 5 витков, закручивается против часовой стрелки -->
+                        <path class="spiral-path spiral-in" d="
+                            M 100 100 
+                            C 85 100, 85 85, 100 85 
+                            C 125 85, 125 115, 100 115 
+                            C 65 115, 65 65, 100 65 
+                            C 145 65, 145 135, 100 135 
+                            C 45 135, 45 45, 100 45
+                            C 170 45, 170 155, 100 155
+                            C 30 155, 30 30, 105 25
+                        " />
+                        <!-- Стрелка внутрь -->
+                        <polygon class="arrow-in" points="105,25 115,35 100,40" />
+                        
+                        <!-- Центральная точка -->
+                        <circle class="center-dot" cx="100" cy="100" r="6" />
+                    </svg>
+                </div>
+
+                <a href="#diagnostics" class="btn-zero">Войти в Ноль</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 5: ДИАГНОСТИКА -->
     <section id="diagnostics">
         <div class="diag-box">
             <h2>Где ты сейчас?</h2>
-            <p class="diag-sub">Мы определим твоё расстояние от себя.</p>
+            <p class="diag-sub">Выбери состояние, которое ближе всего к тебе прямо сейчас.</p>
             <form id="form" onsubmit="calc(event)">
-                <div class="form-group">
-                    <label>Дата рождения</label>
-                    <div class="date-selects">
-                        <select id="day" required></select>
-                        <select id="month" required></select>
-                        <select id="year" required></select>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label>Твоё текущее состояние</label>
                     <select id="state" required>
                         <option value="" disabled selected>Выбери ближайшее...</option>
-                        <option value="1">Тревога, много мыслей</option>
-                        <option value="2">Хочу всё контролировать</option>
-                        <option value="3">Хочу всё бросить и убежать</option>
+                        <option value="0">0 — Точка Ноль (Гармония, спокойствие, Я в себе)</option>
+                        <option value="1">1 — Легкое беспокойство (Мысли скачут, но я держусь)</option>
+                        <option value="2">2 — Зависимость (Привязка к чужому мнению, к результату)</option>
+                        <option value="3">3 — Хаос (Расфокус, много дел, ничего не довожу до конца)</option>
+                        <option value="4">4 — Жесткий контроль (Хочу всё контролировать)</option>
+                        <option value="5">5 — Бегство (Хочу всё бросить и убежать)</option>
+                        <option value="6">6 — Спасательство (Тяну всё на себе, забываю о себе)</option>
+                        <option value="7">7 — Холод (Уход в голову, оторванность от тела)</option>
+                        <option value="8">8 — Давление (Давлю на мир, на людей, на себя)</option>
+                        <option value="9">9 — Крайняя точка (Тяжелое состояние, пустота, депрессия)</option>
                     </select>
                 </div>
                 <button type="submit" class="btn-submit">Узнать мою точку на спирали</button>
@@ -393,19 +592,22 @@
                 <div class="res-item"><strong>Активная тень:</strong> <span id="r-shadow" class="t-shadow"></span></div>
                 <div class="res-item"><strong>Твой свет:</strong> <span id="r-light" class="t-light"></span></div>
                 <div class="res-item"><strong>Шаг Алисы:</strong> <span id="r-alice" class="t-alice"></span></div>
-                <a href="#course" class="btn-next">Начать путь</a>
+                
+                <button class="btn-show-shield" onclick="showShield()">🛡️ Открыть Щит Персея</button>
             </div>
         </div>
     </section>
 
-    <section id="course">
+    <!-- БЛОК 6: ЩИТ ПЕРСЕЯ -->
+    <section id="course" style="display: none;">
         <div class="c-title">
-            <h2>Спираль Персея</h2>
-            <p>Твой путь от Тени к Свету.</p>
+            <h2>Щит Персея</h2>
+            <p>Твой путь вперёд. Взгляд в прошлое без окаменения.</p>
         </div>
         <div class="timeline" id="timeline"></div>
     </section>
 
+    <!-- БЛОК 7: КОМПАС -->
     <section id="balance">
         <div class="c-title">
             <h2>Твоя точка сборки</h2>
@@ -525,7 +727,7 @@
         <span id="ci-avg-text"></span>
     </div>
 
-    <!-- БЛОК "МОЙ ПУТЬ" -->
+    <!-- БЛОК 8: МОЙ ПУТЬ -->
     <section id="my-path-section" style="display: none;">
         <div class="my-path-btn-container">
             <button class="my-path-btn" onclick="openModal()">
@@ -534,6 +736,7 @@
         </div>
     </section>
 
+    <!-- БЛОК 9: МЕДИТАЦИИ -->
     <section id="meditations">
         <div class="c-title">
             <h2>Медитации Точки Ноль</h2>
@@ -559,6 +762,7 @@
         </div>
     </section>
 
+    <!-- БЛОК 10: ЛЕГЕНДА -->
     <section id="legend">
         <div class="book-container">
             <div class="book-page" id="book-content">
@@ -573,36 +777,13 @@
 
             <div class="book-controls">
                 <button class="book-btn" id="book-prev" onclick="prevPage()">← Назад</button>
-                <span class="page-num" id="page-num">Стр. 1 из 5</span>
+                <span class="page-num" id="page-num">Стр. 1 из 3</span>
                 <button class="book-btn" id="book-next" onclick="nextPage()">Вперед →</button>
             </div>
         </div>
     </section>
 
-    <section id="agents">
-        <div class="ag-title">
-            <h2>Три силы</h2>
-            <p>Три состояния одного человека.</p>
-        </div>
-        <div class="ag-grid">
-            <div class="ag-card g-card" onclick="openTextModal('Горгона', 'Тень числа', 'Она не пугает. Она показывает правду. Это искажённая вибрация, которая появляется, когда ты уходишь далеко от себя.')">
-                <div class="ag-icon">👁</div>
-                <h3>Горгона</h3>
-                <div class="ag-role">Тень</div>
-            </div>
-            <div class="ag-card p-card" onclick="openTextModal('Персей', 'Свет числа', 'Он не спасает. Он напоминает, кто ты есть. Это очищенная вибрация, которая ведёт тебя внутрь.')">
-                <div class="ag-icon">☀</div>
-                <h3>Персей</h3>
-                <div class="ag-role">Свет</div>
-            </div>
-            <div class="ag-card a-card" onclick="openTextModal('Алиса', 'Путь', 'Она не учит. Она ведёт. Это твоё сознание, которое умеет видеть оба направления спирали и выбирает шаг.')">
-                <div class="ag-icon">✦</div>
-                <h3>Алиса</h3>
-                <div class="ag-role">Путь</div>
-            </div>
-        </div>
-    </section>
-
+    <!-- ПОДВАЛ -->
     <footer id="footer">
         <div class="calendar-section">
             <div class="calendar-header">
@@ -627,23 +808,38 @@
         </div>
     </footer>
 
-    <!-- МОДАЛЬНОЕ ОКНО "МОЙ ПУТЬ" (ЛИЧНЫЙ КАБИНЕТ) -->
+    <!-- МОДАЛЬНОЕ ОКНО "МОЙ ПУТЬ" -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">✕</button>
             
-            <!-- ГЛАВНЫЙ ЭКРАН (3 КНОПКИ) -->
             <div id="current-view">
                 <h2>Личный кабинет</h2>
                 <div style="margin-top: 30px; margin-bottom: 30px;">
                     <button class="btn-mod" onclick="showPath()" style="padding: 25px; font-size: 1.2rem; margin-bottom: 20px; background: rgba(126, 200, 255, 0.1); border-color: var(--blue); color: var(--blue);">✨ Твой текущий путь</button>
                     <button class="btn-mod" onclick="showDiary()" style="padding: 25px; font-size: 1.2rem; margin-bottom: 20px; background: rgba(255, 217, 138, 0.1); border-color: var(--gold); color: var(--gold);">📖 Мой дневник</button>
                     <button class="btn-mod" onclick="showArchive()" style="padding: 25px; font-size: 1.2rem; margin-bottom: 20px;">📜 Мой архив (Витки)</button>
+                    <button class="btn-mod" onclick="showNumerology()" style="padding: 25px; font-size: 1.2rem; margin-bottom: 20px; background: rgba(179, 136, 255, 0.1); border-color: var(--purple); color: var(--purple);">🔢 Нумерология</button>
                 </div>
                 <button class="btn-mod" onclick="closeModal()">Закрыть</button>
             </div>
 
-            <!-- МОДУЛЬ "ТВОЙ ТЕКУЩИЙ ПУТЬ" -->
+            <div id="numerology-view">
+                <h2>Нумерология</h2>
+                <p style="color: var(--muted); margin-bottom: 20px; font-size: 0.9rem;">Раздел в разработке. Здесь будет глубокий анализ даты рождения и даты прохождения.</p>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label style="display:block; color: var(--muted); font-size: 0.9rem; margin-bottom: 5px;">Дата рождения</label>
+                    <input type="date" id="num-birth" style="width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; margin-bottom: 10px;">
+                    
+                    <label style="display:block; color: var(--muted); font-size: 0.9rem; margin-bottom: 5px;">Дата прохождения</label>
+                    <input type="date" id="num-current" style="width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; margin-bottom: 10px;">
+                    
+                    <button class="btn-mod" onclick="calcNumerology()" style="background: var(--purple); color: var(--bg); border: none;">Рассчитать</button>
+                    <div id="num-result" style="margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.4); border-radius: var(--r-md); color: #fff; font-size: 1rem; display: none;"></div>
+                </div>
+                <button class="btn-mod" onclick="showCurrent()">← Назад в кабинет</button>
+            </div>
+
             <div id="path-view">
                 <h2>Твой текущий путь</h2>
                 <div class="modal-grid">
@@ -667,7 +863,6 @@
                 <button class="btn-mod" onclick="showCurrent()">← Назад в кабинет</button>
             </div>
 
-            <!-- МОДУЛЬ "ДНЕВНИК" -->
             <div id="diary-view">
                 <h2>Мой дневник</h2>
                 <div style="margin-bottom: 20px;">
@@ -682,7 +877,6 @@
                 <button class="btn-mod" onclick="showCurrent()">← Назад в кабинет</button>
             </div>
 
-            <!-- МОДУЛЬ "АРХИВ" -->
             <div id="archive-view">
                 <h2>Мой архив</h2>
                 <div class="scrollable-list">
@@ -691,12 +885,9 @@
                 <button class="btn-mod" onclick="showCurrent()">← Назад в кабинет</button>
             </div>
 
-            <!-- МОДУЛЬ "СВОДКА ДНЯ" (ИЗ КАЛЕНДАРЯ) -->
             <div id="day-view">
                 <h2>Детали дня</h2>
-                <div class="scrollable-list" id="day-log-list">
-                    <!-- Сюда JS будет генерировать блоки -->
-                </div>
+                <div class="scrollable-list" id="day-log-list"></div>
                 <button class="btn-mod" onclick="closeModal()">Закрыть</button>
             </div>
         </div>
@@ -740,7 +931,8 @@
         ];
 
         const nData = {
-            1: { s: "Тревожный Кролик", l: "Ясный импульс", a: "Остановиться и увидеть точку ухода." },
+            0: { s: "Отсутствие тени", l: "Чистое Я", a: "Пребывать в покое." },
+            1: { s: "Легкое беспокойство", l: "Ясный импульс", a: "Остановиться и увидеть точку ухода." },
             2: { s: "Зависимость", l: "Союз с собой", a: "Увидеть, что зеркало — не истина." },
             3: { s: "Хаос, расфокус", l: "Творческий поток", a: "Собрать внимание в одну линию." },
             4: { s: "Жесткий контроль", l: "Опора, порядок", a: "Отпустить то, что не твоё." },
@@ -767,9 +959,7 @@
         const bookPages = [
             { title: "Точка Ноль", text: "В начале — <strong>Ноль</strong>.<br>Не пустота, не отсутствие, не тишина.<br>А истинное Я, которое было всегда.<br><br>Ноль — это дом, центр, свет, чистота, начало и конец.<br>Место, где человек помнит себя.<br>Ноль не говорит. Он зовёт." },
             { title: "Спираль", text: "Вокруг Ноля рождается <strong>Спираль</strong> — путь опыта.<br><br>Она имеет два направления.<br>Наружу — путь удаления, где человек идёт от себя, набирая роли, маски, страхи и чужие голоса.<br><br>Внутрь — путь возвращения, где человек снимает слои, напряжение и ложные идентичности." },
-            { title: "Горгона", text: "<strong>Горгона</strong> — не чудовище.<br><br>Она — искажённая вибрация, которая появляется, когда человек уходит слишком далеко от Ноля.<br><br>Она не нападает. Она отражает, где человек потерял себя.<br>Она — честность без прикрас." },
-            { title: "Персей", text: "<strong>Персей</strong> — не герой с мечом.<br><br>Он — очищенная вибрация, которая появляется, когда человек делает шаг внутрь.<br><br>Он не спасает. Он помогает вспомнить, кем человек был до искажений.<br>Он — свет без давления." },
-            { title: "Алиса", text: "<strong>Алиса</strong> — это не девочка из сказки.<br><br>Это сознание, которое умеет видеть оба направления спирали.<br><br>Она замечает тень, замечает свет, знает путь и знает шаг.<br>Она — навигатор, который ведёт человека не вперёд, а внутрь.<br>Она не учит. Она показывает." }
+            { title: "Зеркальный Щит", text: "<strong>Щит</strong> — это не просто защита. Это способ смотреть на прошлое (Горгону), не окаменевая.<br><br>Ты видишь свои страхи, но они не парализуют тебя.<br>Ты идёшь вперёд, а зеркало позволяет тебе учиться на прошлом, не застревая в нём." }
         ];
         let currentPage = 0;
 
@@ -789,25 +979,46 @@
             document.getElementById('book-next').disabled = (currentPage === bookPages.length - 1);
         }
 
+        // Переключение аккордеонов карточек
+        function toggleAgent(card) {
+            card.classList.toggle('open');
+            const content = card.querySelector('.ag-content');
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+            } else {
+                document.querySelectorAll('.ag-content').forEach(c => c.classList.remove('open'));
+                document.querySelectorAll('.ag-card').forEach(c => c.classList.remove('open'));
+                
+                content.classList.add('open');
+            }
+        }
+
+        // Переключение блока Точка Ноль
+        function toggleZero() {
+            const trigger = document.getElementById('zero-trigger');
+            const content = document.getElementById('zero-content');
+            trigger.classList.toggle('open');
+            content.classList.toggle('open');
+        }
+
         function calc(e) {
             e.preventDefault();
-            const day = document.getElementById('day').value;
-            const month = document.getElementById('month').value;
-            const year = document.getElementById('year').value;
+            const stateVal = parseInt(document.getElementById('state').value);
             
-            const dateStr = day + month + year;
-            let sum = 0;
-            for (let i = 0; i < dateStr.length; i++) { if (!isNaN(parseInt(dateStr[i]))) sum += parseInt(dateStr[i]); }
+            let f = stateVal; 
             
-            let f = sum;
-            while (f > 9) { f = Math.floor(f / 10) + (f % 10); }
-            if (f === 0) f = 9; 
-            
-            document.getElementById('r-vitok').innerText = 'Виток №' + f;
-            document.getElementById('r-shadow').innerText = nData[f].s;
-            document.getElementById('r-light').innerText = nData[f].l;
-            document.getElementById('r-alice').innerText = nData[f].a;
-            
+            if (stateVal === 0) {
+                document.getElementById('r-vitok').innerText = 'Точка Ноль';
+                document.getElementById('r-shadow').innerText = 'Отсутствие тени';
+                document.getElementById('r-light').innerText = 'Чистое Я';
+                document.getElementById('r-alice').innerText = 'Пребывать в покое и гармонии.';
+            } else {
+                document.getElementById('r-vitok').innerText = 'Виток №' + f;
+                document.getElementById('r-shadow').innerText = nData[f].s;
+                document.getElementById('r-light').innerText = nData[f].l;
+                document.getElementById('r-alice').innerText = nData[f].a;
+            }
+
             const now = new Date();
             const dateFormatted = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
             const dateKey = now.toISOString().split('T')[0];
@@ -832,6 +1043,25 @@
             box.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
+        function showShield() {
+            const courseSection = document.getElementById('course');
+            courseSection.style.display = 'flex';
+            
+            document.querySelectorAll('.l-details').forEach(function(el) { el.classList.remove('show'); });
+            document.querySelectorAll('.l-card').forEach(function(el) { el.classList.remove('active'); });
+            
+            const stateVal = parseInt(document.getElementById('state').value);
+            let targetId = stateVal;
+            if (stateVal === 0) targetId = 0;
+            
+            document.getElementById('d-'+targetId).classList.add('show');
+            document.getElementById('c-'+targetId).classList.add('active');
+
+            setTimeout(() => {
+                courseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
         function updateMyPathSection() {
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
@@ -843,25 +1073,62 @@
             }
         }
 
-        // === УПРАВЛЕНИЕ МОДАЛЬНЫМ ОКНОМ ===
         function openModal() {
-            showCurrent(); // Всегда открываем главное меню
+            showCurrent(); 
             document.getElementById('modal').classList.add('show');
         }
         function closeModal() {
             document.getElementById('modal').classList.remove('show');
         }
 
-        // Показ главного меню (3 кнопки)
         function showCurrent() {
             document.getElementById('path-view').style.display = 'none';
             document.getElementById('diary-view').style.display = 'none';
             document.getElementById('archive-view').style.display = 'none';
             document.getElementById('day-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'none';
             document.getElementById('current-view').style.display = 'block';
         }
 
-        // Показ "Текущий путь"
+        function showNumerology() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'flex';
+        }
+
+        function calcNumerology() {
+            const birthInput = document.getElementById('num-birth').value;
+            const currentInput = document.getElementById('num-current').value;
+            const resultBox = document.getElementById('num-result');
+
+            if (!birthInput || !currentInput) {
+                alert('Пожалуйста, заполните обе даты.');
+                return;
+            }
+
+            const birthDate = new Date(birthInput);
+            const currentDate = new Date(currentInput);
+
+            const sumDigits = (date) => {
+                const str = date.getDate().toString() + (date.getMonth() + 1).toString() + date.getFullYear().toString();
+                let sum = 0;
+                for (let i = 0; i < str.length; i++) { if (!isNaN(parseInt(str[i]))) sum += parseInt(str[i]); }
+                let f = sum;
+                while (f > 9) { f = Math.floor(f / 10) + (f % 10); }
+                return f;
+            };
+
+            const birthNum = sumDigits(birthDate);
+            const currentNum = sumDigits(currentDate);
+
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `
+                <strong>Число рождения:</strong> ${birthNum}<br>
+                <strong>Число дня прохождения:</strong> ${currentNum}<br>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
+                <em style="color: var(--muted); font-size: 0.85rem;">Этот раздел находится в разработке. Позже мы добавим сюда глубокий анализ взаимодействия этих чисел.</em>
+            `;
+        }
+
         function showPath() {
             document.getElementById('current-view').style.display = 'none';
             document.getElementById('path-view').style.display = 'flex';
@@ -881,12 +1148,12 @@
             }
         }
 
-        // Показ "Дневник"
         function showDiary() {
             document.getElementById('current-view').style.display = 'none';
             document.getElementById('path-view').style.display = 'none';
             document.getElementById('archive-view').style.display = 'none';
             document.getElementById('day-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'none';
             document.getElementById('diary-view').style.display = 'flex';
 
             const list = document.getElementById('diary-list');
@@ -921,12 +1188,12 @@
             });
         }
 
-        // Показ "Архив"
         function showArchive() {
             document.getElementById('current-view').style.display = 'none';
             document.getElementById('path-view').style.display = 'none';
             document.getElementById('diary-view').style.display = 'none';
             document.getElementById('day-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'none';
             document.getElementById('archive-view').style.display = 'flex';
 
             const list = document.getElementById('archive-list');
@@ -954,7 +1221,6 @@
             });
         }
 
-        // === ФУНКЦИИ ДНЕВНИКА И АРХИВА ===
         function deleteFromArchive(index) {
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             history.splice(index, 1);
@@ -1019,7 +1285,6 @@
             showDiary();
         }
 
-        // === ОСТАЛЬНАЯ ЛОГИКА ===
         function toggle(id) {
             document.querySelectorAll('.l-details').forEach(function(el) { el.classList.remove('show'); });
             document.querySelectorAll('.l-card').forEach(function(el) { el.classList.remove('active'); });
@@ -1189,12 +1454,14 @@
                     div.classList.add('today');
                 }
 
+                let hasData = false;
                 if (calData[dateKey]) {
                     const hasCompass = calData[dateKey].compass && calData[dateKey].compass.length > 0;
                     const hasVitok = calData[dateKey].vitok && calData[dateKey].vitok.length > 0;
                     const hasDiary = calData[dateKey].diary && calData[dateKey].diary.length > 0;
                     
                     if (hasCompass || hasVitok || hasDiary) {
+                        hasData = true;
                         div.classList.add('has-data');
                         
                         if (hasCompass) {
@@ -1209,10 +1476,11 @@
                         if (hasDiary) {
                             div.classList.add('has-diary');
                         }
-
-                        div.onclick = () => showDayDetails(calData[dateKey], `${i}.${monthStr}.${year}`);
                     }
                 }
+                
+                div.onclick = () => showDayDetails(calData[dateKey] || null, `${i}.${monthStr}.${year}`);
+                
                 grid.appendChild(div);
             }
         }
@@ -1229,64 +1497,64 @@
             const list = document.getElementById('day-log-list');
             list.innerHTML = '';
 
-            if (dayData.vitok && dayData.vitok.length > 0) {
-                const title = document.createElement('div');
-                title.className = 'day-section-title';
-                title.innerText = 'Пройденные тесты (Витки)';
-                list.appendChild(title);
+            if (!dayData) {
+                list.innerHTML = '<p style="color: var(--muted); text-align: center; padding: 20px 0;">В этот день записей нет.<br><br>Пройди диагностику или сделай запись в дневник, чтобы заполнить этот день.</p>';
+            } else {
+                if (dayData.vitok && dayData.vitok.length > 0) {
+                    const title = document.createElement('div');
+                    title.className = 'day-section-title';
+                    title.innerText = 'Пройденные тесты (Витки)';
+                    list.appendChild(title);
 
-                dayData.vitok.forEach(v => {
-                    const div = document.createElement('div');
-                    div.className = 'day-log-item';
-                    div.innerHTML = `
-                        <div style="margin-bottom: 5px; font-weight: bold; color: var(--gold);">Виток №${v.vitok}</div>
-                        <div style="font-size: 0.85rem; color: #ddd;">Тень: ${v.shadow} | Свет: ${v.light}</div>
-                        <div style="font-size: 0.85rem; color: var(--blue); margin-top: 5px;">Шаг: ${v.alice}</div>
-                    `;
-                    list.appendChild(div);
-                });
-            }
+                    dayData.vitok.forEach(v => {
+                        const div = document.createElement('div');
+                        div.className = 'day-log-item';
+                        div.innerHTML = `
+                            <div style="margin-bottom: 5px; font-weight: bold; color: var(--gold);">Виток №${v.vitok}</div>
+                            <div style="font-size: 0.85rem; color: #ddd;">Тень: ${v.shadow} | Свет: ${v.light}</div>
+                            <div style="font-size: 0.85rem; color: var(--blue); margin-top: 5px;">Шаг: ${v.alice}</div>
+                        `;
+                        list.appendChild(div);
+                    });
+                }
 
-            if (dayData.compass && dayData.compass.length > 0) {
-                const title = document.createElement('div');
-                title.className = 'day-section-title';
-                title.innerText = 'Показатели Компаса';
-                list.appendChild(title);
+                if (dayData.compass && dayData.compass.length > 0) {
+                    const title = document.createElement('div');
+                    title.className = 'day-section-title';
+                    title.innerText = 'Показатели Компаса';
+                    list.appendChild(title);
 
-                dayData.compass.forEach(c => {
-                    const div = document.createElement('div');
-                    div.className = 'day-log-item';
-                    div.innerHTML = `
-                        <div style="margin-bottom: 5px;"><span class="time">${c.time}</span> <span class="vector" style="color:${c.avg >= 4 ? 'var(--gold)' : (c.avg <= -4 ? 'var(--red)' : '#fff')}; font-weight: bold;">Вектор: ${c.avg}</span></div>
-                        <div style="font-size: 0.8rem; color: #bbb; margin-bottom: 5px;">Логика: ${c.x}, Эмоции: ${c.y}, Состояние: ${c.z}</div>
-                        <div style="font-size: 0.85rem; color: #ddd;">${c.text}</div>
-                    `;
-                    list.appendChild(div);
-                });
-            }
+                    dayData.compass.forEach(c => {
+                        const div = document.createElement('div');
+                        div.className = 'day-log-item';
+                        div.innerHTML = `
+                            <div style="margin-bottom: 5px;"><span class="time">${c.time}</span> <span class="vector" style="color:${c.avg >= 4 ? 'var(--gold)' : (c.avg <= -4 ? 'var(--red)' : '#fff')}; font-weight: bold;">Вектор: ${c.avg}</span></div>
+                            <div style="font-size: 0.8rem; color: #bbb; margin-bottom: 5px;">Логика: ${c.x}, Эмоции: ${c.y}, Состояние: ${c.z}</div>
+                            <div style="font-size: 0.85rem; color: #ddd;">${c.text}</div>
+                        `;
+                        list.appendChild(div);
+                    });
+                }
 
-            if (dayData.diary && dayData.diary.length > 0) {
-                const title = document.createElement('div');
-                title.className = 'day-section-title';
-                title.innerText = 'Записи Дневника';
-                list.appendChild(title);
+                if (dayData.diary && dayData.diary.length > 0) {
+                    const title = document.createElement('div');
+                    title.className = 'day-section-title';
+                    title.innerText = 'Записи Дневника';
+                    list.appendChild(title);
 
-                dayData.diary.forEach(d => {
-                    const div = document.createElement('div');
-                    div.className = 'day-log-item';
-                    let vitokBadge = d.vitok ? `<span class="vitok-badge" style="display:inline-block; background: rgba(126,200,255,0.15); color: var(--blue); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 8px;">Виток №${d.vitok}</span>` : '';
-                    div.innerHTML = `
-                        ${vitokBadge}
-                        <div style="margin-bottom: 5px;"><span class="time">${d.date.split(' ')[1]}</span></div>
-                        <div style="font-size: 0.95rem; color: #fff; font-style: italic; margin-bottom: 8px;">"${d.text}"</div>
-                        <div style="font-size: 0.8rem; color: #bbb;">Логика: ${d.x}, Эмоции: ${d.y}, Состояние: ${d.z} (Вектор: ${d.avg})</div>
-                    `;
-                    list.appendChild(div);
-                });
-            }
-
-            if (list.innerHTML === '') {
-                list.innerHTML = '<p style="color: var(--muted); text-align: center;">В этот день записей нет.</p>';
+                    dayData.diary.forEach(d => {
+                        const div = document.createElement('div');
+                        div.className = 'day-log-item';
+                        let vitokBadge = d.vitok ? `<span class="vitok-badge" style="display:inline-block; background: rgba(126,200,255,0.15); color: var(--blue); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 8px;">Виток №${d.vitok}</span>` : '';
+                        div.innerHTML = `
+                            ${vitokBadge}
+                            <div style="margin-bottom: 5px;"><span class="time">${d.date.split(' ')[1]}</span></div>
+                            <div style="font-size: 0.95rem; color: #fff; font-style: italic; margin-bottom: 8px;">"${d.text}"</div>
+                            <div style="font-size: 0.8rem; color: #bbb;">Логика: ${d.x}, Эмоции: ${d.y}, Состояние: ${d.z} (Вектор: ${d.avg})</div>
+                        `;
+                        list.appendChild(div);
+                    });
+                }
             }
 
             document.getElementById('modal').classList.add('show');
@@ -1406,31 +1674,6 @@
             renderCalendar();
             updateBook();
             renderMedCards();
-
-            const daySelect = document.getElementById('day');
-            for (let i = 1; i <= 31; i++) {
-                let opt = document.createElement('option');
-                opt.value = i < 10 ? '0' + i : i;
-                opt.innerText = i;
-                daySelect.appendChild(opt);
-            }
-
-            const monthSelect = document.getElementById('month');
-            const months = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
-            for (let i = 1; i <= 12; i++) {
-                let opt = document.createElement('option');
-                opt.value = i < 10 ? '0' + i : i;
-                opt.innerText = months[i-1];
-                monthSelect.appendChild(opt);
-            }
-
-            const yearSelect = document.getElementById('year');
-            for (let i = 2026; i >= 1930; i--) {
-                let opt = document.createElement('option');
-                opt.value = i;
-                opt.innerText = i;
-                yearSelect.appendChild(opt);
-            }
 
             const tl = document.getElementById('timeline');
             cData.forEach(function(l) {
