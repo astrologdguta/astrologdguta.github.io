@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* --- БАЗОВЫЕ ПЕРЕМЕННЫЕ --- */
         :root {
             --bg: #120A1F; 
             --bg-sec: #1A1125;
@@ -24,6 +25,7 @@
             --r-md: 14px;
             --r-lg: 20px;
         }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
         body { 
@@ -39,14 +41,14 @@
             font-weight: 300; 
         }
         
-        h1, h2, h3, .book-page h2, .c-title h2, .map-title h2 { font-family: var(--font-title); font-weight: 400; letter-spacing: 1px; }
+        h1, h2, h3 { font-family: var(--font-title); font-weight: 400; letter-spacing: 1px; }
 
-        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: rgba(18, 10, 31, 0.8); }
         ::-webkit-scrollbar-thumb { background: rgba(126, 200, 255, 0.4); border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(126, 200, 255, 0.6); }
 
-        /* --- БЛОК 1: ГЛАВНЫЙ ЭКРАН --- */
+        /* --- 1. ГЛАВНЫЙ ЭКРАН --- */
         #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; background: radial-gradient(circle at center, rgba(230, 216, 255, 0.15) 0%, rgba(58, 36, 82, 0.4) 55%, rgba(18, 10, 31, 0.7) 100%); padding: 20px; }
         .zero-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; animation: breathe 6s infinite; z-index: -1; }
         @keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } }
@@ -54,149 +56,88 @@
         .subtitle { font-size: 1.15rem; color: #ffffff; line-height: 1.8; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); font-weight: 300; }
         .slogan { font-size: 1rem; font-style: italic; color: var(--gold); margin-bottom: 40px; max-width: 600px; line-height: 1.8; text-shadow: 0 2px 10px rgba(0,0,0,0.9); font-family: Georgia, serif; }
         
-        .btn { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: var(--font-body); font-weight: 500; }
-        .btn:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
+        .btn-main { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: var(--font-body); font-weight: 500; }
+        .btn-main:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
 
-        /* --- БЛОК 2: ВВОДНЫЙ ТЕКСТ --- */
+        /* --- 2. ВВОДНЫЙ ТЕКСТ --- */
         #intro { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
         .intro-box { max-width: 800px; text-align: center; background: rgba(18, 10, 31, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 40px 25px; }
         .intro-box h2 { font-size: 2.2rem; margin-bottom: 20px; color: var(--gold); }
         .intro-box p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; color: #e0d8ec; }
         .intro-box p strong { color: #fff; }
 
-        /* --- БЛОК 3: ТРИ СИЛЫ (АККОРДЕОНЫ) --- */
-        #agents { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(circle at center, rgba(26, 17, 37, 0.8) 0%, rgba(18, 10, 31, 0.9) 100%); }
-        .ag-title { text-align: center; margin-bottom: 40px; }
-        .ag-title h2 { font-size: 2.4rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .ag-title p { color: var(--muted); font-size: 0.9rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        /* --- 3. КНИГА "ТРИ СИЛЫ" --- */
+        #book-forces { padding: 60px 20px; display: flex; flex-direction: column; align-items: center; background: transparent; }
+        .section-title { text-align: center; margin-bottom: 30px; }
+        .section-title h2 { font-size: 2.4rem; color: var(--gold); margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .section-title p { color: var(--muted); font-size: 1rem; }
         
-        .ag-grid { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 800px; }
+        .book-container { width: 100%; max-width: 600px; background: rgba(26, 17, 37, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.2), inset 0 0 20px rgba(0,0,0,0.8); padding: 30px 25px; display: flex; flex-direction: column; font-family: 'Georgia', 'Times New Roman', serif; margin-bottom: 40px; }
+        .toc { display: flex; flex-direction: column; gap: 10px; }
+        .toc-btn { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--text); padding: 15px 20px; border-radius: var(--r-md); cursor: pointer; text-align: left; font-family: var(--font-body); font-size: 1rem; font-weight: 500; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
+        .toc-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--muted); }
+        .toc-btn.active[data-target="gorgon"] { border-color: var(--red); color: var(--red); background: rgba(209, 74, 74, 0.1); }
+        .toc-btn.active[data-target="perseus"] { border-color: var(--gold); color: var(--gold); background: rgba(255, 217, 138, 0.1); }
+        .toc-btn.active[data-target="alice"] { border-color: var(--blue); color: var(--blue); background: rgba(126, 200, 255, 0.1); }
+        .toc-btn .icon { font-size: 1.2rem; }
+        .book-page { color: #F8F5E9; font-size: 1.05rem; line-height: 1.7; text-align: left; display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 217, 138, 0.2); animation: fadeIn 0.4s ease-out; }
+        .book-page.active { display: block; }
+        .book-page h2 { margin-bottom: 5px; font-size: 2rem; text-align: center; }
+        .book-page[data-page="gorgon"] h2 { color: var(--red); }
+        .book-page[data-page="perseus"] h2 { color: var(--gold); }
+        .book-page[data-page="alice"] h2 { color: var(--blue); }
+        .book-page .subtitle-text { font-size: 1rem; color: var(--muted); font-style: italic; text-align: center; margin-bottom: 25px; line-height: 1.5; }
+        .book-page p { margin-bottom: 15px; }
+        .book-page strong { color: #fff; }
+        .close-hint { text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: 20px; font-family: var(--font-body); }
+        .action-btn { display: block; width: 100%; padding: 16px; margin-top: 20px; border-radius: var(--r-md); text-decoration: none; text-align: center; font-family: var(--font-body); font-weight: 600; font-size: 1.05rem; transition: 0.3s; box-sizing: border-box; }
+        .action-btn.btn-gorgon { background: rgba(209, 74, 74, 0.1); color: var(--red); border: 1px solid var(--red); }
+        .action-btn.btn-gorgon:hover { background: var(--red); color: var(--text); box-shadow: 0 0 20px rgba(209, 74, 74, 0.4); }
+        .action-btn.btn-perseus { background: rgba(255, 217, 138, 0.1); color: var(--gold); border: 1px solid var(--gold); }
+        .action-btn.btn-perseus:hover { background: var(--gold); color: var(--bg); box-shadow: 0 0 20px rgba(255, 217, 138, 0.4); }
+        .action-btn.btn-alice { background: rgba(126, 200, 255, 0.1); color: var(--blue); border: 1px solid var(--blue); }
+        .action-btn.btn-alice:hover { background: var(--blue); color: var(--bg); box-shadow: 0 0 20px rgba(126, 200, 255, 0.4); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .ag-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--r-lg); padding: 25px 20px; cursor: pointer; transition: 0.3s; }
-        .ag-card:hover { background: rgba(18, 10, 31, 0.95); }
-        .g-card:hover { border-color: var(--red); box-shadow: 0 5px 25px rgba(209,74,74,0.2); }
-        .p-card:hover { border-color: var(--gold); box-shadow: 0 5px 25px rgba(255,217,138,0.2); }
-        .a-card:hover { border-color: var(--blue); box-shadow: 0 5px 25px rgba(126,200,255,0.2); }
-        
-        .ag-header { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-        .ag-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
-        .g-card .ag-icon { background: rgba(209, 74, 74, 0.2); color: var(--red); border: 1px solid var(--red); }
-        .p-card .ag-icon { background: rgba(255, 217, 138, 0.2); color: var(--gold); border: 1px solid var(--gold); }
-        .a-card .ag-icon { background: rgba(126, 200, 255, 0.2); color: var(--blue); border: 1px solid var(--blue); }
-        
-        .ag-header-text { text-align: left; }
-        .ag-card h3 { font-size: 1.3rem; margin-bottom: 2px; }
-        .g-card h3 { color: var(--red); }
-        .p-card h3 { color: var(--gold); }
-        .a-card h3 { color: var(--blue); }
-        .ag-role { font-size: 0.75rem; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; }
-
-        .ag-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; text-align: left; }
-        .ag-content.open { max-height: 500px; }
-        .ag-text { font-size: 0.95rem; line-height: 1.6; color: #ddd; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 15px; }
-        .ag-text strong { color: #fff; }
-        .toggle-icon { margin-left: auto; font-size: 1.2rem; color: var(--muted); transition: transform 0.3s; }
-        .ag-card.open .toggle-icon { transform: rotate(180deg); }
-
-        /* --- БЛОК 4: ТОЧКА НОЛЬ (БИРЮЗОВЫЙ АККОРДЕОН) --- */
-        #zero-point { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
-        
-        .zero-trigger { 
-            max-width: 800px; width: 100%; 
-            background: rgba(18, 10, 31, 0.85); 
-            border: 1px solid var(--gold); 
-            border-radius: var(--r-lg); 
-            padding: 25px 20px; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: 0.3s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* --- 4. ТОЧКА НОЛЬ --- */
+        #zero-point { display: flex; flex-direction: column; align-items: center; padding: 20px 20px 60px 20px; background: transparent; }
+        .zero-trigger { max-width: 800px; width: 100%; background: rgba(18, 10, 31, 0.85); border: 1px solid var(--gold); border-radius: var(--r-lg); padding: 25px 20px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
         .zero-trigger:hover { background: rgba(18, 10, 31, 0.95); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
         .zero-trigger h2 { font-size: 2rem; color: var(--gold); margin: 0; }
-        .zero-trigger .icon { font-size: 1.5rem; color: var(--gold); transition: transform 0.3s; }
+        .zero-trigger .icon { font-size: 1.5rem; color: var(--gold); transition: transform 0.4s; }
         .zero-trigger.open .icon { transform: rotate(180deg); }
-
-        .zero-content-wrapper {
-            max-width: 800px; width: 100%;
-            background: linear-gradient(to bottom, #E0F7FA, #B2EBF2); 
-            color: #004D40; 
-            border-radius: var(--r-lg); 
-            margin-top: 15px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s ease-out, padding 0.6s ease-out;
-            padding: 0 20px;
-        }
-        .zero-content-wrapper.open {
-            max-height: 1200px;
-            padding: 40px 20px;
-        }
-
+        .zero-content-wrapper { max-width: 800px; width: 100%; background-color: #d2f0e8; color: #005B4F; border-radius: var(--r-lg); margin-top: 15px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; padding: 0 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .zero-content-wrapper.open { max-height: 1500px; padding: 40px 20px; }
         .zero-inner { text-align: center; }
-        .zero-inner h2 { font-size: 2.2rem; margin-bottom: 20px; color: #004D40; font-weight: 400; }
-        .zero-inner p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; color: #00695C; }
-        
-        /* Визуал: Спирали Архимеда */
-        .zero-visual { 
-            width: 250px; 
-            height: 250px; 
-            position: relative; 
-            margin: 20px auto; 
-        }
-        
-        .zero-svg { width: 100%; height: 100%; overflow: visible; }
-        
-        .spiral-path { fill: none; stroke-width: 3; stroke-linecap: round; }
-        .spiral-out { stroke: #004D40; } 
-        .spiral-in { stroke: #009688; } 
-        
-        .center-dot { fill: #FFFFFF; stroke: #004D40; stroke-width: 2; }
-        
-        .arrow-out { fill: #004D40; }
-        .arrow-in { fill: #009688; }
+        .zero-inner p { margin-bottom: 24px; font-size: 18px; line-height: 1.7; font-weight: 400; color: #005B4F; }
+        .zero-inner p:last-of-type { margin-bottom: 0; }
+        .svg-container { width: 220px; height: 220px; margin: 40px auto; }
+        .btn-zero { background-color: #009688; color: white; padding: 16px 50px; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s; }
+        .btn-zero:hover { background-color: #00796B; }
 
-        .btn-zero { display: inline-block; padding: 16px 40px; font-size: 1rem; color: #FFFFFF; background: #009688; text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0, 150, 136, 0.3); font-family: var(--font-body); font-weight: 600; margin-top: 20px; }
-        .btn-zero:hover { background: #00796B; box-shadow: 0 0 25px rgba(0, 150, 136, 0.5); transform: translateY(-2px); }
-
-        /* --- БЛОК 5: КАРТА --- */
-        #consciousness-map { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: transparent; padding: 40px 20px; overflow: hidden; }
-        .map-title { text-align: center; margin-bottom: 30px; }
-        .map-title h2 { font-size: 2.2rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .map-title p { color: var(--muted); font-size: 0.9rem; font-weight: 300; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-        .sphere-container { position: relative; width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; }
-        .layer { position: absolute; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .layer:nth-child(1) { width: 60px; height: 60px; border-color: rgba(248, 245, 233, 0.6); }
-        .layer:nth-child(2) { width: 110px; height: 110px; border-color: rgba(248, 245, 233, 0.4); }
-        .layer:nth-child(3) { width: 160px; height: 160px; border-color: rgba(255, 217, 138, 0.3); }
-        .layer:nth-child(4) { width: 210px; height: 210px; border-color: rgba(255, 217, 138, 0.3); }
-        .layer:nth-child(5) { width: 260px; height: 260px; border-color: rgba(126, 200, 255, 0.3); }
-        .layer:nth-child(6) { width: 310px; height: 310px; border-color: rgba(126, 200, 255, 0.2); }
-        .layer:nth-child(7) { width: 360px; height: 360px; border-color: rgba(209, 74, 74, 0.3); }
-        .point-zero { position: absolute; width: 15px; height: 15px; background: var(--text); border-radius: 50%; box-shadow: 0 0 30px 10px rgba(248, 245, 233, 0.6); z-index: 5; animation: pulse 3s infinite alternate; }
-        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.2); box-shadow: 0 0 50px 20px rgba(248, 245, 233, 0.9); } }
-        .user-point { position: absolute; width: 10px; height: 10px; background: var(--red); border-radius: 50%; box-shadow: 0 0 15px 5px rgba(209, 74, 74, 0.7); transform: translate(90px, -60px); z-index: 6; }
-        .alice-line { position: absolute; width: 2px; height: 120px; background: linear-gradient(to top, transparent, var(--blue)); transform: rotate(35deg) translate(-40px, -80px); transform-origin: bottom center; z-index: 4; opacity: 0.8; border-radius: 2px; }
-        
-        .btn-diag { margin-top: 40px; padding: 16px 40px; color: var(--text); background: rgba(18, 10, 31, 0.6); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: var(--r-md); cursor: pointer; text-decoration: none; transition: 0.4s; font-family: var(--font-body); font-weight: 500; backdrop-filter: blur(5px); }
-        .btn-diag:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 20px rgba(126, 200, 255, 0.4); }
-
-        /* --- БЛОК 6: ДИАГНОСТИКА --- */
+        /* --- 5. ДИАГНОСТИКА --- */
         #diagnostics { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; background: transparent; }
         .diag-box { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-lg); padding: 30px 20px; max-width: 600px; width: 100%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .diag-box h2 { font-size: 2.2rem; margin-bottom: 10px; }
-        .diag-sub { color: var(--muted); margin-bottom: 30px; line-height: 1.5; font-size: 0.9rem; }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.9rem; }
-        
-        .form-group > select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); outline: none; font-family: var(--font-body); font-size: 0.95rem; -webkit-appearance: none; }
-        .form-group > select:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(126, 200, 255, 0.3); }
-        .form-group > select option { background: var(--bg-sec); color: var(--text); }
-
-        .btn-submit { margin-top: 10px; padding: 18px; color: var(--bg); background: var(--text); border: none; border-radius: var(--r-md); cursor: pointer; width: 100%; font-weight: bold; font-family: var(--font-body); transition: 0.3s; }
-        .btn-submit:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.4); }
+        .diag-box h2 { font-size: 2.2rem; margin-bottom: 10px; color: var(--text); }
+        .diag-sub { color: var(--muted); margin-bottom: 25px; line-height: 1.5; font-size: 0.9rem; }
+        .state-trigger { width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); padding: 18px 20px; color: var(--text); font-family: var(--font-body); font-size: 1rem; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; margin-bottom: 0; }
+        .state-trigger:hover { background: rgba(0, 0, 0, 0.5); border-color: var(--muted); }
+        .state-trigger.open { border-color: var(--gold); border-bottom-left-radius: 0; border-bottom-right-radius: 0; margin-bottom: 0; background: rgba(255, 217, 138, 0.05); }
+        .state-trigger .trigger-text { font-weight: 500; }
+        .state-trigger .icon { transition: transform 0.4s; color: var(--gold); }
+        .state-trigger.open .icon { transform: rotate(180deg); }
+        .states-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; background: rgba(0, 0, 0, 0.2); border: 1px solid transparent; border-top: none; border-radius: 0 0 var(--r-md) var(--r-md); }
+        .states-wrapper.open { max-height: 800px; padding: 15px; border-color: var(--gold); border-top: none; margin-bottom: 20px; }
+        .states-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media (min-width: 500px) { .states-grid { grid-template-columns: repeat(3, 1fr); } }
+        .state-card { background: rgba(18, 10, 31, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--r-md); padding: 12px 10px; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; gap: 5px; }
+        .state-card:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--muted); }
+        .state-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.15); box-shadow: 0 0 15px rgba(255, 217, 138, 0.2); }
+        .sc-num { font-size: 1.2rem; font-weight: 600; color: var(--blue); font-family: var(--font-body); }
+        .state-card.active .sc-num { color: var(--gold); }
+        .sc-text { font-size: 0.8rem; color: var(--text); line-height: 1.3; text-align: left; }
+        .btn-submit { margin-top: 15px; padding: 18px; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: var(--r-md); cursor: pointer; width: 100%; font-weight: bold; font-family: var(--font-body); transition: 0.4s; font-size: 1rem; letter-spacing: 0.5px; }
+        .btn-submit:hover { background: var(--gold); color: var(--bg); box-shadow: 0 0 25px rgba(255, 217, 138, 0.4); }
         .result { display: none; margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: left; }
         .result-title { font-size: 1.3rem; color: var(--gold); margin-bottom: 15px; text-align: center; font-family: var(--font-title); }
         .res-item { margin-bottom: 15px; line-height: 1.5; font-size: 0.95rem; }
@@ -204,68 +145,75 @@
         .t-shadow { color: var(--red); font-weight: bold; }
         .t-light { color: var(--gold); font-weight: bold; }
         .t-alice { color: var(--blue); font-weight: bold; }
-        
         .btn-show-shield { display: block; margin-top: 20px; padding: 16px; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: var(--r-md); font-weight: bold; text-align: center; cursor: pointer; width: 100%; font-family: var(--font-body); transition: 0.3s; font-size: 1rem; }
         .btn-show-shield:hover { background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 25px rgba(255, 217, 138, 0.2); }
 
-        /* --- БЛОК 7: ЩИТ ПЕРСЕЯ --- */
+        /* --- 6. ЩИТ ПЕРСЕЯ --- */
         #course { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; display: none; }
-        .c-title { text-align: center; margin-bottom: 40px; }
-        .c-title h2 { font-size: 2.4rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .c-title { text-align: center; margin-bottom: 30px; }
+        .c-title h2 { font-size: 2.4rem; margin-bottom: 10px; color: var(--gold); text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .c-title p { color: var(--muted); font-size: 0.9rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-        .timeline { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 600px; }
-        .l-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--r-md); padding: 18px 20px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
-        .l-card:hover { background: rgba(18, 10, 31, 0.95); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .l-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 20px rgba(255, 217, 138, 0.2); }
-        
-        .l-num { font-size: 1.2rem; font-weight: 600; color: var(--blue); width: 30px; font-family: var(--font-body); }
-        
+        .shield-container { width: 100%; max-width: 600px; }
+        .shield-trigger { width: 100%; background: rgba(18, 10, 31, 0.85); border: 1px solid var(--gold); border-radius: var(--r-md); padding: 18px 20px; color: var(--gold); font-family: var(--font-body); font-size: 1rem; font-weight: 500; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .shield-trigger:hover { background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 20px rgba(255, 217, 138, 0.2); }
+        .shield-trigger.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; background: rgba(255, 217, 138, 0.05); }
+        .shield-trigger .icon { transition: transform 0.4s; }
+        .shield-trigger.open .icon { transform: rotate(180deg); }
+        .shield-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(0, 0, 0, 0.2); border: 1px solid transparent; border-top: none; border-radius: 0 0 var(--r-md) var(--r-md); }
+        .shield-wrapper.open { border-color: var(--gold); padding: 15px; }
+        .timeline { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        .l-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); padding: 18px 20px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
+        .l-card:hover { background: rgba(18, 10, 31, 0.95); border-color: var(--muted); transform: translateY(-2px); }
+        .l-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.05); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .l-num { font-size: 1.2rem; font-weight: 600; color: var(--blue); width: 35px; transition: 0.3s; }
+        .l-card.active .l-num { color: var(--gold); }
         .l-title { font-size: 1rem; font-weight: 400; }
-        .l-details { display: none; background: rgba(0, 0, 0, 0.5); border-radius: var(--r-md); padding: 18px; margin-top: -5px; text-align: left; border: 1px solid rgba(255,255,255,0.1); }
-        .l-details.show { display: block; animation: fadeIn 0.4s; }
-        .d-block { margin-bottom: 12px; font-size: 0.9rem; }
-        .d-block strong { display: block; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 3px; }
+        .l-details { display: none; background: rgba(0, 0, 0, 0.5); border-radius: 0 0 var(--r-md) var(--r-md); padding: 20px; margin-top: -12px; text-align: left; border: 1px solid var(--gold); border-top: none; animation: fadeIn 0.3s ease-out; }
+        .l-details.show { display: block; }
+        .d-block { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; }
+        .d-block:last-child { margin-bottom: 0; }
+        .d-block strong { display: block; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
         .d-shadow strong { color: var(--red); }
+        .d-shadow { color: #ffb3b3; }
         .d-light strong { color: var(--gold); }
+        .d-light { color: #fff3cc; }
         .d-alice strong { color: var(--blue); }
+        .d-alice { color: #cceeff; }
 
-        /* --- БЛОК 8: КОМПАС --- */
+        /* --- 7. КОМПАС --- */
         #balance { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
-        
-        .balance-visual-area { position: relative; width: 100%; max-width: 500px; height: 400px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
-
-        .axis-text-btn { position: absolute; font-size: 0.9rem; font-weight: bold; text-align: center; background: rgba(18, 10, 31, 0.95); padding: 10px 16px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.2); z-index: 20; max-width: 130px; line-height: 1.2; transition: 0.3s; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-family: var(--font-body); }
-        .axis-text-btn:hover { transform: scale(1.05); }
-        
+        .balance-visual-area { position: relative; width: 100%; max-width: 500px; height: 380px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
+        .axis-text-btn { position: absolute; font-size: 0.85rem; font-weight: bold; text-align: center; background: rgba(18, 10, 31, 0.95); padding: 8px 12px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.2); z-index: 20; max-width: 130px; line-height: 1.2; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-family: var(--font-body); }
         .btn-x { right: -10px; top: 50%; transform: translateY(-50%); color: var(--gold); border-color: var(--gold); }
         .btn-y { left: -10px; top: 50%; transform: translateY(-50%); color: var(--blue); border-color: var(--blue); }
         .btn-z { bottom: -10px; left: 50%; transform: translateX(-50%); color: var(--purple); border-color: var(--purple); }
-        .btn-avg { top: -10px; left: 50%; transform: translateX(-50%); color: #fff; border-color: #fff; font-size: 1.1rem; padding: 10px 20px; }
-
-        .visual-container { position: relative; width: 300px; height: 300px; background: rgba(0,0,0,0.5); border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 0 40px rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 10; }
-        
-        .axis-center { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 20px #fff; z-index: 10; animation: pulse-zero 2s infinite alternate; }
-        
-        .axis-arrow { position: absolute; bottom: 50%; left: 50%; width: 4px; border-radius: 4px; transform-origin: bottom center; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.8s; opacity: 0.9; animation: glow-pulse 3s infinite alternate; }
-        @keyframes glow-pulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
-
-        .arrow-x { background: linear-gradient(to top, var(--gold), #FFA500); box-shadow: 0 0 15px var(--gold); z-index: 5; height: 100px; background-image: linear-gradient(to bottom, var(--gold) 50%, transparent 50%); background-size: 4px 10px; } 
-        .arrow-y { background: linear-gradient(to top, var(--blue), #fff); box-shadow: 0 0 15px var(--blue); z-index: 5; height: 100px; background-image: linear-gradient(to bottom, var(--blue) 50%, transparent 50%); background-size: 4px 10px; }
-        .arrow-z { background: linear-gradient(to top, var(--purple), var(--blue)); box-shadow: 0 0 15px var(--purple); z-index: 5; height: 100px; background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.2) 5px, rgba(255,255,255,0.2) 10px); }
-        
+        .btn-avg { top: -10px; left: 50%; transform: translateX(-50%); color: #fff; border-color: #fff; font-size: 1rem; padding: 10px 20px; }
+        .visual-container { position: relative; width: 260px; height: 260px; background: rgba(0,0,0,0.5); border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 0 40px rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 10; }
+        .axis-center { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 20px #fff; z-index: 10; }
+        .axis-arrow { position: absolute; bottom: 50%; left: 50%; width: 4px; border-radius: 4px; transform-origin: bottom center; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.8s; opacity: 0.9; }
+        .arrow-x { background: var(--gold); box-shadow: 0 0 15px var(--gold); z-index: 5; height: 80px; }
+        .arrow-y { background: var(--blue); box-shadow: 0 0 15px var(--blue); z-index: 5; height: 80px; }
+        .arrow-z { background: var(--purple); box-shadow: 0 0 15px var(--purple); z-index: 5; height: 80px; }
         .arrow-average { background: #fff; box-shadow: 0 0 25px #fff; z-index: 6; width: 6px; height: 0px; transform: translateX(-50%); transition: all 0.8s ease-out; border-radius: 3px; }
-
-        .balance-box { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-lg); padding: 30px 20px; width: 100%; max-width: 500px; box-shadow: 0 15px 50px rgba(0,0,0,0.5); }
-        .balance-item { margin-bottom: 20px; text-align: left; }
+        .balance-box { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-lg); padding: 30px 20px; width: 100%; max-width: 500px; box-shadow: 0 15px 50px rgba(0,0,0,0.5); position: relative; z-index: 100; }
+        .balance-item { margin-bottom: 20px; text-align: left; position: relative; }
         .balance-item label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.95rem; }
-        .balance-item select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); outline: none; font-size: 0.9rem; font-family: var(--font-body); transition: 0.3s; -webkit-appearance: none; }
-        .balance-item select:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(126, 200, 255, 0.2); }
-        .balance-item select option { background: var(--bg-sec); color: var(--text); }
-
-        .balance-result { margin-top: 15px; padding: 25px 20px; background: rgba(0,0,0,0.7); border-radius: var(--r-md); text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.4s; }
+        .custom-select-btn { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); font-size: 0.95rem; font-family: var(--font-body); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .custom-select-btn:hover { border-color: var(--muted); }
+        .custom-select-btn.active { border-color: var(--gold); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .custom-select-btn .arrow { color: var(--gold); transition: transform 0.3s; font-size: 1.2rem; }
+        .custom-select-btn.active .arrow { transform: rotate(180deg); }
+        .custom-options { position: absolute; top: 100%; left: 0; width: 100%; background: #1A1125; border: 1px solid var(--gold); border-top: none; border-radius: 0 0 var(--r-md) var(--r-md); max-height: 250px; overflow-y: auto; z-index: 200; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .custom-options.show { display: block; }
+        .custom-options::-webkit-scrollbar { width: 6px; }
+        .custom-options::-webkit-scrollbar-track { background: #120A1F; }
+        .custom-options::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+        .custom-option { padding: 12px 15px; color: var(--text); font-size: 0.9rem; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .custom-option:hover { background: rgba(255, 217, 138, 0.15); color: var(--gold); }
+        .custom-option.selected { background: rgba(255, 217, 138, 0.2); color: var(--gold); font-weight: 600; }
+        .balance-result { margin-top: 25px; padding: 25px 20px; background: rgba(0,0,0,0.7); border-radius: var(--r-md); text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.4s; }
         .balance-result h3 { font-weight: 400; margin-bottom: 10px; font-size: 1.6rem; }
         .balance-result p { font-size: 0.95rem; line-height: 1.6; color: #ddd; }
-        
         .state-ideal { border-color: var(--gold); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
         .state-ideal h3 { color: var(--gold); }
         .state-unbalance { border-color: var(--red); box-shadow: 0 0 30px rgba(209, 74, 74, 0.2); }
@@ -273,64 +221,176 @@
         .state-neutral { border-color: #fff; box-shadow: 0 0 30px rgba(255, 255, 255, 0.1); }
         .state-neutral h3 { color: #fff; }
 
-        /* --- БЛОК 9: МОЙ ПУТЬ --- */
+        /* --- 8. МОЙ ПУТЬ --- */
         #my-path-section { width: 100%; display: flex; justify-content: center; padding: 40px 20px; background: transparent; }
-        .my-path-btn-container { max-width: 500px; width: 100%; text-align: center; }
-        .my-path-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 20px; background: linear-gradient(135deg, rgba(126, 200, 255, 0.2), rgba(255, 217, 138, 0.2)); color: var(--blue); border: 1px solid var(--blue); border-radius: var(--r-lg); font-size: 1.2rem; font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: 0.3s; box-shadow: 0 0 30px rgba(126, 200, 255, 0.2); text-transform: uppercase; letter-spacing: 2px; backdrop-filter: blur(5px); }
-        .my-path-btn:hover { background: linear-gradient(135deg, rgba(126, 200, 255, 0.4), rgba(255, 217, 138, 0.4)); color: #fff; box-shadow: 0 0 40px rgba(126, 200, 255, 0.5); transform: translateY(-3px); border-color: #fff; }
-        .my-path-btn .icon { font-size: 1.5rem; }
+        .open-book-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 20px 40px; background: linear-gradient(135deg, rgba(126, 200, 255, 0.1), rgba(255, 217, 138, 0.1)); color: var(--blue); border: 2px solid var(--blue); border-radius: var(--r-lg); font-size: 1.2rem; font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: 0.4s; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 30px rgba(126, 200, 255, 0.15); }
+        .open-book-btn:hover { background: linear-gradient(135deg, rgba(126, 200, 255, 0.3), rgba(255, 217, 138, 0.3)); color: #fff; box-shadow: 0 0 40px rgba(126, 200, 255, 0.4); transform: translateY(-3px); border-color: #fff; }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 5, 20, 0.9); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 300; padding: 20px; }
+        .modal-overlay.show { display: flex; animation: fadeIn 0.4s; }
+        .modal-content { background: rgba(26, 17, 37, 0.98); border: 2px solid var(--gold); border-radius: var(--r-lg); padding: 30px 25px 25px 25px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 0 50px rgba(255, 217, 138, 0.15), inset 0 0 30px rgba(0,0,0,0.8); text-align: center; max-height: 85vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .close-modal { position: sticky; top: 0; float: right; background: transparent; border: none; color: var(--muted); font-size: 26px; cursor: pointer; transition: 0.2s; z-index: 20; padding: 0 0 5px 10px; line-height: 1; margin-top: -10px; margin-right: -5px; }
+        .close-modal:hover { color: var(--gold); transform: scale(1.1) rotate(90deg); }
+        .modal-content h2 { margin-bottom: 20px; color: var(--gold); font-size: 2rem; clear: none; }
+        
+        #current-view { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+        .tabs-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        .tab-btn { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-md); padding: 18px; color: var(--text); font-family: var(--font-body); font-size: 1.05rem; font-weight: 500; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px; text-align: left; }
+        .tab-btn:hover { background: rgba(255,255,255,0.05); transform: translateX(5px); }
+        .tab-path { border-left: 4px solid var(--blue); }
+        .tab-path:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 15px rgba(126,200,255,0.2); }
+        .tab-diary { border-left: 4px solid var(--gold); }
+        .tab-diary:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 15px rgba(255,217,138,0.2); }
+        .tab-archive { border-left: 4px solid var(--muted); }
+        .tab-archive:hover { border-color: var(--muted); color: var(--muted); box-shadow: 0 0 15px rgba(209,196,233,0.2); }
+        .tab-num { border-left: 4px solid var(--purple); }
+        .tab-num:hover { border-color: var(--purple); color: var(--purple); box-shadow: 0 0 15px rgba(179,136,255,0.2); }
 
-        /* --- МОДАЛЬНОЕ ОКНО ТЕКСТА --- */
-        .tooltip-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 300; }
-        .tooltip-modal.show { display: flex; animation: fadeIn 0.3s; }
-        .tooltip-content { background: var(--bg-sec); border: 1px solid var(--blue); padding: 30px; border-radius: var(--r-lg); max-width: 400px; width: 90%; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.7); }
-        .tooltip-content h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--gold); }
-        .tooltip-content p { font-size: 1.05rem; color: #fff; line-height: 1.5; margin-bottom: 20px; }
-        .tooltip-close { background: var(--blue); color: var(--bg); border: none; padding: 12px 30px; border-radius: var(--r-md); font-size: 1rem; cursor: pointer; font-weight: bold; font-family: var(--font-body); transition: 0.3s; }
-        .tooltip-close:hover { box-shadow: 0 0 20px rgba(126,200,255,0.5); }
+        #path-view, #diary-view, #archive-view, #numerology-view, #day-view { display: none; flex-direction: column; flex: 1; min-height: 0; animation: fadeIn 0.3s; }
+        .modal-grid { display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 20px; }
+        .mod-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--blue); }
+        .mod-item span { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+        .mod-item strong { font-size: 1.1rem; }
+        .btn-back { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--text); border-radius: var(--r-md); cursor: pointer; font-size: 1rem; transition: 0.3s; font-family: var(--font-body); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; }
+        .btn-back:hover { background: var(--muted); color: var(--bg); border-color: var(--muted); }
+        
+        .diary-input { width: 100%; height: 100px; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid rgba(126, 200, 255, 0.4); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); margin-bottom: 15px; resize: none; outline: none; transition: 0.3s; font-size: 0.95rem; }
+        .diary-input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,217,138,0.2); }
+        .btn-save { width: 100%; padding: 15px; background: var(--blue); color: var(--bg); border: none; border-radius: var(--r-md); cursor: pointer; font-weight: 600; font-family: var(--font-body); transition: 0.3s; font-size: 1rem; }
+        .btn-save:hover { box-shadow: 0 0 20px rgba(126,200,255,0.5); background: #fff; }
+        .scrollable-list { overflow-y: auto; flex: 1; min-height: 0; max-height: 40vh; padding-right: 5px; margin-bottom: 15px; }
+        .diary-entry { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--gold); text-align: left; position: relative; margin-bottom: 10px; }
+        .diary-entry .time { font-size: 0.8rem; color: var(--muted); margin-bottom: 5px; display: block; padding-right: 40px; }
+        .diary-entry .text { font-size: 0.95rem; color: #fff; margin-bottom: 12px; font-style: italic; padding-right: 40px; }
+        .diary-entry .metrics { font-size: 0.85rem; color: #bbb; display: flex; gap: 8px; flex-wrap: wrap; }
+        .diary-entry .metrics span { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; }
+        .diary-entry .btn-del { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; font-size: 1rem; background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .diary-entry .btn-del:hover { background: var(--red); color: #fff; }
 
-        /* --- БЛОК 10: МЕДИТАЦИИ --- */
+        .archive-list { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+        .archive-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .archive-info h4 { font-weight: normal; margin-bottom: 5px; color: var(--gold); font-size: 1rem; }
+        .archive-info p { font-size: 0.85rem; color: var(--muted); }
+        .archive-date { font-size: 0.75rem; color: var(--blue); margin-top: 5px; display: block; }
+        .btn-del-arch { background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; }
+        .btn-del-arch:hover { background: var(--red); color: var(--text); transform: scale(1.1); }
+
+        .num-input-group { text-align: left; margin-bottom: 15px; }
+        .num-input-group label { display: block; color: var(--muted); font-size: 0.9rem; margin-bottom: 5px; }
+        .num-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); }
+        .btn-calc { width: 100%; padding: 15px; background: var(--purple); color: var(--bg); border: none; border-radius: var(--r-md); cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s; }
+        .btn-calc:hover { box-shadow: 0 0 20px rgba(179,136,255,0.5); background: #fff; }
+        #num-result { margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.4); border-radius: var(--r-md); color: #fff; font-size: 1rem; display: none; text-align: left; line-height: 1.6; }
+
+        .day-log-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--blue); text-align: left; margin-bottom: 10px; }
+        .day-log-item .time { font-size: 0.8rem; color: var(--muted); }
+        .day-section-title { font-family: var(--font-title); color: var(--gold); font-size: 1.2rem; margin: 20px 0 10px 0; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+
+        /* --- 9. МЕДИТАЦИИ (ОБНОВЛЕНО) --- */
         #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
-        .med-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 600px; margin-bottom: 30px; }
-        @media (max-width: 350px) { .med-grid { grid-template-columns: 1fr; } }
-        .med-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); padding: 18px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .med-card:hover { background: rgba(18, 10, 31, 0.95); border-color: var(--gold); transform: translateY(-3px); }
-        .med-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.15); box-shadow: 0 0 25px rgba(255, 217, 138, 0.3); }
-        .med-card h4 { color: var(--gold); font-weight: normal; margin-bottom: 5px; font-size: 1rem; font-family: var(--font-title); }
-        .med-card p { color: var(--text); font-size: 0.8rem; }
-        .player-box { display: none; width: 100%; max-width: 600px; background: rgba(0,0,0,0.8); border: 1px solid var(--gold); border-radius: var(--r-lg); padding: 25px 20px; text-align: center; margin-top: 10px; position: relative; backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .player-box.show { display: block; animation: fadeIn 0.5s; }
-        .player-title { font-size: 1.2rem; color: #fff; margin-bottom: 15px; font-family: var(--font-title); }
-        .player-controls { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
-        .play-btn { width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: var(--bg); font-size: 24px; transition: 0.2s; box-shadow: 0 5px 15px rgba(255,217,138,0.3); }
-        .play-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,217,138,0.5); }
+        
+        /* Кнопка-обертка для медитаций */
+        .med-section-wrapper {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .med-main-trigger {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(126, 200, 255, 0.1), rgba(255, 217, 138, 0.1));
+            border: 1px solid var(--gold);
+            border-radius: var(--r-lg);
+            padding: 22px 25px;
+            color: var(--gold);
+            font-family: var(--font-title);
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.4s;
+            box-shadow: 0 0 20px rgba(255, 217, 138, 0.1);
+            letter-spacing: 1px;
+        }
+
+        .med-main-trigger:hover {
+            background: linear-gradient(135deg, rgba(126, 200, 255, 0.2), rgba(255, 217, 138, 0.2));
+            box-shadow: 0 0 30px rgba(255, 217, 138, 0.2);
+        }
+
+        .med-main-trigger.open {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        .med-main-trigger .icon {
+            font-size: 1.2rem;
+            transition: transform 0.4s;
+        }
+
+        .med-main-trigger.open .icon {
+            transform: rotate(180deg);
+        }
+
+        /* Контейнер, который прячет все карточки */
+        .med-content-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            background: rgba(18, 10, 31, 0.4);
+            border: 1px solid transparent;
+            border-top: none;
+            border-radius: 0 0 var(--r-lg) var(--r-lg);
+        }
+
+        .med-content-wrapper.open {
+            border-color: var(--blue);
+        }
+
+        .med-container { width: 100%; display: flex; flex-direction: column; gap: 15px; padding: 20px; }
+        .med-item { display: flex; flex-direction: column; width: 100%; }
+        .med-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); padding: 20px; text-align: left; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: space-between; }
+        .med-card:hover { background: rgba(18, 10, 31, 0.95); border-color: var(--muted); transform: translateY(-2px); }
+        .med-card.active { border-color: var(--gold); background: rgba(255, 217, 138, 0.05); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .med-info h4 { color: var(--gold); font-weight: 400; margin-bottom: 5px; font-size: 1.1rem; font-family: var(--font-title); }
+        .med-info p { color: var(--text); font-size: 0.9rem; }
+        .med-card .icon { color: var(--gold); font-size: 1.2rem; transition: transform 0.3s; }
+        .med-card.active .icon { transform: rotate(180deg); }
+        .player-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(0, 0, 0, 0.4); border: 1px solid transparent; border-top: none; border-radius: 0 0 var(--r-md) var(--r-md); }
+        .player-wrapper.open { border-color: var(--gold); }
+        .player-box { padding: 25px 20px; text-align: center; position: relative; }
+        .player-controls { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .play-btn { width: 65px; height: 65px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: var(--bg); font-size: 26px; transition: 0.2s; box-shadow: 0 5px 20px rgba(255,217,138,0.4); }
+        .play-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,217,138,0.6); }
         .play-btn:active { transform: scale(0.95); }
         .progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; cursor: pointer; position: relative; margin-bottom: 12px; }
-        .progress-fill { width: 0%; height: 100%; background: var(--gold); border-radius: 10px; position: absolute; top: 0; left: 0; pointer-events: none; }
+        .progress-fill { width: 0%; height: 100%; background: var(--blue); border-radius: 10px; position: absolute; top: 0; left: 0; pointer-events: none; box-shadow: 0 0 10px rgba(126,200,255,0.5); }
         .player-time { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-        .player-error { color: var(--red); font-size: 0.85rem; margin-top: 10px; display: none; }
+        .player-error { color: var(--red); font-size: 0.85rem; margin-top: 15px; display: none; }
         .player-error.show { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- БЛОК 11: ЛЕГЕНДА --- */
+        /* --- 10. ЛЕГЕНДА --- */
         #legend { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
-        
-        .book-container { width: 100%; max-width: 500px; height: 450px; background: rgba(26, 17, 37, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.3), inset 0 0 20px rgba(0,0,0,0.8); padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; font-family: 'Georgia', 'Times New Roman', serif; }
-
-        .book-page { color: #F8F5E9; font-size: 1.05rem; line-height: 1.7; overflow-y: auto; text-align: center; padding: 15px 10px; flex-grow: 1; display: block; }
-
-        .book-page h2 { color: var(--gold); margin-top: 5px; margin-bottom: 20px; font-size: 1.8rem; }
-
-        .book-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 217, 138, 0.2); }
-
-        .book-btn { background: transparent; color: var(--blue); border: 1px solid var(--blue); padding: 10px 18px; border-radius: var(--r-md); cursor: pointer; font-family: Georgia, serif; font-size: 0.9rem; transition: 0.3s; font-weight: bold; }
+        .book-container-legend { width: 100%; max-width: 550px; height: 500px; background: rgba(26, 17, 37, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.2), inset 0 0 20px rgba(0,0,0,0.8); padding: 30px 25px 20px 25px; display: flex; flex-direction: column; justify-content: space-between; position: relative; font-family: 'Georgia', 'Times New Roman', serif; }
+        .book-page-legend { color: #F8F5E9; font-size: 1.05rem; line-height: 1.8; overflow-y: auto; text-align: center; flex-grow: 1; display: block; padding: 10px; animation: fadeIn 0.4s ease-out; }
+        .book-page-legend h2 { color: var(--gold); margin-top: 5px; margin-bottom: 25px; font-size: 2rem; text-align: center; }
+        .book-page-legend p { margin-bottom: 15px; }
+        .book-page-legend strong { color: #fff; }
+        .book-page-legend::-webkit-scrollbar { width: 4px; }
+        .book-page-legend::-webkit-scrollbar-track { background: transparent; }
+        .book-page-legend::-webkit-scrollbar-thumb { background: rgba(255, 217, 138, 0.3); border-radius: 2px; }
+        .book-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 20px; border-top: 1px solid rgba(255, 217, 138, 0.2); }
+        .book-btn { background: transparent; color: var(--blue); border: 1px solid var(--blue); padding: 10px 18px; border-radius: var(--r-md); cursor: pointer; font-family: var(--font-body); font-size: 0.9rem; transition: 0.3s; font-weight: 500; }
         .book-btn:hover:not(:disabled) { background: var(--blue); color: var(--bg); box-shadow: 0 0 15px rgba(126,200,255,0.4); }
-        .book-btn:disabled { opacity: 0.3; cursor: not-allowed; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.3); }
-        .page-num { color: var(--muted); font-style: italic; font-size: 0.9rem; }
+        .book-btn:disabled { opacity: 0.2; cursor: not-allowed; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.3); }
+        .page-num { color: var(--muted); font-style: italic; font-size: 0.9rem; font-family: var(--font-body); }
 
         /* --- ПОДВАЛ + КАЛЕНДАРЬ --- */
         #footer { padding: 50px 20px; background: rgba(18, 10, 31, 0.95); backdrop-filter: blur(10px); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); position: relative; }
-        
         .calendar-section { max-width: 600px; margin: 0 auto 40px auto; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 25px 20px; }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 5px; }
         .calendar-header h3 { font-size: 1.1rem; flex: 1; text-align: center; letter-spacing: 0; }
@@ -338,14 +398,11 @@
         .cal-nav-btn:hover { background: rgba(126,200,255,0.3); border-color: var(--blue); transform: scale(1.1); box-shadow: 0 0 15px rgba(126,200,255,0.4); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
         .cal-day-name { font-size: 0.75rem; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; }
-        
         .cal-day { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; cursor: default; transition: 0.3s; color: rgba(255,255,255,0.2); background: transparent; border: none; font-weight: 400; position: relative; font-family: var(--font-body); }
-        
         .cal-day.has-data { cursor: pointer; font-weight: bold; }
         .cal-day.has-data:hover { transform: scale(1.15); box-shadow: 0 0 15px rgba(255,255,255,0.2); }
         .cal-day:not(.has-data) { cursor: pointer; }
         .cal-day:not(.has-data):hover { background: rgba(255,255,255,0.05); }
-        
         .cal-day.plus { background: rgba(255, 217, 138, 0.3); color: var(--gold); border: 1px solid var(--gold); }
         .cal-day.minus { background: rgba(209, 74, 74, 0.3); color: var(--red); border: 1px solid var(--red); }
         .cal-day.zero { background: rgba(255, 255, 255, 0.2); color: #fff; border: 1px solid #fff; }
@@ -359,75 +416,32 @@
         .social-btn:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(126,200,255,0.4); }
         .copyright { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; margin-bottom: 0 !important; }
 
-        /* --- МОДАЛЬНОЕ ОКНО "МОЙ ПУТЬ" --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 5, 20, 0.9); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
-        .modal-overlay.show { display: flex; animation: fadeIn 0.3s; }
-        .modal-content { background: var(--bg-sec); border: 1px solid var(--blue); border-radius: var(--r-lg); padding: 30px 20px 20px 20px; max-width: 500px; width: 100%; position: relative; box-shadow: 0 0 50px rgba(126, 200, 255, 0.2); text-align: center; max-height: 85vh; overflow-y: auto; display: flex; flex-direction: column; }
-
-        .close-modal { position: sticky; top: 0; float: right; background: transparent; border: none; color: var(--muted); font-size: 26px; cursor: pointer; transition: 0.2s; z-index: 20; padding: 0 0 5px 10px; line-height: 1; margin-top: -10px; margin-right: -5px; }
-        .close-modal:hover { color: #fff; transform: scale(1.1) rotate(90deg); }
-        
-        .modal-content h2 { margin-bottom: 20px; color: var(--blue); font-size: 2rem; clear: none; }
-        .modal-grid { display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 20px; }
-        
-        .mod-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--blue); }
-        .mod-item span { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-        .mod-item strong { font-size: 1.1rem; }
-        
-        .btn-mod { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--text); border-radius: var(--r-md); cursor: pointer; font-size: 1rem; transition: 0.3s; margin-bottom: 10px; font-family: var(--font-body); flex-shrink: 0; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-mod:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); box-shadow: 0 0 20px rgba(126,200,255,0.3); }
-        .btn-mod.gold { background: rgba(255, 217, 138, 0.1); color: var(--gold); border-color: var(--gold); }
-        .btn-mod.gold:hover { background: var(--gold); color: var(--bg); }
-
-        .diary-input { width: 100%; height: 100px; padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid var(--blue); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); margin-bottom: 10px; resize: none; outline: none; transition: 0.3s; font-size: 0.95rem; }
-        .diary-input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,217,138,0.2); }
-
-        #archive-view, #diary-view, #path-view, #day-view, #numerology-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
-        #current-view { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-
-        .scrollable-list { overflow-y: auto; flex: 1; min-height: 0; max-height: 55vh; padding-right: 5px; margin-bottom: 15px; }
-
-        .archive-list { display: flex; flex-direction: column; gap: 10px; text-align: left; }
-        .archive-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-        .archive-info h4 { font-weight: normal; margin-bottom: 5px; color: var(--gold); font-size: 1rem; }
-        .archive-info p { font-size: 0.85rem; color: var(--muted); }
-        .archive-date { font-size: 0.75rem; color: var(--blue); margin-top: 5px; display: block; }
-        .btn-del { background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; }
-        .btn-del:hover { background: var(--red); color: var(--text); transform: scale(1.1); }
-        
-        .diary-entry { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--gold); text-align: left; position: relative; margin-bottom: 10px; }
-        .diary-entry .time { font-size: 0.8rem; color: var(--muted); margin-bottom: 5px; display: block; padding-right: 40px; }
-        .diary-entry .text { font-size: 0.95rem; color: #fff; margin-bottom: 12px; font-style: italic; padding-right: 40px; }
-        .diary-entry .metrics { font-size: 0.85rem; color: #bbb; display: flex; gap: 8px; flex-wrap: wrap; }
-        .diary-entry .metrics span { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; }
-        .diary-entry .btn-del { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; font-size: 1rem; }
-        .diary-entry .vitok-badge { display: inline-block; background: rgba(126,200,255,0.15); color: var(--blue); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 8px; }
-
-        .day-log-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--blue); text-align: left; margin-bottom: 10px; }
-        .day-log-item .time { font-size: 0.8rem; color: var(--muted); }
-        .day-section-title { font-family: var(--font-title); color: var(--gold); font-size: 1.2rem; margin: 20px 0 10px 0; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
-
         @media (max-width: 400px) {
             h1 { font-size: 2rem; }
-            .c-title h2 { font-size: 1.8rem; }
-            .modal-content { padding: 25px 15px; }
-            .book-container { height: 480px; padding: 20px 15px; }
-            .zero-visual { width: 200px; height: 200px; }
+            .section-title h2, .c-title h2 { font-size: 1.8rem; }
+            .modal-content { padding: 20px 15px; }
+            .book-container-legend { height: 520px; padding: 20px 15px; }
+            .svg-container { width: 180px; height: 180px; }
+            .visual-container { width: 220px; height: 220px; }
+            .axis-text-btn { font-size: 0.75rem; padding: 6px 10px; }
+            .med-main-trigger { font-size: 1.1rem; padding: 18px 15px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- 1. ГЛАВНЫЙ ЭКРАН -->
     <section id="hero">
         <div class="zero-center"></div>
         <div style="max-width: 800px; z-index: 1;">
             <h1>Вернись к себе</h1>
             <p class="subtitle">Ты не потеряна.<br>Ты просто ушла от себя.<br>Пора вернуться.</p>
             <p class="slogan">«Нельзя вернуться в прошлое и изменить свой старт,<br>но можно стартовать сейчас и изменить свой финиш.»</p>
-            <a href="#intro" class="btn">Понять, где я сейчас</a>
+            <a href="#intro" class="btn-main">Понять, где я сейчас</a>
         </div>
     </section>
 
+    <!-- 2. ВВОДНЫЙ ТЕКСТ -->
     <section id="intro">
         <div class="intro-box">
             <h2>Три силы внутри нас</h2>
@@ -438,76 +452,55 @@
         </div>
     </section>
 
-    <section id="agents">
-        <div class="ag-title">
+    <!-- 3. КНИГА "ТРИ СИЛЫ" -->
+    <section id="book-forces">
+        <div class="section-title">
             <h2>Три силы</h2>
-            <p>Прошлое, ясность и путь.</p>
+            <p>Открой книгу и выбери главу</p>
         </div>
-        <div class="ag-grid">
-            <!-- ГОРГОНА -->
-            <div class="ag-card g-card" onclick="toggleAgent(this)">
-                <div class="ag-header">
-                    <div class="ag-icon">👁</div>
-                    <div class="ag-header-text">
-                        <h3>Горгона</h3>
-                        <div class="ag-role">Прошлое</div>
-                    </div>
-                    <div class="toggle-icon">🔽</div>
-                </div>
-                <div class="ag-content">
-                    <div class="ag-text">
-                        <p><strong>Горгона — это не чудовище.</strong> Это то, что держит нас в прошлом: страхи, обиды, ошибки, старые роли, привычные реакции.</p>
-                        <p>Она не даёт повернуться назад полностью. Потому что прямой взгляд в прошлое парализует — превращает человека в камень.</p>
-                        <p>Но если смотреть на прошлое как в отражение, через понимание, через честность, через движение вперёд — оно теряет власть.</p>
-                        <p><strong>Горгона напоминает: прошлое можно видеть, но нельзя жить в нём.</strong></p>
-                    </div>
-                </div>
+        <div class="book-container">
+            <div class="toc">
+                <button class="toc-btn" data-target="gorgon" onclick="openPage('gorgon')">
+                    <span class="icon">👁</span> Глава 1. Отражение Горгоны
+                </button>
+                <button class="toc-btn" data-target="perseus" onclick="openPage('perseus')">
+                    <span class="icon">☀</span> Глава 2. Освобождение Персея
+                </button>
+                <button class="toc-btn" data-target="alice" onclick="openPage('alice')">
+                    <span class="icon">✦</span> Глава 3. Путь Алисы
+                </button>
             </div>
-
-            <!-- ПЕРСЕЙ -->
-            <div class="ag-card p-card" onclick="toggleAgent(this)">
-                <div class="ag-header">
-                    <div class="ag-icon">☀</div>
-                    <div class="ag-header-text">
-                        <h3>Персей</h3>
-                        <div class="ag-role">Ясность</div>
-                    </div>
-                    <div class="toggle-icon">🔽</div>
-                </div>
-                <div class="ag-content">
-                    <div class="ag-text">
-                        <p><strong>Персей — это внутренняя сила, которая умеет смотреть на страхи не напрямую, а через зеркало.</strong></p>
-                        <p>Он победил Горгону не мечом. Он победил её ясностью. Он увидел свои страхи как отражение, а не как реальность — и в этот момент они потеряли власть.</p>
-                        <p>Персей — это момент, когда человек говорит: «Я вижу, что меня держит. И я больше не хочу это тащить».</p>
-                        <p><strong>Это и есть настоящая свобода: свобода от негатива, от старых установок, от привычных сценариев.</strong></p>
-                    </div>
-                </div>
+            <div class="book-page" data-page="gorgon" ondblclick="closePage()">
+                <h2>Отражение Горгоны</h2>
+                <div class="subtitle-text">Прошлое видно, но не управляет.</div>
+                <p>Горгона — это не чудовище. Это прошлое, которое можно видеть только через отражение.</p>
+                <p>Горгона — это страхи, обиды, ошибки, старые роли. Она не даёт повернуться назад полностью, потому что прямой взгляд в прошлое парализует. Но если смотреть на прошлое как в отражение, оно теряет власть.</p>
+                <p>Оно становится просто частью истории, а не частью настоящего. <strong>Горгона напоминает: прошлое можно видеть, но нельзя жить в нём.</strong></p>
+                <a href="#diagnostics" class="action-btn btn-gorgon">Посмотреть отражение</a>
+                <div class="close-hint">Двойной клик по тексту — закрыть главу</div>
             </div>
-
-            <!-- АЛИСА -->
-            <div class="ag-card a-card" onclick="toggleAgent(this)">
-                <div class="ag-header">
-                    <div class="ag-icon">✦</div>
-                    <div class="ag-header-text">
-                        <h3>Алиса</h3>
-                        <div class="ag-role">Путь</div>
-                    </div>
-                    <div class="toggle-icon">🔽</div>
-                </div>
-                <div class="ag-content">
-                    <div class="ag-text">
-                        <p><strong>Алиса — это архетип человека, который прошёл через страхи, через тень, через хаос — и вышел победителем.</strong></p>
-                        <p>Она знает путь. Она знает, как выйти из старых сценариев. Она знает, как не попасть в негатив снова.</p>
-                        <p>Алиса — оптимистка по жизни, но не наивная. Она видела тьму и знает, как из неё выходить.</p>
-                        <p><strong>Она — внутренний голос, который говорит: «Ты можешь начать заново. И я покажу тебе дорогу».</strong></p>
-                    </div>
-                </div>
+            <div class="book-page" data-page="perseus" ondblclick="closePage()">
+                <h2>Освобождение Персея</h2>
+                <div class="subtitle-text">Ясность сильнее страха.</div>
+                <p>Он победил Горгону не мечом, а пониманием.</p>
+                <p>Персей — это внутренняя сила, которая умеет смотреть на страхи не напрямую, а через отражение. Он понял главный секрет: страхи теряют власть, когда человек перестаёт смотреть на них как на реальность.</p>
+                <p>Персей — это момент, когда человек говорит: <strong>«Я вижу, что меня держит. И я больше не хочу это тащить».</strong> Он освобождается от старых ролей, привычек, убеждений. Он перестаёт быть заложником прошлого. Он делает шаг в сторону свободы.</p>
+                <a href="#balance" class="action-btn btn-perseus">Найти мою точку сборки</a>
+                <div class="close-hint">Двойной клик по тексту — закрыть главу</div>
+            </div>
+            <div class="book-page" data-page="alice" ondblclick="closePage()">
+                <h2>Путь Алисы</h2>
+                <div class="subtitle-text">Движение вперёд без страха.</div>
+                <p>Она прошла через хаос, увидела свои тени и вышла победителем.</p>
+                <p>Алиса — это архетип человека, который не просто освободился от прошлого, но нашёл свой путь. Она знает, что страхи — это отражение, а не реальность. Она знает, что движение вперёд начинается с честности. Она знает, что новый путь появляется только тогда, когда человек выходит в Точку Ноль.</p>
+                <p>Алиса — оптимистка по жизни, но не наивная. Она видела тьму и знает, как из неё выходить. Она — тот внутренний голос, который говорит: <strong>«Ты можешь начать заново. И я покажу тебе дорогу».</strong></p>
+                <a href="#my-path-section" class="action-btn btn-alice">Начать мой путь</a>
+                <div class="close-hint">Двойной клик по тексту — закрыть главу</div>
             </div>
         </div>
-        <a href="#zero-point" class="btn-diag" style="margin-top: 50px;">Дальше: Точка Ноль</a>
     </section>
 
-    <!-- БЛОК 4: ТОЧКА НОЛЬ (БИРЮЗОВЫЙ АККОРДЕОН) -->
+    <!-- 4. ТОЧКА НОЛЬ -->
     <section id="zero-point">
         <div class="zero-trigger" id="zero-trigger" onclick="toggleZero()">
             <h2>Точка Ноль</h2>
@@ -516,73 +509,76 @@
         
         <div class="zero-content-wrapper" id="zero-content">
             <div class="zero-inner">
-                <h2>Точка Ноль</h2>
-                <p>Точка Ноль — это не пустота. Это состояние, где нет старых страхов, ролей, привычек и убеждений.</p>
                 <p>Это момент, когда человек обнуляется, чтобы выбрать новое направление — чистое, честное, своё.</p>
                 <p>Персей освобождается от прошлого. Алиса показывает путь. Горгона остаётся позади — только как отражение, а не как реальность.</p>
-                <p><strong>Только из Точки Ноль можно начать новый путь, который действительно ведёт вперёд.</strong></p>
-                
-                <div class="zero-visual">
-                    <svg class="zero-svg" viewBox="0 0 200 200">
-                        <!-- Спираль наружу (Уход от себя) - 5 витков, закручивается по часовой стрелке -->
-                        <path class="spiral-path spiral-out" d="
-                            M 100 100 
-                            C 115 100, 115 115, 100 115 
-                            C 75 115, 75 85, 100 85 
-                            C 135 85, 135 135, 100 135 
-                            C 55 135, 55 65, 100 65 
-                            C 155 65, 155 155, 100 155
-                            C 30 155, 30 45, 100 45
-                            C 170 45, 170 170, 95 175
-                        " />
-                        <!-- Стрелка наружу -->
-                        <polygon class="arrow-out" points="95,175 85,165 100,160" />
-
-                        <!-- Спираль внутрь (Возврат к себе) - 5 витков, закручивается против часовой стрелки -->
-                        <path class="spiral-path spiral-in" d="
-                            M 100 100 
-                            C 85 100, 85 85, 100 85 
-                            C 125 85, 125 115, 100 115 
-                            C 65 115, 65 65, 100 65 
-                            C 145 65, 145 135, 100 135 
-                            C 45 135, 45 45, 100 45
-                            C 170 45, 170 155, 100 155
-                            C 30 155, 30 30, 105 25
-                        " />
-                        <!-- Стрелка внутрь -->
-                        <polygon class="arrow-in" points="105,25 115,35 100,40" />
-                        
-                        <!-- Центральная точка -->
-                        <circle class="center-dot" cx="100" cy="100" r="6" />
+                <p>Только из Точки Ноль можно начать новый путь, который действительно ведёт вперёд.</p>
+                <div class="svg-container">
+                    <svg width="100%" height="100%" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrow-dark" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#004D40" />
+                            </marker>
+                            <marker id="arrow-light" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+                                <path d="M 10 0 L 0 5 L 10 10 z" fill="#009688" />
+                            </marker>
+                        </defs>
+                        <g transform="translate(120, 120) rotate(-45)">
+                            <path d="M 0 0 C 10 0, 20 10, 20 20 C 20 35, 5 50, -15 45 C -40 40, -55 15, -45 -10 C -35 -40, 5 -55, 35 -40 C 70 -20, 80 25, 55 55 C 30 85, -20 90, -55 65 C -95 35, -95 -30, -50 -65 C -5 -100, 70 -85, 95 -30 C 110 10, 100 50, 70 75" stroke="#004D40" stroke-width="2.5" stroke-linecap="round" fill="none" marker-start="url(#arrow-dark)" marker-end="url(#arrow-dark)" />
+                            <path d="M 8 5 C 18 5, 28 15, 28 25 C 28 40, 12 55, -8 50 C -33 45, -48 20, -38 -5 C -28 -35, 12 -50, 42 -35 C 77 -15, 87 30, 62 60 C 37 90, -13 95, -48 70 C -88 40, -88 -25, -43 -60 C 2 -95, 77 -80, 102 -25 C 117 15, 107 55, 77 80" stroke="#009688" stroke-width="2.5" stroke-linecap="round" fill="none" marker-start="url(#arrow-light)" marker-end="url(#arrow-light)" />
+                            <circle cx="0" cy="0" r="5" fill="#009688" />
+                            <circle cx="0" cy="0" r="2.5" fill="#FFFFFF" />
+                        </g>
                     </svg>
                 </div>
-
                 <a href="#diagnostics" class="btn-zero">Войти в Ноль</a>
             </div>
         </div>
     </section>
 
-    <!-- БЛОК 5: ДИАГНОСТИКА -->
+    <!-- 5. ДИАГНОСТИКА -->
     <section id="diagnostics">
         <div class="diag-box">
             <h2>Где ты сейчас?</h2>
             <p class="diag-sub">Выбери состояние, которое ближе всего к тебе прямо сейчас.</p>
             <form id="form" onsubmit="calc(event)">
-                <div class="form-group">
-                    <label>Твоё текущее состояние</label>
-                    <select id="state" required>
-                        <option value="" disabled selected>Выбери ближайшее...</option>
-                        <option value="0">0 — Точка Ноль (Гармония, спокойствие, Я в себе)</option>
-                        <option value="1">1 — Легкое беспокойство (Мысли скачут, но я держусь)</option>
-                        <option value="2">2 — Зависимость (Привязка к чужому мнению, к результату)</option>
-                        <option value="3">3 — Хаос (Расфокус, много дел, ничего не довожу до конца)</option>
-                        <option value="4">4 — Жесткий контроль (Хочу всё контролировать)</option>
-                        <option value="5">5 — Бегство (Хочу всё бросить и убежать)</option>
-                        <option value="6">6 — Спасательство (Тяну всё на себе, забываю о себе)</option>
-                        <option value="7">7 — Холод (Уход в голову, оторванность от тела)</option>
-                        <option value="8">8 — Давление (Давлю на мир, на людей, на себя)</option>
-                        <option value="9">9 — Крайняя точка (Тяжелое состояние, пустота, депрессия)</option>
-                    </select>
+                <input type="hidden" id="selected-state" value="" required>
+                <div class="state-trigger" id="state-trigger" onclick="toggleStates()">
+                    <span class="trigger-text" id="trigger-text">Выбери своё состояние...</span>
+                    <span class="icon">🔽</span>
+                </div>
+                <div class="states-wrapper" id="states-wrapper">
+                    <div class="states-grid">
+                        <div class="state-card" onclick="selectState(0, 'Точка Ноль (Гармония)', this)">
+                            <span class="sc-num">0</span><span class="sc-text">Точка Ноль (Гармония)</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(1, 'Легкое беспокойство', this)">
+                            <span class="sc-num">1</span><span class="sc-text">Легкое беспокойство</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(2, 'Зависимость', this)">
+                            <span class="sc-num">2</span><span class="sc-text">Зависимость от мнения</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(3, 'Хаос, расфокус', this)">
+                            <span class="sc-num">3</span><span class="sc-text">Хаос, расфокус</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(4, 'Жесткий контроль', this)">
+                            <span class="sc-num">4</span><span class="sc-text">Жесткий контроль</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(5, 'Бегство', this)">
+                            <span class="sc-num">5</span><span class="sc-text">Бегство (хочу бросить)</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(6, 'Спасательство', this)">
+                            <span class="sc-num">6</span><span class="sc-text">Спасательство</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(7, 'Холод, уход в голову', this)">
+                            <span class="sc-num">7</span><span class="sc-text">Холод, уход в голову</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(8, 'Давление на мир', this)">
+                            <span class="sc-num">8</span><span class="sc-text">Давление на мир</span>
+                        </div>
+                        <div class="state-card" onclick="selectState(9, 'Крайняя точка', this)">
+                            <span class="sc-num">9</span><span class="sc-text">Крайняя точка (пустота)</span>
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="btn-submit">Узнать мою точку на спирали</button>
             </form>
@@ -592,42 +588,39 @@
                 <div class="res-item"><strong>Активная тень:</strong> <span id="r-shadow" class="t-shadow"></span></div>
                 <div class="res-item"><strong>Твой свет:</strong> <span id="r-light" class="t-light"></span></div>
                 <div class="res-item"><strong>Шаг Алисы:</strong> <span id="r-alice" class="t-alice"></span></div>
-                
                 <button class="btn-show-shield" onclick="showShield()">🛡️ Открыть Щит Персея</button>
             </div>
         </div>
     </section>
 
-    <!-- БЛОК 6: ЩИТ ПЕРСЕЯ -->
+    <!-- 6. ЩИТ ПЕРСЕЯ -->
     <section id="course" style="display: none;">
         <div class="c-title">
             <h2>Щит Персея</h2>
             <p>Твой путь вперёд. Взгляд в прошлое без окаменения.</p>
         </div>
-        <div class="timeline" id="timeline"></div>
+        <div class="shield-container">
+            <div class="shield-trigger" id="shield-trigger" onclick="toggleShield()">
+                <span>Открыть Щит Персея</span>
+                <span class="icon">🔽</span>
+            </div>
+            <div class="shield-wrapper" id="shield-wrapper">
+                <div class="timeline" id="timeline"></div>
+            </div>
+        </div>
     </section>
 
-    <!-- БЛОК 7: КОМПАС -->
+    <!-- 7. КОМПАС -->
     <section id="balance">
         <div class="c-title">
             <h2>Твоя точка сборки</h2>
             <p>Ответь на три вопроса и построй свой Вектор Пути.</p>
         </div>
-        
         <div class="balance-visual-area">
-            <div class="axis-text-btn btn-avg" onclick="openTextModal('Вектор Пути', document.getElementById('ci-avg').innerText, document.getElementById('ci-avg-text').innerText)">
-                <span id="ci-avg">Вектор: 0</span>
-            </div>
-            <div class="axis-text-btn btn-x" onclick="openTextModal('Логика', document.getElementById('ci-x').innerText, document.getElementById('ci-x-text').innerText)">
-                <span id="ci-x">Логика: 0</span>
-            </div>
-            <div class="axis-text-btn btn-y" onclick="openTextModal('Эмоции', document.getElementById('ci-y').innerText, document.getElementById('ci-y-text').innerText)">
-                <span id="ci-y">Эмоции: 0</span>
-            </div>
-            <div class="axis-text-btn btn-z" onclick="openTextModal('Состояние', document.getElementById('ci-z').innerText, document.getElementById('ci-z-text').innerText)">
-                <span id="ci-z">Состояние: 0</span>
-            </div>
-
+            <div class="axis-text-btn btn-avg" id="ci-avg">Вектор: 0</div>
+            <div class="axis-text-btn btn-x" id="ci-x">Логика: 0</div>
+            <div class="axis-text-btn btn-y" id="ci-y">Эмоции: 0</div>
+            <div class="axis-text-btn btn-z" id="ci-z">Состояние: 0</div>
             <div class="visual-container" id="visual-container">
                 <div class="axis-arrow arrow-x" id="vis-x"></div>
                 <div class="axis-arrow arrow-y" id="vis-y"></div>
@@ -636,149 +629,77 @@
                 <div class="axis-center"></div>
             </div>
         </div>
-
         <div class="balance-box">
             <div class="balance-item">
                 <label>Логика: как работает твой ум?</label>
-                <select id="select-logic" onchange="updateBalance()">
-                    <option value="-9">-9 — Полный хаос, мысли рвутся</option>
-                    <option value="-8">-8 — Сильная тревога, ум скачет</option>
-                    <option value="-7">-7 — Перегруз, мысли давят</option>
-                    <option value="-6">-6 — Сильный туман, внимание рассыпается</option>
-                    <option value="-5">-5 — Неуверенность, логика не работает</option>
-                    <option value="-4">-4 — Рассеянность, сложно структурировать</option>
-                    <option value="-3">-3 — Медленные мысли, но управляемые</option>
-                    <option value="-2">-2 — Лёгкий туман, но я держусь</option>
-                    <option value="-1">-1 — Нестабильная ясность, скачки</option>
-                    <option value="0" selected>0 — Нейтральность, ровный ум</option>
-                    <option value="1">+1 — Лёгкая ясность</option>
-                    <option value="2">+2 — Спокойная собранность</option>
-                    <option value="3">+3 — Ум работает ровно</option>
-                    <option value="4">+4 — Хорошая структурность</option>
-                    <option value="5">+5 — Ясность, решения приходят</option>
-                    <option value="6">+6 — Чёткая логика, ясные выводы</option>
-                    <option value="7">+7 — Высокая ясность, ум быстрый</option>
-                    <option value="8">+8 — Прозрачность мышления, поток</option>
-                    <option value="9">+9 — Лазерная ясность, «вижу всё»</option>
-                </select>
+                <div class="custom-select-btn" onclick="toggleCustom('logic')">
+                    <span id="label-logic">0 — Нейтральность, ровный ум</span>
+                    <span class="arrow">🔽</span>
+                </div>
+                <div class="custom-options" id="options-logic"></div>
             </div>
-            
             <div class="balance-item">
                 <label>Эмоции: что ты чувствуешь?</label>
-                <select id="select-emotion" onchange="updateBalance()">
-                    <option value="-9">-9 — Эмоциональная закрытость, холод</option>
-                    <option value="-8">-8 — Сильная обида, боль, сжатие</option>
-                    <option value="-7">-7 — Тревога, страх, внутренний дрожь</option>
-                    <option value="-6">-6 — Напряжение, раздражение</option>
-                    <option value="-5">-5 — Эмоциональная тяжесть</option>
-                    <option value="-4">-4 — Негативный фон, недовольство</option>
-                    <option value="-3">-3 — Приглушенность, отсутствие тепла</option>
-                    <option value="-2">-2 — Лёгкая тревога</option>
-                    <option value="-1">-1 — Нестабильность, колебания</option>
-                    <option value="0" selected>0 — Ровная нейтральность</option>
-                    <option value="1">+1 — Мягкость</option>
-                    <option value="2">+2 — Спокойствие</option>
-                    <option value="3">+3 — Лёгкое тепло</option>
-                    <option value="4">+4 — Радость</option>
-                    <option value="5">+5 — Открытость</option>
-                    <option value="6">+6 — Доверие</option>
-                    <option value="7">+7 — Вдохновение</option>
-                    <option value="8">+8 — Сильная любовь к миру</option>
-                    <option value="9">+9 — Расширение, состояние «света»</option>
-                </select>
+                <div class="custom-select-btn" onclick="toggleCustom('emotion')">
+                    <span id="label-emotion">0 — Ровная нейтральность</span>
+                    <span class="arrow">🔽</span>
+                </div>
+                <div class="custom-options" id="options-emotion"></div>
             </div>
-            
             <div class="balance-item">
                 <label>Состояние: как ощущается тело?</label>
-                <select id="select-state" onchange="updateBalance()">
-                    <option value="-9">-9 — Полный упадок, отсутствие энергии</option>
-                    <option value="-8">-8 — Сильная слабость</option>
-                    <option value="-7">-7 — Вялость, медленное движение</option>
-                    <option value="-6">-6 — Тело «падает», нет потока</option>
-                    <option value="-5">-5 — Низкая вибрация</option>
-                    <option value="-4">-4 — Тяжёлый фон</option>
-                    <option value="-3">-3 — Усталость</option>
-                    <option value="-2">-2 — Замедленность</option>
-                    <option value="-1">-1 — Нестабильная энергия</option>
-                    <option value="0" selected>0 — Нейтральное состояние</option>
-                    <option value="1">+1 — Лёгкий тонус</option>
-                    <option value="2">+2 — Стабильная энергия</option>
-                    <option value="3">+3 — Лёгкость</option>
-                    <option value="4">+4 — Приятное движение</option>
-                    <option value="5">+5 — Поток</option>
-                    <option value="6">+6 — Живость</option>
-                    <option value="7">+7 — Высокая вибрация</option>
-                    <option value="8">+8 — Сильная энергия</option>
-                    <option value="9">+9 — Состояние полёта, мощная частота</option>
-                </select>
+                <div class="custom-select-btn" onclick="toggleCustom('state')">
+                    <span id="label-state">0 — Нейтральное состояние</span>
+                    <span class="arrow">🔽</span>
+                </div>
+                <div class="custom-options" id="options-state"></div>
             </div>
-
-            <div class="balance-result" id="balance-result">
+            <div class="balance-result state-neutral" id="balance-result">
                 <h3 id="balance-title">Ты в Точке Ноль</h3>
                 <p id="balance-text">Векторы в идеальном балансе. Пребывай в этом состоянии.</p>
             </div>
         </div>
     </section>
 
-    <div style="display:none;">
-        <span id="ci-x-text"></span>
-        <span id="ci-y-text"></span>
-        <span id="ci-z-text"></span>
-        <span id="ci-avg-text"></span>
-    </div>
-
-    <!-- БЛОК 8: МОЙ ПУТЬ -->
+    <!-- 8. МОЙ ПУТЬ -->
     <section id="my-path-section" style="display: none;">
-        <div class="my-path-btn-container">
-            <button class="my-path-btn" onclick="openModal()">
-                <span class="icon">✨</span> Мой путь
-            </button>
-        </div>
+        <button class="open-book-btn" onclick="openModal()">
+            <span class="icon">✨</span> Мой путь
+        </button>
     </section>
 
-    <!-- БЛОК 9: МЕДИТАЦИИ -->
+    <!-- 9. МЕДИТАЦИИ (ОБНОВЛЕНО) -->
     <section id="meditations">
         <div class="c-title">
             <h2>Медитации Точки Ноль</h2>
             <p>Выбери состояние, в которое хочешь войти.</p>
         </div>
         
-        <div class="med-grid" id="med-grid"></div>
-
-        <div class="player-box" id="player">
-            <audio id="audio-player"></audio>
-            <div class="player-title" id="player-title">Выберите медитацию</div>
-            <div class="player-controls">
-                <button class="play-btn" id="play-btn" onclick="togglePlay()">▶</button>
+        <div class="med-section-wrapper">
+            <div class="med-main-trigger" id="med-main-trigger" onclick="toggleMeditations()">
+                <span>Погрузиться в медитации</span>
+                <span class="icon">🔽</span>
             </div>
-            <div class="progress-container" id="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
+            <div class="med-content-wrapper" id="med-content-wrapper">
+                <div class="med-container" id="med-container"></div>
             </div>
-            <div class="player-time">
-                <span id="time-current">0:00</span>
-                <span id="time-total">0:00</span>
-            </div>
-            <div class="player-error" id="player-error">Аудиофайл не найден. Проверьте путь к файлу.</div>
         </div>
+        
+        <audio id="audio-player"></audio>
     </section>
 
-    <!-- БЛОК 10: ЛЕГЕНДА -->
+    <!-- 10. ЛЕГЕНДА -->
     <section id="legend">
-        <div class="book-container">
-            <div class="book-page" id="book-content">
-                <h2>Точка Ноль</h2>
-                <p>В начале — <strong>Ноль</strong>.<br>
-                Не пустота, не отсутствие, не тишина.<br> 
-                А истинное Я, которое было всегда.</p>
-                <p>Ноль — это дом, центр, свет, чистота, начало и конец.<br>
-                Место, где человек помнит себя.<br>
-                Ноль не говорит. Он зовёт.</p>
-            </div>
-
+        <div class="section-title">
+            <h2>Легенда</h2>
+            <p>Прикоснись к истории</p>
+        </div>
+        <div class="book-container-legend">
+            <div class="book-page-legend" id="book-content-legend"></div>
             <div class="book-controls">
-                <button class="book-btn" id="book-prev" onclick="prevPage()">← Назад</button>
-                <span class="page-num" id="page-num">Стр. 1 из 3</span>
-                <button class="book-btn" id="book-next" onclick="nextPage()">Вперед →</button>
+                <button class="book-btn" id="book-prev" onclick="prevPageLegend()">← Назад</button>
+                <span class="page-num" id="page-num-legend">Стр. 1 из 50</span>
+                <button class="book-btn" id="book-next" onclick="nextPageLegend()">Вперед →</button>
             </div>
         </div>
     </section>
@@ -795,7 +716,6 @@
             </div>
             <div class="calendar-grid" id="calendar-grid"></div>
         </div>
-
         <div class="footer-content">
             <h3>Оставайся на связи</h3>
             <p>Присоединяйся к сообществу</p>
@@ -812,124 +732,59 @@
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">✕</button>
-            
             <div id="current-view">
                 <h2>Личный кабинет</h2>
-                <div style="margin-top: 30px; margin-bottom: 30px;">
-                    <button class="btn-mod" onclick="showPath()" style="padding: 25px; font-size: 1.2rem; margin-bottom: 20px; background: rgba(126, 200, 255, 0.1); border-color: var(--blue); color: var(--blue);">✨ Твой текущий путь</button>
-                    <button class="btn-mod" onclick="showDiary()" style="padding: 25px; font-size: 1.2rem; margin-bottom: 20px; background: rgba(255, 217, 138, 0.1); border-color: var(--gold); color: var(--gold);">📖 Мой дневник</button>
-                    <button class="btn-mod" onclick="showArchive()" style="padding: 25px; font-size: 1.2rem; margin-bottom: 20px;">📜 Мой архив (Витки)</button>
-                    <button class="btn-mod" onclick="showNumerology()" style="padding: 25px; font-size: 1.2rem; margin-bottom: 20px; background: rgba(179, 136, 255, 0.1); border-color: var(--purple); color: var(--purple);">🔢 Нумерология</button>
+                <div class="tabs-grid">
+                    <button class="tab-btn tab-path" onclick="showPath()">✨ Твой текущий путь</button>
+                    <button class="tab-btn tab-diary" onclick="showDiary()">📖 Мой дневник</button>
+                    <button class="tab-btn tab-archive" onclick="showArchive()">📜 Мой архив (Витки)</button>
+                    <button class="tab-btn tab-num" onclick="showNumerology()">🔢 Нумерология</button>
                 </div>
-                <button class="btn-mod" onclick="closeModal()">Закрыть</button>
             </div>
-
-            <div id="numerology-view">
-                <h2>Нумерология</h2>
-                <p style="color: var(--muted); margin-bottom: 20px; font-size: 0.9rem;">Раздел в разработке. Здесь будет глубокий анализ даты рождения и даты прохождения.</p>
-                <div style="margin-bottom: 20px; text-align: left;">
-                    <label style="display:block; color: var(--muted); font-size: 0.9rem; margin-bottom: 5px;">Дата рождения</label>
-                    <input type="date" id="num-birth" style="width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; margin-bottom: 10px;">
-                    
-                    <label style="display:block; color: var(--muted); font-size: 0.9rem; margin-bottom: 5px;">Дата прохождения</label>
-                    <input type="date" id="num-current" style="width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; margin-bottom: 10px;">
-                    
-                    <button class="btn-mod" onclick="calcNumerology()" style="background: var(--purple); color: var(--bg); border: none;">Рассчитать</button>
-                    <div id="num-result" style="margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.4); border-radius: var(--r-md); color: #fff; font-size: 1rem; display: none;"></div>
-                </div>
-                <button class="btn-mod" onclick="showCurrent()">← Назад в кабинет</button>
-            </div>
-
             <div id="path-view">
                 <h2>Твой текущий путь</h2>
                 <div class="modal-grid">
-                    <div class="mod-item">
-                        <span>Текущий виток</span>
-                        <strong id="m-vitok">...</strong>
-                    </div>
-                    <div class="mod-item">
-                        <span>Активная тень</span>
-                        <strong class="t-shadow" id="m-shadow">...</strong>
-                    </div>
-                    <div class="mod-item">
-                        <span>Твой свет</span>
-                        <strong class="t-light" id="m-light">...</strong>
-                    </div>
-                    <div class="mod-item">
-                        <span>Следующий шаг Алисы</span>
-                        <strong class="t-alice" id="m-alice">...</strong>
-                    </div>
+                    <div class="mod-item"><span>Текущий виток</span><strong id="m-vitok" style="color: #fff;">...</strong></div>
+                    <div class="mod-item" style="border-left-color: var(--red);"><span>Активная тень</span><strong class="t-shadow" id="m-shadow" style="color: #ffb3b3;">...</strong></div>
+                    <div class="mod-item" style="border-left-color: var(--gold);"><span>Твой свет</span><strong class="t-light" id="m-light" style="color: #fff3cc;">...</strong></div>
+                    <div class="mod-item" style="border-left-color: var(--blue);"><span>Следующий шаг Алисы</span><strong class="t-alice" id="m-alice" style="color: #cceeff;">...</strong></div>
                 </div>
-                <button class="btn-mod" onclick="showCurrent()">← Назад в кабинет</button>
+                <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
-
             <div id="diary-view">
                 <h2>Мой дневник</h2>
                 <div style="margin-bottom: 20px;">
                     <textarea id="diary-text" class="diary-input" placeholder="Напиши, что ты чувствуешь сейчас..."></textarea>
-                    <button class="btn-mod" onclick="saveDiaryNote()" style="background: var(--blue); color: var(--bg); border: none;">Сохранить запись</button>
+                    <button class="btn-save" onclick="saveDiaryNote()">Сохранить запись</button>
                 </div>
-                
                 <h3 style="color: var(--gold); font-size: 1.2rem; margin-bottom: 10px; text-align: left;">История записей</h3>
-                <div class="scrollable-list">
-                    <div id="diary-list"></div>
-                </div>
-                <button class="btn-mod" onclick="showCurrent()">← Назад в кабинет</button>
+                <div class="scrollable-list"><div id="diary-list"></div></div>
+                <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
-
             <div id="archive-view">
                 <h2>Мой архив</h2>
-                <div class="scrollable-list">
-                    <div class="archive-list" id="archive-list"></div>
-                </div>
-                <button class="btn-mod" onclick="showCurrent()">← Назад в кабинет</button>
+                <div class="scrollable-list"><div class="archive-list" id="archive-list"></div></div>
+                <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
-
+            <div id="numerology-view">
+                <h2>Нумерология</h2>
+                <p style="color: var(--muted); margin-bottom: 20px; font-size: 0.9rem;">Раздел в разработке. Здесь будет глубокий анализ даты рождения и даты прохождения.</p>
+                <div class="num-input-group"><label>Дата рождения</label><input type="date" id="num-birth" class="num-input"></div>
+                <div class="num-input-group"><label>Дата прохождения</label><input type="date" id="num-current" class="num-input"></div>
+                <button class="btn-calc" onclick="calcNumerology()">Рассчитать</button>
+                <div id="num-result"></div>
+                <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
+            </div>
             <div id="day-view">
                 <h2>Детали дня</h2>
                 <div class="scrollable-list" id="day-log-list"></div>
-                <button class="btn-mod" onclick="closeModal()">Закрыть</button>
+                <button class="btn-back" onclick="closeModal()">Закрыть</button>
             </div>
-        </div>
-    </div>
-
-    <div class="tooltip-modal" id="text-modal">
-        <div class="tooltip-content">
-            <h3 id="modal-title">Заголовок</h3>
-            <p id="modal-desc">Текст описания</p>
-            <button class="tooltip-close" onclick="closeTextModal()">Понятно</button>
         </div>
     </div>
 
     <script>
-        const audioFiles = {
-            0:  'audio/med0-dom.mp3',
-            1:  'audio/med1-ostanovka.mp3',
-            2:  'audio/med2-zerkala.mp3',
-            3:  'audio/med3-fokus.mp3',
-            4:  'audio/med4-struktura.mp3',
-            5:  'audio/med5-svoboda.mp3',
-            6:  'audio/med6-energiya.mp3',
-            7:  'audio/med7-teplo.mp3',
-            8:  'audio/med8-sila.mp3',
-            9:  'audio/med9-porog.mp3',
-            10: 'audio/final-ya-est.mp3'
-        };
-
-        const meditations = [
-            { id: 0,  num: "Медитация 0", name: "Дом" },
-            { id: 1,  num: "Медитация 1", name: "Остановка" },
-            { id: 2,  num: "Медитация 2", name: "Зеркала" },
-            { id: 3,  num: "Медитация 3", name: "Фокус" },
-            { id: 4,  num: "Медитация 4", name: "Структура" },
-            { id: 5,  num: "Медитация 5", name: "Свобода" },
-            { id: 6,  num: "Медитация 6", name: "Энергия" },
-            { id: 7,  num: "Медитация 7", name: "Тепло" },
-            { id: 8,  num: "Медитация 8", name: "Сила" },
-            { id: 9,  num: "Медитация 9", name: "Порог" },
-            { id: 10, num: "Финал", name: "Я есть" }
-        ];
-
+        // === ДАННЫЕ ===
         const nData = {
             0: { s: "Отсутствие тени", l: "Чистое Я", a: "Пребывать в покое." },
             1: { s: "Легкое беспокойство", l: "Ясный импульс", a: "Остановиться и увидеть точку ухода." },
@@ -956,44 +811,67 @@
             { id: 9, t: "Удаление", s: "Крайняя точка.", l: "Завершение цикла.", a: "Увидеть, что дальше — только внутрь." }
         ];
 
-        const bookPages = [
+        const meditations = [
+            { id: 0,  num: "Медитация 0", name: "Дом", file: "audio/med0-dom.mp3" },
+            { id: 1,  num: "Медитация 1", name: "Остановка", file: "audio/med1-ostanovka.mp3" },
+            { id: 2,  num: "Медитация 2", name: "Зеркала", file: "audio/med2-zerkala.mp3" },
+            { id: 3,  num: "Медитация 3", name: "Фокус", file: "audio/med3-fokus.mp3" },
+            { id: 4,  num: "Медитация 4", name: "Структура", file: "audio/med4-struktura.mp3" },
+            { id: 5,  num: "Медитация 5", name: "Свобода", file: "audio/med5-svoboda.mp3" },
+            { id: 6,  num: "Медитация 6", name: "Энергия", file: "audio/med6-energiya.mp3" },
+            { id: 7,  num: "Медитация 7", name: "Тепло", file: "audio/med7-teplo.mp3" },
+            { id: 8,  num: "Медитация 8", name: "Сила", file: "audio/med8-sila.mp3" },
+            { id: 9,  num: "Медитация 9", name: "Порог", file: "audio/med9-porog.mp3" },
+            { id: 10, num: "Финал", name: "Я есть", file: "audio/final-ya-est.mp3" }
+        ];
+
+        const balanceData = {
+            logic: [
+                { v: -9, t: "Полный хаос, мысли рвутся" }, { v: -8, t: "Сильная тревога, ум скачет" }, { v: -7, t: "Перегруз, мысли давят" }, { v: -6, t: "Сильный туман, внимание рассыпается" }, { v: -5, t: "Неуверенность, логика не работает" }, { v: -4, t: "Рассеянность, сложно структурировать" }, { v: -3, t: "Медленные мысли, но управляемые" }, { v: -2, t: "Лёгкий туман, но я держусь" }, { v: -1, t: "Нестабильная ясность, скачки" }, { v: 0, t: "Нейтральность, ровный ум" }, { v: 1, t: "Лёгкая ясность" }, { v: 2, t: "Спокойная собранность" }, { v: 3, t: "Ум работает ровно" }, { v: 4, t: "Хорошая структурность" }, { v: 5, t: "Ясность, решения приходят" }, { v: 6, t: "Чёткая логика, ясные выводы" }, { v: 7, t: "Высокая ясность, ум быстрый" }, { v: 8, t: "Прозрачность мышления, поток" }, { v: 9, t: "Лазерная ясность, «вижу всё»" }
+            ],
+            emotion: [
+                { v: -9, t: "Эмоциональная закрытость, холод" }, { v: -8, t: "Сильная обида, боль, сжатие" }, { v: -7, t: "Тревога, страх, внутренний дрожь" }, { v: -6, t: "Напряжение, раздражение" }, { v: -5, t: "Эмоциональная тяжесть" }, { v: -4, t: "Негативный фон, недовольство" }, { v: -3, t: "Приглушенность, отсутствие тепла" }, { v: -2, t: "Лёгкая тревога" }, { v: -1, t: "Нестабильность, колебания" }, { v: 0, t: "Ровная нейтральность" }, { v: 1, t: "Мягкость" }, { v: 2, t: "Спокойствие" }, { v: 3, t: "Лёгкое тепло" }, { v: 4, t: "Радость" }, { v: 5, t: "Открытость" }, { v: 6, t: "Доверие" }, { v: 7, t: "Вдохновение" }, { v: 8, t: "Сильная любовь к миру" }, { v: 9, t: "Расширение, состояние «света»" }
+            ],
+            state: [
+                { v: -9, t: "Полный упадок, отсутствие энергии" }, { v: -8, t: "Сильная слабость" }, { v: -7, t: "Вялость, медленное движение" }, { v: -6, t: "Тело «падает», нет потока" }, { v: -5, t: "Низкая вибрация" }, { v: -4, t: "Тяжёлый фон" }, { v: -3, t: "Усталость" }, { v: -2, t: "Замедленность" }, { v: -1, t: "Нестабильная энергия" }, { v: 0, t: "Нейтральное состояние" }, { v: 1, t: "Лёгкий тонус" }, { v: 2, t: "Стабильная энергия" }, { v: 3, t: "Лёгкость" }, { v: 4, t: "Приятное движение" }, { v: 5, t: "Поток" }, { v: 6, t: "Живость" }, { v: 7, t: "Высокая вибрация" }, { v: 8, t: "Сильная энергия" }, { v: 9, t: "Состояние полёта, мощная частота" }
+            ]
+        };
+
+        const bookPagesLegend = [
             { title: "Точка Ноль", text: "В начале — <strong>Ноль</strong>.<br>Не пустота, не отсутствие, не тишина.<br>А истинное Я, которое было всегда.<br><br>Ноль — это дом, центр, свет, чистота, начало и конец.<br>Место, где человек помнит себя.<br>Ноль не говорит. Он зовёт." },
             { title: "Спираль", text: "Вокруг Ноля рождается <strong>Спираль</strong> — путь опыта.<br><br>Она имеет два направления.<br>Наружу — путь удаления, где человек идёт от себя, набирая роли, маски, страхи и чужие голоса.<br><br>Внутрь — путь возвращения, где человек снимает слои, напряжение и ложные идентичности." },
-            { title: "Зеркальный Щит", text: "<strong>Щит</strong> — это не просто защита. Это способ смотреть на прошлое (Горгону), не окаменевая.<br><br>Ты видишь свои страхи, но они не парализуют тебя.<br>Ты идёшь вперёд, а зеркало позволяет тебе учиться на прошлом, не застревая в нём." }
+            { title: "Зеркальный Щит", text: "<strong>Щит</strong> — это не просто защита. Это способ смотреть на прошлое (Горгону), не окаменевая.<br><br>Ты видишь свои страхи, но они не парализуют тебя.<br>Ты идёшь вперёд, а зеркало позволяет тебе учиться на прошлом, не застревая в нём." },
+            { title: "Глава 4", text: "Здесь будет текст вашей четвертой главы. Вы можете удалить эту подсказку и написать свой текст." },
+            { title: "Глава 5", text: "Текст пятой главы..." }, { title: "Глава 6", text: "Текст шестой главы..." }, { title: "Глава 7", text: "Текст седьмой главы..." }, { title: "Глава 8", text: "Текст восьмой главы..." }, { title: "Глава 9", text: "Текст девятой главы..." }, { title: "Глава 10", text: "Текст десятой главы..." },
+            { title: "Глава 11", text: "Текст одиннадцатой главы..." }, { title: "Глава 12", text: "Текст двенадцатой главы..." }, { title: "Глава 13", text: "Текст тринадцатой главы..." }, { title: "Глава 14", text: "Текст четырнадцатой главы..." }, { title: "Глава 15", text: "Текст пятнадцатой главы..." }, { title: "Глава 16", text: "Текст шестнадцатой главы..." }, { title: "Глава 17", text: "Текст семнадцатой главы..." }, { title: "Глава 18", text: "Текст восемнадцатой главы..." }, { title: "Глава 19", text: "Текст девятнадцатой главы..." }, { title: "Глава 20", text: "Текст двадцатой главы..." },
+            { title: "Глава 21", text: "Текст двадцать первой главы..." }, { title: "Глава 22", text: "Текст двадцать второй главы..." }, { title: "Глава 23", text: "Текст двадцать третьей главы..." }, { title: "Глава 24", text: "Текст двадцать четвертой главы..." }, { title: "Глава 25", text: "Текст двадцать пятой главы..." }, { title: "Глава 26", text: "Текст двадцать шестой главы..." }, { title: "Глава 27", text: "Текст двадцать седьмой главы..." }, { title: "Глава 28", text: "Текст двадцать восьмой главы..." }, { title: "Глава 29", text: "Текст двадцать девятой главы..." }, { title: "Глава 30", text: "Текст тридцатой главы..." },
+            { title: "Глава 31", text: "Текст тридцать первой главы..." }, { title: "Глава 32", text: "Текст тридцать второй главы..." }, { title: "Глава 33", text: "Текст тридцать третьей главы..." }, { title: "Глава 34", text: "Текст тридцать четвертой главы..." }, { title: "Глава 35", text: "Текст тридцать пятой главы..." }, { title: "Глава 36", text: "Текст тридцать шестой главы..." }, { title: "Глава 37", text: "Текст тридцать седьмой главы..." }, { title: "Глава 38", text: "Текст тридцать восьмой главы..." }, { title: "Глава 39", text: "Текст тридцать девятой главы..." }, { title: "Глава 40", text: "Текст сороковой главы..." },
+            { title: "Глава 41", text: "Текст сорок первой главы..." }, { title: "Глава 42", text: "Текст сорок второй главы..." }, { title: "Глава 43", text: "Текст сорок третьей главы..." }, { title: "Глава 44", text: "Текст сорок четвертой главы..." }, { title: "Глава 45", text: "Текст сорок пятой главы..." }, { title: "Глава 46", text: "Текст сорок шестой главы..." }, { title: "Глава 47", text: "Текст сорок седьмой главы..." }, { title: "Глава 48", text: "Текст сорок восьмой главы..." }, { title: "Глава 49", text: "Текст сорок девятой главы..." }, { title: "Глава 50", text: "Текст пятидесятой главы..." }
         ];
-        let currentPage = 0;
 
-        function nextPage() {
-            if (currentPage < bookPages.length - 1) { currentPage++; updateBook(); }
-        }
-        function prevPage() {
-            if (currentPage > 0) { currentPage--; updateBook(); }
-        }
-        function updateBook() {
-            document.getElementById('book-content').innerHTML = `
-                <h2>${bookPages[currentPage].title}</h2>
-                <p>${bookPages[currentPage].text}</p>
-            `;
-            document.getElementById('page-num').innerText = `Стр. ${currentPage + 1} из ${bookPages.length}`;
-            document.getElementById('book-prev').disabled = (currentPage === 0);
-            document.getElementById('book-next').disabled = (currentPage === bookPages.length - 1);
-        }
+        // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
+        let currentVals = { logic: 0, emotion: 0, state: 0 };
+        let currentPlayingId = null;
+        let currentLegendPage = 0;
+        let calViewYear = new Date().getFullYear();
+        let calViewMonth = new Date().getMonth();
+        let saveTimeout = null;
 
-        // Переключение аккордеонов карточек
-        function toggleAgent(card) {
-            card.classList.toggle('open');
-            const content = card.querySelector('.ag-content');
-            if (content.classList.contains('open')) {
-                content.classList.remove('open');
-            } else {
-                document.querySelectorAll('.ag-content').forEach(c => c.classList.remove('open'));
-                document.querySelectorAll('.ag-card').forEach(c => c.classList.remove('open'));
-                
-                content.classList.add('open');
-            }
+        // === 3. КНИГА СИЛ ===
+        function openPage(pageName) {
+            const currentPage = document.querySelector(`.book-page[data-page="${pageName}"]`);
+            if (currentPage.classList.contains('active')) { closePage(); return; }
+            document.querySelectorAll('.toc-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.toc-btn[data-target="${pageName}"]`).classList.add('active');
+            document.querySelectorAll('.book-page').forEach(page => page.classList.remove('active'));
+            currentPage.classList.add('active');
+        }
+        function closePage() {
+            document.querySelectorAll('.book-page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.toc-btn').forEach(btn => btn.classList.remove('active'));
         }
 
-        // Переключение блока Точка Ноль
+        // === 4. ТОЧКА НОЛЬ ===
         function toggleZero() {
             const trigger = document.getElementById('zero-trigger');
             const content = document.getElementById('zero-content');
@@ -1001,11 +879,25 @@
             content.classList.toggle('open');
         }
 
+        // === 5. ДИАГНОСТИКА ===
+        function toggleStates() {
+            const trigger = document.getElementById('state-trigger');
+            const wrapper = document.getElementById('states-wrapper');
+            trigger.classList.toggle('open');
+            wrapper.classList.toggle('open');
+        }
+        function selectState(val, text, element) {
+            document.querySelectorAll('.state-card').forEach(card => card.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('selected-state').value = val;
+            document.getElementById('trigger-text').innerText = 'Выбрано: ' + val + ' — ' + text;
+            document.getElementById('state-trigger').classList.remove('open');
+            document.getElementById('states-wrapper').classList.remove('open');
+        }
         function calc(e) {
             e.preventDefault();
-            const stateVal = parseInt(document.getElementById('state').value);
-            
-            let f = stateVal; 
+            const stateVal = parseInt(document.getElementById('selected-state').value);
+            if (isNaN(stateVal)) { alert("Пожалуйста, сначала выбери состояние из списка."); return; }
             
             if (stateVal === 0) {
                 document.getElementById('r-vitok').innerText = 'Точка Ноль';
@@ -1013,17 +905,17 @@
                 document.getElementById('r-light').innerText = 'Чистое Я';
                 document.getElementById('r-alice').innerText = 'Пребывать в покое и гармонии.';
             } else {
-                document.getElementById('r-vitok').innerText = 'Виток №' + f;
-                document.getElementById('r-shadow').innerText = nData[f].s;
-                document.getElementById('r-light').innerText = nData[f].l;
-                document.getElementById('r-alice').innerText = nData[f].a;
+                document.getElementById('r-vitok').innerText = 'Виток №' + stateVal;
+                document.getElementById('r-shadow').innerText = nData[stateVal].s;
+                document.getElementById('r-light').innerText = nData[stateVal].l;
+                document.getElementById('r-alice').innerText = nData[stateVal].a;
             }
 
             const now = new Date();
             const dateFormatted = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
             const dateKey = now.toISOString().split('T')[0];
             
-            const newResult = { date: dateFormatted, vitok: f, shadow: nData[f].s, light: nData[f].l, alice: nData[f].a };
+            const newResult = { date: dateFormatted, vitok: stateVal, shadow: nData[stateVal].s, light: nData[stateVal].l, alice: nData[stateVal].a };
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             history.push(newResult); 
             localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
@@ -1031,8 +923,7 @@
             let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
             if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
             if (!Array.isArray(calData[dateKey].vitok)) calData[dateKey].vitok = [];
-            
-            calData[dateKey].vitok.push({ vitok: f, shadow: nData[f].s, light: nData[f].l, alice: nData[f].a });
+            calData[dateKey].vitok.push({ vitok: stateVal, shadow: nData[stateVal].s, light: nData[stateVal].l, alice: nData[stateVal].a });
             localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
             
             updateMyPathSection();
@@ -1043,288 +934,113 @@
             box.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
+        // === 6. ЩИТ ПЕРСЕЯ ===
         function showShield() {
-            const courseSection = document.getElementById('course');
-            courseSection.style.display = 'flex';
+            document.getElementById('course').style.display = 'flex';
+            document.getElementById('shield-wrapper').classList.remove('open');
+            document.getElementById('shield-trigger').classList.remove('open');
+            document.getElementById('shield-wrapper').style.maxHeight = '0px';
             
-            document.querySelectorAll('.l-details').forEach(function(el) { el.classList.remove('show'); });
-            document.querySelectorAll('.l-card').forEach(function(el) { el.classList.remove('active'); });
-            
-            const stateVal = parseInt(document.getElementById('state').value);
-            let targetId = stateVal;
-            if (stateVal === 0) targetId = 0;
-            
-            document.getElementById('d-'+targetId).classList.add('show');
-            document.getElementById('c-'+targetId).classList.add('active');
-
             setTimeout(() => {
-                courseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('course').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
-
-        function updateMyPathSection() {
-            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
-            const section = document.getElementById('my-path-section');
-            if (history.length > 0 || diary.length > 0) {
-                section.style.display = 'flex';
+        function toggleShield() {
+            const trigger = document.getElementById('shield-trigger');
+            const wrapper = document.getElementById('shield-wrapper');
+            if (wrapper.classList.contains('open')) {
+                wrapper.classList.remove('open');
+                trigger.classList.remove('open');
+                wrapper.style.maxHeight = '0px';
             } else {
-                section.style.display = 'none';
+                wrapper.classList.add('open');
+                trigger.classList.add('open');
+                wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
             }
         }
-
-        function openModal() {
-            showCurrent(); 
-            document.getElementById('modal').classList.add('show');
-        }
-        function closeModal() {
-            document.getElementById('modal').classList.remove('show');
-        }
-
-        function showCurrent() {
-            document.getElementById('path-view').style.display = 'none';
-            document.getElementById('diary-view').style.display = 'none';
-            document.getElementById('archive-view').style.display = 'none';
-            document.getElementById('day-view').style.display = 'none';
-            document.getElementById('numerology-view').style.display = 'none';
-            document.getElementById('current-view').style.display = 'block';
-        }
-
-        function showNumerology() {
-            document.getElementById('current-view').style.display = 'none';
-            document.getElementById('numerology-view').style.display = 'flex';
-        }
-
-        function calcNumerology() {
-            const birthInput = document.getElementById('num-birth').value;
-            const currentInput = document.getElementById('num-current').value;
-            const resultBox = document.getElementById('num-result');
-
-            if (!birthInput || !currentInput) {
-                alert('Пожалуйста, заполните обе даты.');
-                return;
-            }
-
-            const birthDate = new Date(birthInput);
-            const currentDate = new Date(currentInput);
-
-            const sumDigits = (date) => {
-                const str = date.getDate().toString() + (date.getMonth() + 1).toString() + date.getFullYear().toString();
-                let sum = 0;
-                for (let i = 0; i < str.length; i++) { if (!isNaN(parseInt(str[i]))) sum += parseInt(str[i]); }
-                let f = sum;
-                while (f > 9) { f = Math.floor(f / 10) + (f % 10); }
-                return f;
-            };
-
-            const birthNum = sumDigits(birthDate);
-            const currentNum = sumDigits(currentDate);
-
-            resultBox.style.display = 'block';
-            resultBox.innerHTML = `
-                <strong>Число рождения:</strong> ${birthNum}<br>
-                <strong>Число дня прохождения:</strong> ${currentNum}<br>
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
-                <em style="color: var(--muted); font-size: 0.85rem;">Этот раздел находится в разработке. Позже мы добавим сюда глубокий анализ взаимодействия этих чисел.</em>
-            `;
-        }
-
-        function showPath() {
-            document.getElementById('current-view').style.display = 'none';
-            document.getElementById('path-view').style.display = 'flex';
-            
-            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            if (history.length > 0) {
-                const data = history[history.length - 1];
-                document.getElementById('m-vitok').innerText = 'Виток №' + data.vitok;
-                document.getElementById('m-shadow').innerText = data.shadow;
-                document.getElementById('m-light').innerText = data.light;
-                document.getElementById('m-alice').innerText = data.alice;
+        function toggleCard(id) {
+            const card = document.getElementById('c-' + id);
+            const details = document.getElementById('d-' + id);
+            if (details.classList.contains('show')) {
+                details.classList.remove('show');
+                card.classList.remove('active');
             } else {
-                document.getElementById('m-vitok').innerText = 'Нет данных';
-                document.getElementById('m-shadow').innerText = 'Пройди диагностику';
-                document.getElementById('m-light').innerText = '...';
-                document.getElementById('m-alice').innerText = '...';
+                document.querySelectorAll('.l-details').forEach(el => el.classList.remove('show'));
+                document.querySelectorAll('.l-card').forEach(el => el.classList.remove('active'));
+                details.classList.add('show');
+                card.classList.add('active');
             }
+            document.getElementById('shield-wrapper').style.maxHeight = 'none';
         }
-
-        function showDiary() {
-            document.getElementById('current-view').style.display = 'none';
-            document.getElementById('path-view').style.display = 'none';
-            document.getElementById('archive-view').style.display = 'none';
-            document.getElementById('day-view').style.display = 'none';
-            document.getElementById('numerology-view').style.display = 'none';
-            document.getElementById('diary-view').style.display = 'flex';
-
-            const list = document.getElementById('diary-list');
-            list.innerHTML = '';
-
-            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
-            if (diary.length === 0) {
-                list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой дневник пока пуст.</p>';
-                return;
-            }
-
-            diary.slice().reverse().forEach((item) => {
-                const realIndex = diary.indexOf(item);
-                const div = document.createElement('div');
-                div.className = 'diary-entry';
-                let color = (item.avg >= 4) ? 'var(--gold)' : ((item.avg <= -4) ? 'var(--red)' : '#fff');
-                let vitokBadge = item.vitok ? `<span class="vitok-badge">Виток №${item.vitok}</span>` : '';
-
-                div.innerHTML = `
-                    ${vitokBadge}
-                    <span class="time">${item.date}</span>
-                    <div class="text">"${item.text}"</div>
-                    <div class="metrics">
-                        <span>Логика: ${item.x}</span>
-                        <span>Эмоции: ${item.y}</span>
-                        <span>Состояние: ${item.z}</span>
-                        <span style="color:${color}; font-weight:bold;">Вектор: ${item.avg}</span>
-                    </div>
-                    <button class="btn-del" onclick="deleteDiaryNote(${realIndex})" title="Удалить">✕</button>
+        function renderShield() {
+            const tl = document.getElementById('timeline');
+            tl.innerHTML = '';
+            cData.forEach(function(l) {
+                const c = document.createElement('div');
+                c.className = 'l-card';
+                c.id = 'c-' + l.id;
+                c.onclick = function() { toggleCard(l.id); };
+                c.innerHTML = '<div class="l-num">' + l.id + '</div><div class="l-title">' + l.t + '</div>';
+                
+                const d = document.createElement('div');
+                d.className = 'l-details';
+                d.id = 'd-' + l.id;
+                d.innerHTML = `
+                    <div class="d-block d-shadow"><strong>Горгона (Тень):</strong> ${l.s}</div>
+                    <div class="d-block d-light"><strong>Персей (Свет):</strong> ${l.l}</div>
+                    <div class="d-block d-alice"><strong>Шаг Алисы:</strong> ${l.a}</div>
                 `;
-                list.appendChild(div);
+                tl.appendChild(c);
+                tl.appendChild(d);
             });
         }
 
-        function showArchive() {
-            document.getElementById('current-view').style.display = 'none';
-            document.getElementById('path-view').style.display = 'none';
-            document.getElementById('diary-view').style.display = 'none';
-            document.getElementById('day-view').style.display = 'none';
-            document.getElementById('numerology-view').style.display = 'none';
-            document.getElementById('archive-view').style.display = 'flex';
-
-            const list = document.getElementById('archive-list');
-            list.innerHTML = '';
-
-            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            if (history.length === 0) {
-                list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой архив пока пуст.</p>';
-                return;
-            }
-
-            history.slice().reverse().forEach((item, index) => {
-                const realIndex = history.length - 1 - index;
+        // === 7. КОМПАС ===
+        function buildBalanceList(type) {
+            const container = document.getElementById('options-' + type);
+            container.innerHTML = '';
+            balanceData[type].forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'archive-item';
-                div.innerHTML = `
-                    <div class="archive-info">
-                        <h4>Виток №${item.vitok} (${item.shadow})</h4>
-                        <p>Шаг: ${item.alice}</p>
-                        <span class="archive-date">Пройдено: ${item.date}</span>
-                    </div>
-                    <button class="btn-del" onclick="deleteFromArchive(${realIndex})" title="Удалить">✕</button>
-                `;
-                list.appendChild(div);
+                div.className = 'custom-option' + (item.v === 0 ? ' selected' : '');
+                div.innerText = (item.v > 0 ? '+' : '') + item.v + ' — ' + item.t;
+                div.onclick = (e) => { e.stopPropagation(); selectBalanceOption(type, item.v, item.t); };
+                container.appendChild(div);
             });
         }
-
-        function deleteFromArchive(index) {
-            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            history.splice(index, 1);
-            localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
-            updateMyPathSection();
-            showArchive();
+        function toggleCustom(type) {
+            const currentBtn = document.querySelector(`[onclick="toggleCustom('${type}')"]`);
+            const currentList = document.getElementById('options-' + type);
+            if (currentList.classList.contains('show')) {
+                currentBtn.classList.remove('active');
+                currentList.classList.remove('show');
+                return; 
+            }
+            document.querySelectorAll('.custom-select-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.custom-options').forEach(l => l.classList.remove('show'));
+            currentBtn.classList.add('active');
+            currentList.classList.add('show');
         }
-
-        function saveDiaryNote() {
-            const text = document.getElementById('diary-text').value.trim();
-            if (!text) { alert('Напиши что-нибудь перед сохранением.'); return; }
-
-            const x = parseInt(document.getElementById('select-logic').value);
-            const y = parseInt(document.getElementById('select-emotion').value);
-            const z = parseInt(document.getElementById('select-state').value);
-            const avg = Math.round((x + y + z) / 3);
-
-            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            let currentVitok = history.length > 0 ? history[history.length - 1].vitok : null;
-
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
-            const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            const timestamp = now.getTime();
-            const dateKey = now.toISOString().split('T')[0];
-
-            const newNote = { timestamp, date: `${dateStr} ${timeStr}`, text, x, y, z, avg, vitok: currentVitok };
-
-            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
-            diary.push(newNote);
-            localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
-            
-            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
-            if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
-            if (!Array.isArray(calData[dateKey].diary)) calData[dateKey].diary = [];
-            calData[dateKey].diary.push(newNote);
-            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
-
-            document.getElementById('diary-text').value = '';
-            alert('Запись сохранена!');
-            updateMyPathSection();
-            renderCalendar();
-            showDiary(); 
+        function selectBalanceOption(type, val, text) {
+            currentVals[type] = val;
+            const prefix = val > 0 ? '+' : '';
+            document.getElementById('label-' + type).innerText = prefix + val + ' — ' + text;
+            const container = document.getElementById('options-' + type);
+            Array.from(container.children).forEach(child => child.classList.remove('selected'));
+            Array.from(container.children).find(child => child.innerText.includes(text)).classList.add('selected');
+            document.querySelectorAll('.custom-select-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.custom-options').forEach(l => l.classList.remove('show'));
+            updateBalance();
         }
-
-        function deleteDiaryNote(index) {
-            if (!confirm('Удалить эту запись?')) return;
-            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
-            diary.splice(index, 1);
-            localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
-            
-            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
-            Object.keys(calData).forEach(key => {
-                if (calData[key].diary) {
-                    calData[key].diary = calData[key].diary.filter(note => diary.some(d => d.timestamp === note.timestamp));
-                }
-            });
-            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
-
-            updateMyPathSection();
-            renderCalendar();
-            showDiary();
-        }
-
-        function toggle(id) {
-            document.querySelectorAll('.l-details').forEach(function(el) { el.classList.remove('show'); });
-            document.querySelectorAll('.l-card').forEach(function(el) { el.classList.remove('active'); });
-            document.getElementById('d-'+id).classList.add('show');
-            document.getElementById('c-'+id).classList.add('active');
-        }
-
-        function openTextModal(title, score, text) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerHTML = `<strong style="font-size: 1.5rem; color: var(--gold); display: block; margin-bottom: 10px;">${score}</strong> ${text}`;
-            document.getElementById('text-modal').classList.add('show');
-        }
-        function closeTextModal() {
-            document.getElementById('text-modal').classList.remove('show');
-        }
-
-        let saveTimeout = null;
-
         function updateBalance() {
-            const x = parseInt(document.getElementById('select-logic').value);
-            const y = parseInt(document.getElementById('select-emotion').value);
-            const z = parseInt(document.getElementById('select-state').value);
-
+            const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
             const resultBox = document.getElementById('balance-result');
             const title = document.getElementById('balance-title');
             const text = document.getElementById('balance-text');
             const avgVal = Math.round((x + y + z) / 3);
 
-            const textX = document.getElementById('select-logic').options[document.getElementById('select-logic').selectedIndex].text.split('—')[1].trim();
             document.getElementById('ci-x').innerText = 'Логика: ' + (x > 0 ? '+' : '') + x;
-            document.getElementById('ci-x-text').innerText = textX;
-            
-            const textY = document.getElementById('select-emotion').options[document.getElementById('select-emotion').selectedIndex].text.split('—')[1].trim();
             document.getElementById('ci-y').innerText = 'Эмоции: ' + (y > 0 ? '+' : '') + y;
-            document.getElementById('ci-y-text').innerText = textY;
-            
-            const textZ = document.getElementById('select-state').options[document.getElementById('select-state').selectedIndex].text.split('—')[1].trim();
             document.getElementById('ci-z').innerText = 'Состояние: ' + (z > 0 ? '+' : '') + z;
-            document.getElementById('ci-z-text').innerText = textZ;
-            
             document.getElementById('ci-avg').innerText = 'Вектор: ' + (avgVal > 0 ? '+' : '') + avgVal;
 
             let resultText = "";
@@ -1341,22 +1057,19 @@
             
             title.innerText = "Вектор Пути: " + (avgVal > 0 ? '+' : '') + avgVal;
             text.innerText = resultText;
-            document.getElementById('ci-avg-text').innerText = resultText;
 
             const arrowX = document.getElementById('vis-x');
-            arrowX.style.height = (80 + Math.abs(x) * 4) + 'px';
+            arrowX.style.height = (60 + Math.abs(x) * 5) + 'px';
             arrowX.style.transform = `translateX(-50%) rotate(${x >= 0 ? 45 - (x * 4) : -45 + (x * 4)}deg)`;
-
             const arrowY = document.getElementById('vis-y');
-            arrowY.style.height = (80 + Math.abs(y) * 4) + 'px';
+            arrowY.style.height = (60 + Math.abs(y) * 5) + 'px';
             arrowY.style.transform = `translateX(-50%) rotate(${y >= 0 ? -45 + (y * 4) : 45 + (y * 4)}deg)`;
-
             const arrowZ = document.getElementById('vis-z');
-            arrowZ.style.height = (80 + Math.abs(z) * 4) + 'px';
+            arrowZ.style.height = (60 + Math.abs(z) * 5) + 'px';
             arrowZ.style.transform = `translateX(-50%) rotate(${z >= 0 ? 0 : 180}deg)`;
-
             const arrowAvg = document.getElementById('vis-avg');
-            arrowAvg.style.height = (100 + Math.abs(avgVal) * 6) + 'px';
+            arrowAvg.style.height = (80 + Math.abs(avgVal) * 7) + 'px';
+            
             if (avgVal >= 4) {
                  arrowAvg.style.transform = `translateX(-50%) rotate(0deg)`;
                  arrowAvg.style.background = 'var(--gold)';
@@ -1375,128 +1088,405 @@
             }
 
             if (saveTimeout) clearTimeout(saveTimeout);
-            saveTimeout = setTimeout(() => {
-                saveToCalendar(x, y, z, avgVal, resultText);
-            }, 1500);
+            saveTimeout = setTimeout(() => { saveToCalendar(x, y, z, avgVal, resultText); }, 1500);
         }
-
         function saveToCalendar(x, y, z, avg, text) {
             const now = new Date();
             const dateKey = now.toISOString().split('T')[0]; 
             const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-
             let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
             if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
             if (!Array.isArray(calData[dateKey].compass)) calData[dateKey].compass = [];
-
             const lastEntry = calData[dateKey].compass[calData[dateKey].compass.length - 1];
             if (lastEntry && lastEntry.x === x && lastEntry.y === y && lastEntry.z === z) return;
-
             calData[dateKey].compass.push({ time: timeStr, x, y, z, avg, text });
             localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
             renderCalendar();
         }
 
-        let calViewYear = new Date().getFullYear();
-        let calViewMonth = new Date().getMonth();
+        // === 8. МОЙ ПУТЬ ===
+        function updateMyPathSection() {
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            const section = document.getElementById('my-path-section');
+            if (history.length > 0 || diary.length > 0) {
+                section.style.display = 'flex';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+        function openModal() { showCurrent(); document.getElementById('modal').classList.add('show'); }
+        function closeModal() { document.getElementById('modal').classList.remove('show'); }
+        function showCurrent() {
+            document.getElementById('path-view').style.display = 'none';
+            document.getElementById('diary-view').style.display = 'none';
+            document.getElementById('archive-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'none';
+            document.getElementById('day-view').style.display = 'none';
+            document.getElementById('current-view').style.display = 'block';
+        }
+        function showPath() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('path-view').style.display = 'flex';
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            if (history.length > 0) {
+                const data = history[history.length - 1];
+                document.getElementById('m-vitok').innerText = 'Виток №' + data.vitok;
+                document.getElementById('m-shadow').innerText = data.shadow;
+                document.getElementById('m-light').innerText = data.light;
+                document.getElementById('m-alice').innerText = data.alice;
+            } else {
+                document.getElementById('m-vitok').innerText = 'Нет данных';
+                document.getElementById('m-shadow').innerText = 'Пройди диагностику';
+                document.getElementById('m-light').innerText = '...';
+                document.getElementById('m-alice').innerText = '...';
+            }
+        }
+        function showDiary() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('diary-view').style.display = 'flex';
+            const list = document.getElementById('diary-list');
+            list.innerHTML = '';
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            if (diary.length === 0) { list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой дневник пока пуст.</p>'; return; }
+            diary.slice().reverse().forEach((item) => {
+                const realIndex = diary.indexOf(item);
+                const div = document.createElement('div');
+                div.className = 'diary-entry';
+                let color = (item.avg >= 4) ? 'var(--gold)' : ((item.avg <= -4) ? 'var(--red)' : '#fff');
+                let vitokBadge = item.vitok ? `<span class="vitok-badge" style="display:inline-block; background: rgba(126,200,255,0.15); color: var(--blue); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 8px;">Виток №${item.vitok}</span>` : '';
+                div.innerHTML = `
+                    ${vitokBadge}
+                    <span class="time">${item.date}</span>
+                    <div class="text">"${item.text}"</div>
+                    <div class="metrics">
+                        <span>Логика: ${item.x}</span><span>Эмоции: ${item.y}</span><span>Состояние: ${item.z}</span>
+                        <span style="color:${color}; font-weight:bold;">Вектор: ${item.avg}</span>
+                    </div>
+                    <button class="btn-del" onclick="deleteDiaryNote(${realIndex})" title="Удалить">✕</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+        function showArchive() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('archive-view').style.display = 'flex';
+            const list = document.getElementById('archive-list');
+            list.innerHTML = '';
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            if (history.length === 0) { list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой архив пока пуст.</p>'; return; }
+            history.slice().reverse().forEach((item, index) => {
+                const realIndex = history.length - 1 - index;
+                const div = document.createElement('div');
+                div.className = 'archive-item';
+                div.innerHTML = `
+                    <div class="archive-info">
+                        <h4>Виток №${item.vitok} (${item.shadow})</h4>
+                        <p>Шаг: ${item.alice}</p>
+                        <span class="archive-date">Пройдено: ${item.date}</span>
+                    </div>
+                    <button class="btn-del-arch" onclick="deleteFromArchive(${realIndex})" title="Удалить">✕</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+        function showNumerology() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'flex';
+        }
+        function deleteFromArchive(index) {
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            history.splice(index, 1);
+            localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
+            updateMyPathSection();
+            showArchive();
+        }
+        function saveDiaryNote() {
+            const text = document.getElementById('diary-text').value.trim();
+            if (!text) { alert('Напиши что-нибудь перед сохранением.'); return; }
+            const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
+            const avg = Math.round((x + y + z) / 3);
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            let currentVitok = history.length > 0 ? history[history.length - 1].vitok : null;
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            const timestamp = now.getTime();
+            const dateKey = now.toISOString().split('T')[0];
+            const newNote = { timestamp, date: `${dateStr} ${timeStr}`, text, x, y, z, avg, vitok: currentVitok };
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            diary.push(newNote);
+            localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
+            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
+            if (!Array.isArray(calData[dateKey].diary)) calData[dateKey].diary = [];
+            calData[dateKey].diary.push(newNote);
+            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+            document.getElementById('diary-text').value = '';
+            alert('Запись сохранена!');
+            updateMyPathSection();
+            renderCalendar();
+            showDiary(); 
+        }
+        function deleteDiaryNote(index) {
+            if (!confirm('Удалить эту запись?')) return;
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            diary.splice(index, 1);
+            localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
+            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            Object.keys(calData).forEach(key => {
+                if (calData[key].diary) {
+                    calData[key].diary = calData[key].diary.filter(note => diary.some(d => d.timestamp === note.timestamp));
+                }
+            });
+            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+            updateMyPathSection();
+            renderCalendar();
+            showDiary();
+        }
+        function calcNumerology() {
+            const birthInput = document.getElementById('num-birth').value;
+            const currentInput = document.getElementById('num-current').value;
+            const resultBox = document.getElementById('num-result');
+            if (!birthInput || !currentInput) { alert('Пожалуйста, заполните обе даты.'); return; }
+            const birthDate = new Date(birthInput);
+            const currentDate = new Date(currentInput);
+            const sumDigits = (date) => {
+                const str = date.getDate().toString() + (date.getMonth() + 1).toString() + date.getFullYear().toString();
+                let sum = 0;
+                for (let i = 0; i < str.length; i++) { if (!isNaN(parseInt(str[i]))) sum += parseInt(str[i]); }
+                let f = sum;
+                while (f > 9) { f = Math.floor(f / 10) + (f % 10); }
+                return f;
+            };
+            const birthNum = sumDigits(birthDate);
+            const currentNum = sumDigits(currentDate);
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `
+                <strong>Число рождения:</strong> ${birthNum}<br>
+                <strong>Число дня прохождения:</strong> ${currentNum}<br>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
+                <em style="color: var(--muted); font-size: 0.85rem;">Этот раздел находится в разработке. Позже мы добавим сюда глубокий анализ взаимодействия этих чисел.</em>
+            `;
+        }
 
+        // === 9. МЕДИТАЦИИ ===
+        const audio = document.getElementById('audio-player');
+        function toggleMeditations() {
+            const trigger = document.getElementById('med-main-trigger');
+            const wrapper = document.getElementById('med-content-wrapper');
+            if (wrapper.classList.contains('open')) {
+                wrapper.classList.remove('open');
+                trigger.classList.remove('open');
+                wrapper.style.maxHeight = '0px';
+            } else {
+                wrapper.classList.add('open');
+                trigger.classList.add('open');
+                wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+            }
+        }
+        function renderMeditations() {
+            const container = document.getElementById('med-container');
+            container.innerHTML = '';
+            meditations.forEach(med => {
+                const item = document.createElement('div');
+                item.className = 'med-item';
+                
+                const card = document.createElement('div');
+                card.className = 'med-card';
+                card.id = 'card-' + med.id;
+                card.onclick = () => togglePlayer(med.id, med.file);
+                card.innerHTML = `
+                    <div class="med-info">
+                        <h4>${med.num}</h4>
+                        <p>${med.name}</p>
+                    </div>
+                    <span class="icon">🔽</span>
+                `;
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'player-wrapper';
+                wrapper.id = 'wrapper-' + med.id;
+                wrapper.innerHTML = `
+                    <div class="player-box">
+                        <div class="player-controls">
+                            <button class="play-btn" id="play-btn-${med.id}" onclick="togglePlay(${med.id})">▶</button>
+                        </div>
+                        <div class="progress-container" id="progress-bar-${med.id}" onclick="seekAudio(event, ${med.id})">
+                            <div class="progress-fill" id="progress-fill-${med.id}"></div>
+                        </div>
+                        <div class="player-time">
+                            <span id="time-current-${med.id}">0:00</span>
+                            <span id="time-total-${med.id}">0:00</span>
+                        </div>
+                        <div class="player-error" id="player-error-${med.id}">Аудиофайл не найден. Проверьте путь к файлу (папка audio).</div>
+                    </div>
+                `;
+                
+                item.appendChild(card);
+                item.appendChild(wrapper);
+                container.appendChild(item);
+            });
+        }
+        function togglePlayer(id, file) {
+            const currentCard = document.getElementById('card-' + id);
+            const currentWrapper = document.getElementById('wrapper-' + id);
+            if (currentWrapper.classList.contains('open')) { closeAllPlayers(); audio.pause(); return; }
+            closeAllPlayers();
+            audio.pause();
+            audio.src = ''; 
+            currentCard.classList.add('active');
+            currentWrapper.classList.add('open');
+            setTimeout(() => { currentWrapper.style.maxHeight = currentWrapper.scrollHeight + 'px'; }, 10);
+            audio.src = file;
+            audio.load();
+            currentPlayingId = id;
+            document.getElementById('play-btn-' + id).innerText = '▶';
+            document.getElementById('progress-fill-' + id).style.width = '0%';
+            document.getElementById('time-current-' + id).innerText = '0:00';
+            document.getElementById('time-total-' + id).innerText = '0:00';
+            document.getElementById('player-error-' + id).classList.remove('show');
+        }
+        function closeAllPlayers() {
+            document.querySelectorAll('.med-card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.player-wrapper').forEach(w => {
+                w.classList.remove('open');
+                w.style.maxHeight = '0px';
+            });
+            document.querySelectorAll('.play-btn').forEach(b => b.innerText = '▶');
+            currentPlayingId = null;
+        }
+        function togglePlay(id) {
+            if (currentPlayingId !== id) return;
+            const btn = document.getElementById('play-btn-' + id);
+            if (audio.paused) {
+                audio.play().catch(() => { document.getElementById('player-error-' + id).classList.add('show'); });
+                btn.innerText = '⏸';
+            } else {
+                audio.pause();
+                btn.innerText = '▶';
+            }
+        }
+        function updateProgress() {
+            if (!audio.duration || currentPlayingId === null) return;
+            const percent = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progress-fill-' + currentPlayingId).style.width = percent + '%';
+            document.getElementById('time-current-' + currentPlayingId).innerText = formatTime(audio.currentTime);
+        }
+        function updateDuration() {
+            if (currentPlayingId === null) return;
+            document.getElementById('time-total-' + currentPlayingId).innerText = formatTime(audio.duration);
+            document.getElementById('player-error-' + currentPlayingId).classList.remove('show');
+        }
+        function showError() {
+            if (currentPlayingId === null) return;
+            document.getElementById('player-error-' + currentPlayingId).classList.add('show');
+            document.getElementById('play-btn-' + currentPlayingId).innerText = '▶';
+        }
+        function seekAudio(e, id) {
+            if (currentPlayingId !== id || !audio.duration) return;
+            const bar = document.getElementById('progress-bar-' + id);
+            const rect = bar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        }
+        function handleEnded() {
+            if (currentPlayingId === null) return;
+            document.getElementById('play-btn-' + currentPlayingId).innerText = '▶';
+            document.getElementById('progress-fill-' + currentPlayingId).style.width = '0%';
+        }
+        function formatTime(seconds) {
+            if (!isFinite(seconds) || isNaN(seconds)) return '0:00';
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        // === 10. ЛЕГЕНДА ===
+        function updateLegend() {
+            const contentBox = document.getElementById('book-content-legend');
+            contentBox.innerHTML = `<h2>${bookPagesLegend[currentLegendPage].title}</h2><p>${bookPagesLegend[currentLegendPage].text}</p>`;
+            contentBox.style.animation = 'none';
+            contentBox.offsetHeight; 
+            contentBox.style.animation = 'fadeIn 0.4s ease-out';
+            document.getElementById('page-num-legend').innerText = `Стр. ${currentLegendPage + 1} из ${bookPagesLegend.length}`;
+            document.getElementById('book-prev').disabled = (currentLegendPage === 0);
+            document.getElementById('book-next').disabled = (currentLegendPage === bookPagesLegend.length - 1);
+        }
+        function nextPageLegend() {
+            if (currentLegendPage < bookPagesLegend.length - 1) { currentLegendPage++; updateLegend(); }
+        }
+        function prevPageLegend() {
+            if (currentLegendPage > 0) { currentLegendPage--; updateLegend(); }
+        }
+
+        // === КАЛЕНДАРЬ ===
         function changeMonth(delta) {
             calViewMonth += delta;
             if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
             if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
             renderCalendar();
         }
-
-        function changeYear(delta) {
-            calViewYear += delta;
-            renderCalendar();
-        }
-
+        function changeYear(delta) { calViewYear += delta; renderCalendar(); }
         function renderCalendar() {
             const grid = document.getElementById('calendar-grid');
             grid.innerHTML = '';
-            
             const year = calViewYear;
             const month = calViewMonth;
-            
             const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
             document.getElementById('cal-title').innerText = `${monthNames[month]} ${year}`;
-            
             ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].forEach(d => {
                 let div = document.createElement('div');
                 div.className = 'cal-day-name';
                 div.innerText = d;
                 grid.appendChild(div);
             });
-
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             let startOffset = firstDay === 0 ? 6 : firstDay - 1;
-
-            for (let i = 0; i < startOffset; i++) {
-                grid.appendChild(document.createElement('div'));
-            }
-
+            for (let i = 0; i < startOffset; i++) { grid.appendChild(document.createElement('div')); }
             let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
             const today = new Date();
             const isCurrentMonth = (year === today.getFullYear() && month === today.getMonth());
-
             for (let i = 1; i <= daysInMonth; i++) {
                 let dayStr = i < 10 ? '0' + i : i;
                 let monthStr = (month + 1) < 10 ? '0' + (month + 1) : (month + 1);
                 let dateKey = `${year}-${monthStr}-${dayStr}`;
-                
                 let div = document.createElement('div');
                 div.className = 'cal-day';
                 div.innerText = i;
-
-                if (isCurrentMonth && i === today.getDate()) {
-                    div.classList.add('today');
-                }
-
+                if (isCurrentMonth && i === today.getDate()) { div.classList.add('today'); }
                 let hasData = false;
                 if (calData[dateKey]) {
                     const hasCompass = calData[dateKey].compass && calData[dateKey].compass.length > 0;
                     const hasVitok = calData[dateKey].vitok && calData[dateKey].vitok.length > 0;
                     const hasDiary = calData[dateKey].diary && calData[dateKey].diary.length > 0;
-                    
                     if (hasCompass || hasVitok || hasDiary) {
                         hasData = true;
                         div.classList.add('has-data');
-                        
                         if (hasCompass) {
                             const lastEntry = calData[dateKey].compass[calData[dateKey].compass.length - 1]; 
                             if (lastEntry.avg >= 4) div.classList.add('plus');
                             else if (lastEntry.avg <= -4) div.classList.add('minus');
                             else div.classList.add('zero');
-                        } else {
-                            div.classList.add('zero');
-                        }
-
-                        if (hasDiary) {
-                            div.classList.add('has-diary');
-                        }
+                        } else { div.classList.add('zero'); }
+                        if (hasDiary) { div.classList.add('has-diary'); }
                     }
                 }
-                
                 div.onclick = () => showDayDetails(calData[dateKey] || null, `${i}.${monthStr}.${year}`);
-                
                 grid.appendChild(div);
             }
         }
-
         function showDayDetails(dayData, dateLabel) {
             document.getElementById('current-view').style.display = 'none';
             document.getElementById('path-view').style.display = 'none';
             document.getElementById('archive-view').style.display = 'none';
             document.getElementById('diary-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'none';
             document.getElementById('day-view').style.display = 'flex';
-            
             document.querySelector('#day-view h2').innerText = 'Детали дня: ' + dateLabel;
-
             const list = document.getElementById('day-log-list');
             list.innerHTML = '';
-
             if (!dayData) {
                 list.innerHTML = '<p style="color: var(--muted); text-align: center; padding: 20px 0;">В этот день записей нет.<br><br>Пройди диагностику или сделай запись в дневник, чтобы заполнить этот день.</p>';
             } else {
@@ -1505,7 +1495,6 @@
                     title.className = 'day-section-title';
                     title.innerText = 'Пройденные тесты (Витки)';
                     list.appendChild(title);
-
                     dayData.vitok.forEach(v => {
                         const div = document.createElement('div');
                         div.className = 'day-log-item';
@@ -1517,13 +1506,11 @@
                         list.appendChild(div);
                     });
                 }
-
                 if (dayData.compass && dayData.compass.length > 0) {
                     const title = document.createElement('div');
                     title.className = 'day-section-title';
                     title.innerText = 'Показатели Компаса';
                     list.appendChild(title);
-
                     dayData.compass.forEach(c => {
                         const div = document.createElement('div');
                         div.className = 'day-log-item';
@@ -1535,13 +1522,11 @@
                         list.appendChild(div);
                     });
                 }
-
                 if (dayData.diary && dayData.diary.length > 0) {
                     const title = document.createElement('div');
                     title.className = 'day-section-title';
                     title.innerText = 'Записи Дневника';
                     list.appendChild(title);
-
                     dayData.diary.forEach(d => {
                         const div = document.createElement('div');
                         div.className = 'day-log-item';
@@ -1556,144 +1541,32 @@
                     });
                 }
             }
-
             document.getElementById('modal').classList.add('show');
         }
 
-        const audio = document.getElementById('audio-player');
-        const playBtn = document.getElementById('play-btn');
-        const progressFill = document.getElementById('progress-fill');
-        const progressBar = document.getElementById('progress-bar');
-        const timeCurrent = document.getElementById('time-current');
-        const timeTotal = document.getElementById('time-total');
-        const playerError = document.getElementById('player-error');
-        let isPlaying = false;
-        let currentTrackId = null;
-
-        function formatTime(seconds) {
-            if (!isFinite(seconds) || isNaN(seconds)) return '0:00';
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return m + ':' + (s < 10 ? '0' : '') + s;
-        }
-
-        function openPlayer(id) {
-            document.querySelectorAll('.med-card').forEach(el => el.classList.remove('active'));
-            const card = document.querySelector(`.med-card[data-id="${id}"]`);
-            if (card) card.classList.add('active');
-            
-            const med = meditations.find(m => m.id === id);
-            if (!med) return;
-            
-            currentTrackId = id;
-            const player = document.getElementById('player');
-            document.getElementById('player-title').innerText = `${med.num}: ${med.name}`;
-            player.classList.add('show');
-            
-            audio.src = audioFiles[id];
-            audio.load(); 
-            
-            playBtn.innerText = '▶';
-            isPlaying = false;
-            progressFill.style.width = '0%';
-            timeCurrent.innerText = '0:00';
-            timeTotal.innerText = '0:00';
-            playerError.classList.remove('show');
-            
-            player.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function togglePlay() {
-            if (!audio.src) return; 
-            if (isPlaying) {
-                audio.pause();
-                playBtn.innerText = '▶';
-            } else {
-                audio.play().catch(() => { playerError.classList.add('show'); });
-                playBtn.innerText = '⏸';
-            }
-            isPlaying = !isPlaying;
-        }
-
-        audio.addEventListener('timeupdate', function() {
-            if (audio.duration) {
-                progressFill.style.width = (audio.currentTime / audio.duration) * 100 + '%';
-                timeCurrent.innerText = formatTime(audio.currentTime);
+        // === ИНИЦИАЛИЗАЦИЯ ===
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.custom-select-btn')) {
+                document.querySelectorAll('.custom-select-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.custom-options').forEach(l => l.classList.remove('show'));
             }
         });
-
-        audio.addEventListener('loadedmetadata', function() {
-            timeTotal.innerText = formatTime(audio.duration);
-            playerError.classList.remove('show');
-        });
-
-        audio.addEventListener('error', function() {
-            playerError.classList.add('show');
-            playBtn.innerText = '▶';
-            isPlaying = false;
-        });
-
-        audio.addEventListener('ended', function() {
-            playBtn.innerText = '▶';
-            isPlaying = false;
-            progressFill.style.width = '0%';
-            if (currentTrackId !== null) {
-                const nextId = currentTrackId + 1;
-                if (audioFiles[nextId]) {
-                    openPlayer(nextId);
-                    setTimeout(() => {
-                        audio.play().then(() => { playBtn.innerText = '⏸'; isPlaying = true; }).catch(() => {});
-                    }, 500);
-                }
-            }
-        });
-
-        progressBar.addEventListener('click', function(e) {
-            if (!audio.duration) return;
-            const rect = progressBar.getBoundingClientRect();
-            const percent = (e.clientX - rect.left) / rect.width;
-            audio.currentTime = percent * audio.duration;
-        });
-
-        function renderMedCards() {
-            const grid = document.getElementById('med-grid');
-            grid.innerHTML = '';
-            meditations.forEach(m => {
-                const card = document.createElement('div');
-                card.className = 'med-card';
-                card.dataset.id = m.id;
-                card.onclick = () => openPlayer(m.id);
-                card.innerHTML = `<h4>${m.num}</h4><p>${m.name}</p>`;
-                grid.appendChild(card);
-            });
-        }
+        
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('loadedmetadata', updateDuration);
+        audio.addEventListener('error', showError);
+        audio.addEventListener('ended', handleEnded);
 
         window.onload = function() {
             updateMyPathSection();
+            buildBalanceList('logic');
+            buildBalanceList('emotion');
+            buildBalanceList('state');
             updateBalance();
             renderCalendar();
-            updateBook();
-            renderMedCards();
-
-            const tl = document.getElementById('timeline');
-            cData.forEach(function(l) {
-                const c = document.createElement('div');
-                c.className = 'l-card';
-                c.id = 'c-'+l.id;
-                c.onclick = function() { toggle(l.id); };
-                c.innerHTML = '<div class="l-num">' + l.id + '</div><div class="l-title">' + l.t + '</div>';
-                
-                const d = document.createElement('div');
-                d.className = 'l-details';
-                d.id = 'd-'+l.id;
-                d.innerHTML = `
-                    <div class="d-block d-shadow"><strong>Горгона:</strong> ${l.s}</div>
-                    <div class="d-block d-light"><strong>Персей:</strong> ${l.l}</div>
-                    <div class="d-block d-alice"><strong>Шаг Алисы:</strong> ${l.a}</div>
-                `;
-                tl.appendChild(c);
-                tl.appendChild(d);
-            });
+            renderMeditations();
+            renderShield();
+            updateLegend();
         };
     </script>
 </body>
