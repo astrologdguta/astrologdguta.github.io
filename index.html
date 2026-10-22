@@ -28,17 +28,26 @@
         
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
+        /* ФОН ДЛЯ ТЕЛЕФОНОВ (по умолчанию) */
         body { 
-            background-color: var(--bg);
-            background-image: linear-gradient(rgba(18, 10, 31, 0.85), rgba(18, 10, 31, 0.95)), url('bg.jpg');
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
+            background-color: var(--bg); 
             color: var(--text); 
             font-family: var(--font-body); 
             overflow-x: hidden; 
             width: 100%; 
             font-weight: 300; 
+        }
+
+        /* ФОН ДЛЯ КОМПЬЮТЕРОВ И ПЛАНШЕТОВ (экран от 768px) */
+        @media (min-width: 768px) {
+            body {
+                /* Здесь картинка бабочек. Затемнение сделано легким (0.6 и 0.8), чтобы бабочек было видно */
+                background-image: linear-gradient(rgba(18, 10, 31, 0.6), rgba(18, 10, 31, 0.8)), url('bg.jpg');
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-attachment: fixed; /* Бабочки не уезжают при прокрутке */
+            }
         }
         
         h1, h2, h3 { font-family: var(--font-title); font-weight: 400; letter-spacing: 1px; }
@@ -49,8 +58,8 @@
         ::-webkit-scrollbar-thumb:hover { background: rgba(126, 200, 255, 0.6); }
 
         /* --- 1. ГЛАВНЫЙ ЭКРАН --- */
-        #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; background: radial-gradient(circle at center, rgba(230, 216, 255, 0.15) 0%, rgba(58, 36, 82, 0.4) 55%, rgba(18, 10, 31, 0.7) 100%); padding: 20px; }
-        .zero-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; animation: breathe 6s infinite; z-index: -1; }
+        #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; background: radial-gradient(circle at center, rgba(230, 216, 255, 0.1) 0%, rgba(18, 10, 31, 0.5) 100%); padding: 20px; }
+        .zero-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; animation: breathe 6s infinite; z-index: -1; }
         @keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } }
         h1 { font-size: 3.2rem; letter-spacing: 4px; margin-bottom: 25px; text-transform: uppercase; color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
         .subtitle { font-size: 1.15rem; color: #ffffff; line-height: 1.8; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); font-weight: 300; }
@@ -61,7 +70,7 @@
 
         /* --- 2. ВВОДНЫЙ ТЕКСТ --- */
         #intro { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
-        .intro-box { max-width: 800px; text-align: center; background: rgba(18, 10, 31, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 40px 25px; }
+        .intro-box { max-width: 800px; text-align: center; background: rgba(18, 10, 31, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 40px 25px; }
         .intro-box h2 { font-size: 2.2rem; margin-bottom: 20px; color: var(--gold); }
         .intro-box p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; color: #e0d8ec; }
         .intro-box p strong { color: #fff; }
@@ -70,7 +79,7 @@
         #book-forces { padding: 60px 20px; display: flex; flex-direction: column; align-items: center; background: transparent; }
         .section-title { text-align: center; margin-bottom: 30px; }
         .section-title h2 { font-size: 2.4rem; color: var(--gold); margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .section-title p { color: var(--muted); font-size: 1rem; }
+        .section-title p { color: var(--muted); font-size: 1rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
         
         .book-container { width: 100%; max-width: 600px; background: rgba(26, 17, 37, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.2), inset 0 0 20px rgba(0,0,0,0.8); padding: 30px 25px; display: flex; flex-direction: column; font-family: 'Georgia', 'Times New Roman', serif; margin-bottom: 40px; }
         .toc { display: flex; flex-direction: column; gap: 10px; }
@@ -286,71 +295,16 @@
         .day-log-item .time { font-size: 0.8rem; color: var(--muted); }
         .day-section-title { font-family: var(--font-title); color: var(--gold); font-size: 1.2rem; margin: 20px 0 10px 0; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
 
-        /* --- 9. МЕДИТАЦИИ (ОБНОВЛЕНО) --- */
+        /* --- 9. МЕДИТАЦИИ --- */
         #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
-        
-        /* Кнопка-обертка для медитаций */
-        .med-section-wrapper {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .med-main-trigger {
-            width: 100%;
-            background: linear-gradient(135deg, rgba(126, 200, 255, 0.1), rgba(255, 217, 138, 0.1));
-            border: 1px solid var(--gold);
-            border-radius: var(--r-lg);
-            padding: 22px 25px;
-            color: var(--gold);
-            font-family: var(--font-title);
-            font-size: 1.4rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: 0.4s;
-            box-shadow: 0 0 20px rgba(255, 217, 138, 0.1);
-            letter-spacing: 1px;
-        }
-
-        .med-main-trigger:hover {
-            background: linear-gradient(135deg, rgba(126, 200, 255, 0.2), rgba(255, 217, 138, 0.2));
-            box-shadow: 0 0 30px rgba(255, 217, 138, 0.2);
-        }
-
-        .med-main-trigger.open {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            border-color: var(--blue);
-            color: var(--blue);
-        }
-
-        .med-main-trigger .icon {
-            font-size: 1.2rem;
-            transition: transform 0.4s;
-        }
-
-        .med-main-trigger.open .icon {
-            transform: rotate(180deg);
-        }
-
-        /* Контейнер, который прячет все карточки */
-        .med-content-wrapper {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            background: rgba(18, 10, 31, 0.4);
-            border: 1px solid transparent;
-            border-top: none;
-            border-radius: 0 0 var(--r-lg) var(--r-lg);
-        }
-
-        .med-content-wrapper.open {
-            border-color: var(--blue);
-        }
-
+        .med-section-wrapper { width: 100%; max-width: 800px; display: flex; flex-direction: column; }
+        .med-main-trigger { width: 100%; background: linear-gradient(135deg, rgba(126, 200, 255, 0.1), rgba(255, 217, 138, 0.1)); border: 1px solid var(--gold); border-radius: var(--r-lg); padding: 22px 25px; color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.4s; box-shadow: 0 0 20px rgba(255, 217, 138, 0.1); letter-spacing: 1px; }
+        .med-main-trigger:hover { background: linear-gradient(135deg, rgba(126, 200, 255, 0.2), rgba(255, 217, 138, 0.2)); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
+        .med-main-trigger.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-color: var(--blue); color: var(--blue); }
+        .med-main-trigger .icon { font-size: 1.2rem; transition: transform 0.4s; }
+        .med-main-trigger.open .icon { transform: rotate(180deg); }
+        .med-content-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(18, 10, 31, 0.4); border: 1px solid transparent; border-top: none; border-radius: 0 0 var(--r-lg) var(--r-lg); }
+        .med-content-wrapper.open { border-color: var(--blue); }
         .med-container { width: 100%; display: flex; flex-direction: column; gap: 15px; padding: 20px; }
         .med-item { display: flex; flex-direction: column; width: 100%; }
         .med-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); padding: 20px; text-align: left; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: space-between; }
@@ -668,7 +622,7 @@
         </button>
     </section>
 
-    <!-- 9. МЕДИТАЦИИ (ОБНОВЛЕНО) -->
+    <!-- 9. МЕДИТАЦИИ -->
     <section id="meditations">
         <div class="c-title">
             <h2>Медитации Точки Ноль</h2>
