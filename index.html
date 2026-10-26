@@ -295,7 +295,7 @@
         .day-log-item .time { font-size: 0.8rem; color: var(--muted); }
         .day-section-title { font-family: var(--font-title); color: var(--gold); font-size: 1.2rem; margin: 20px 0 10px 0; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
 
-        /* --- 9. МЕДИТАЦИИ --- */
+        /* --- 9. МЕДИТАЦИИ (ОБНОВЛЕНО) --- */
         #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
         .med-section-wrapper { width: 100%; max-width: 800px; display: flex; flex-direction: column; }
         .med-main-trigger { width: 100%; background: linear-gradient(135deg, rgba(126, 200, 255, 0.1), rgba(255, 217, 138, 0.1)); border: 1px solid var(--gold); border-radius: var(--r-lg); padding: 22px 25px; color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.4s; box-shadow: 0 0 20px rgba(255, 217, 138, 0.1); letter-spacing: 1px; }
@@ -380,6 +380,7 @@
             .axis-text-btn { font-size: 0.75rem; padding: 6px 10px; }
             .med-main-trigger { font-size: 1.1rem; padding: 18px 15px; }
             .result-tab-btn { font-size: 0.8rem; padding: 10px 5px; }
+            .play-btn { width: 55px; height: 55px; font-size: 22px; }
         }
     </style>
 </head>
@@ -846,18 +847,20 @@
             { id: 9, t: "Удаление", s: "Крайняя точка.", l: "Завершение цикла.", a: "Увидеть, что дальше — только внутрь." }
         ];
 
+        // === ОБНОВЛЕННЫЕ ДАННЫЕ МЕДИТАЦИЙ ===
         const meditations = [
-            { id: 0,  num: "Медитация 0", name: "Дом", file: "audio/med0-dom.mp3" },
-            { id: 1,  num: "Медитация 1", name: "Остановка", file: "audio/med1-ostanovka.mp3" },
-            { id: 2,  num: "Медитация 2", name: "Зеркала", file: "audio/med2-zerkala.mp3" },
-            { id: 3,  num: "Медитация 3", name: "Фокус", file: "audio/med3-fokus.mp3" },
-            { id: 4,  num: "Медитация 4", name: "Структура", file: "audio/med4-struktura.mp3" },
-            { id: 5,  num: "Медитация 5", name: "Свобода", file: "audio/med5-svoboda.mp3" },
-            { id: 6,  num: "Медитация 6", name: "Энергия", file: "audio/med6-energiya.mp3" },
-            { id: 7,  num: "Медитация 7", name: "Тепло", file: "audio/med7-teplo.mp3" },
-            { id: 8,  num: "Медитация 8", name: "Сила", file: "audio/med8-sila.mp3" },
-            { id: 9,  num: "Медитация 9", name: "Порог", file: "audio/med9-porog.mp3" },
-            { id: 10, num: "Финал", name: "Я есть", file: "audio/final-ya-est.mp3" }
+            { id: 0,  num: "Медитация 0",  name: "Я есть", file: "audio/med0-ja-est.mp3" },
+            { id: 1,  num: "Медитация 1",  name: "Точка Ноль", file: "audio/med1-tochka-nol.mp3" },
+            { id: 2,  num: "Медитация 2",  name: "Присутствие", file: "audio/med2-prisutstvie.mp3" },
+            { id: 3,  num: "Медитация 3",  name: "Синхронность", file: "audio/med3-sinhronnost.mp3" },
+            { id: 4,  num: "Медитация 4",  name: "Ровность", file: "audio/med4-rovnost.mp3" },
+            { id: 5,  num: "Медитация 5",  name: "Свобода", file: "audio/med5-svoboda.mp3" },
+            { id: 6,  num: "Медитация 6",  name: "Естественность", file: "audio/med6-estestvennost.mp3" },
+            { id: 7,  num: "Медитация 7",  name: "Я живу как поле", file: "audio/med7-ja-chsivu-kak-pole.mp3" },
+            { id: 8,  num: "Медитация 8",  name: "Расширение поля", file: "audio/med8-rasshirenie-polja.mp3" },
+            { id: 9,  num: "Медитация 9",  name: "Внутренняя ось", file: "audio/med9-vnutrennjaja-os.mp3" },
+            { id: 10, num: "Медитация 10", name: "Внутренний мир", file: "audio/med10-vnutrenniy-mir.mp3" },
+            { id: 11, num: "Медитация 11", name: "Это уже есть", file: "audio/med11-eto-uche-estj.mp3" }
         ];
 
         const balanceData = {
@@ -1286,8 +1289,9 @@
             showDiary();
         }
 
-        // === 9. МЕДИТАЦИИ ===
+        // === 9. МЕДИТАЦИИ (ИСПРАВЛЕНА ЛОГИКА) ===
         const audio = document.getElementById('audio-player');
+
         function toggleMeditations() {
             const trigger = document.getElementById('med-main-trigger');
             const wrapper = document.getElementById('med-content-wrapper');
@@ -1295,12 +1299,20 @@
                 wrapper.classList.remove('open');
                 trigger.classList.remove('open');
                 wrapper.style.maxHeight = '0px';
+                closeAllPlayers();
+                audio.pause();
             } else {
                 wrapper.classList.add('open');
                 trigger.classList.add('open');
                 wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+                setTimeout(() => {
+                    if (wrapper.classList.contains('open')) {
+                        wrapper.style.maxHeight = 'none';
+                    }
+                }, 400);
             }
         }
+
         function renderMeditations() {
             const container = document.getElementById('med-container');
             container.innerHTML = '';
@@ -1344,16 +1356,38 @@
                 container.appendChild(item);
             });
         }
+
         function togglePlayer(id, file) {
             const currentCard = document.getElementById('card-' + id);
             const currentWrapper = document.getElementById('wrapper-' + id);
-            if (currentWrapper.classList.contains('open')) { closeAllPlayers(); audio.pause(); return; }
+            const mainWrapper = document.getElementById('med-content-wrapper');
+            
+            if (currentWrapper.classList.contains('open')) { 
+                closeAllPlayers(); 
+                audio.pause(); 
+                setTimeout(() => {
+                    if (mainWrapper.classList.contains('open')) {
+                        mainWrapper.style.maxHeight = 'none';
+                    }
+                }, 400);
+                return; 
+            }
+            
             closeAllPlayers();
             audio.pause();
-            audio.src = ''; 
+            audio.removeAttribute('src');
+            audio.load();
+            
             currentCard.classList.add('active');
             currentWrapper.classList.add('open');
-            setTimeout(() => { currentWrapper.style.maxHeight = currentWrapper.scrollHeight + 'px'; }, 10);
+            currentWrapper.style.maxHeight = currentWrapper.scrollHeight + 'px';
+            
+            setTimeout(() => {
+                if (mainWrapper.classList.contains('open')) {
+                    mainWrapper.style.maxHeight = 'none';
+                }
+            }, 400);
+            
             audio.src = file;
             audio.load();
             currentPlayingId = id;
@@ -1363,6 +1397,7 @@
             document.getElementById('time-total-' + id).innerText = '0:00';
             document.getElementById('player-error-' + id).classList.remove('show');
         }
+
         function closeAllPlayers() {
             document.querySelectorAll('.med-card').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.player-wrapper').forEach(w => {
@@ -1372,6 +1407,7 @@
             document.querySelectorAll('.play-btn').forEach(b => b.innerText = '▶');
             currentPlayingId = null;
         }
+
         function togglePlay(id) {
             if (currentPlayingId !== id) return;
             const btn = document.getElementById('play-btn-' + id);
@@ -1383,22 +1419,26 @@
                 btn.innerText = '▶';
             }
         }
+
         function updateProgress() {
             if (!audio.duration || currentPlayingId === null) return;
             const percent = (audio.currentTime / audio.duration) * 100;
             document.getElementById('progress-fill-' + currentPlayingId).style.width = percent + '%';
             document.getElementById('time-current-' + currentPlayingId).innerText = formatTime(audio.currentTime);
         }
+
         function updateDuration() {
             if (currentPlayingId === null) return;
             document.getElementById('time-total-' + currentPlayingId).innerText = formatTime(audio.duration);
             document.getElementById('player-error-' + currentPlayingId).classList.remove('show');
         }
+
         function showError() {
             if (currentPlayingId === null) return;
             document.getElementById('player-error-' + currentPlayingId).classList.add('show');
             document.getElementById('play-btn-' + currentPlayingId).innerText = '▶';
         }
+
         function seekAudio(e, id) {
             if (currentPlayingId !== id || !audio.duration) return;
             const bar = document.getElementById('progress-bar-' + id);
@@ -1406,11 +1446,13 @@
             const percent = (e.clientX - rect.left) / rect.width;
             audio.currentTime = percent * audio.duration;
         }
+
         function handleEnded() {
             if (currentPlayingId === null) return;
             document.getElementById('play-btn-' + currentPlayingId).innerText = '▶';
             document.getElementById('progress-fill-' + currentPlayingId).style.width = '0%';
         }
+
         function formatTime(seconds) {
             if (!isFinite(seconds) || isNaN(seconds)) return '0:00';
             const m = Math.floor(seconds / 60);
