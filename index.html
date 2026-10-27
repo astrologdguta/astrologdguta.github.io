@@ -52,10 +52,24 @@
         .player-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(0, 0, 0, 0.4); border: 1px solid transparent; border-top: none; border-radius: 0 0 var(--r-md) var(--r-md); }
         .player-wrapper.open { border-color: var(--gold); }
         .player-box { padding: 25px 20px; text-align: center; position: relative; }
-        .player-controls { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        
+        .player-controls { display: flex; align-items: center; justify-content: center; gap: 25px; margin-bottom: 20px; }
+        
+        .skip-btn { background: transparent; border: none; color: var(--muted); font-size: 20px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; font-family: var(--font-body); }
+        .skip-btn:hover { color: var(--gold); }
+        
         .play-btn { width: 65px; height: 65px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: var(--bg); font-size: 26px; transition: 0.2s; box-shadow: 0 5px 20px rgba(255,217,138,0.4); }
         .play-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,217,138,0.6); }
         .play-btn:active { transform: scale(0.95); }
+        
+        /* Анимация пульсации, когда трек на паузе */
+        .play-btn.paused { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 217, 138, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 217, 138, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 217, 138, 0); }
+        }
+
         .progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; cursor: pointer; position: relative; margin-bottom: 12px; }
         .progress-fill { width: 0%; height: 100%; background: var(--blue); border-radius: 10px; position: absolute; top: 0; left: 0; pointer-events: none; box-shadow: 0 0 10px rgba(126,200,255,0.5); }
         .player-time { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -157,7 +171,9 @@
                 wrapper.innerHTML = `
                     <div class="player-box">
                         <div class="player-controls">
-                            <button class="play-btn" id="play-btn-${med.id}" onclick="togglePlay(${med.id})">▶</button>
+                            <button class="skip-btn" onclick="skipAudio(-15, ${med.id})" title="-15 сек">⏪ 15</button>
+                            <button class="play-btn paused" id="play-btn-${med.id}" onclick="togglePlay(${med.id})">▶</button>
+                            <button class="skip-btn" onclick="skipAudio(15, ${med.id})" title="+15 сек">15 ⏩</button>
                         </div>
                         <div class="progress-container" id="progress-bar-${med.id}" onclick="seekAudio(event, ${med.id})">
                             <div class="progress-fill" id="progress-fill-${med.id}"></div>
@@ -205,7 +221,11 @@
             audio.src = file;
             audio.load();
             currentPlayingId = id;
-            document.getElementById('play-btn-' + id).innerText = '▶';
+            
+            const btn = document.getElementById('play-btn-' + id);
+            btn.innerText = '▶';
+            btn.classList.add('paused');
+            
             document.getElementById('progress-fill-' + id).style.width = '0%';
             document.getElementById('time-current-' + id).innerText = '0:00';
             document.getElementById('time-total-' + id).innerText = '0:00';
@@ -218,24 +238,36 @@
                 w.classList.remove('open');
                 w.style.maxHeight = '0px';
             });
-            document.querySelectorAll('.play-btn').forEach(b => b.innerText = '▶');
+            document.querySelectorAll('.play-btn').forEach(b => {
+                b.innerText = '▶';
+                b.classList.add('paused');
+            });
             currentPlayingId = null;
         }
 
         function togglePlay(id) {
             if (currentPlayingId !== id) return;
             const btn = document.getElementById('play-btn-' + id);
+            
             if (audio.paused) {
                 audio.play().then(() => {
                     btn.innerText = '⏸';
+                    btn.classList.remove('paused');
                 }).catch(() => { 
                     document.getElementById('player-error-' + id).classList.add('show'); 
                     btn.innerText = '▶';
+                    btn.classList.add('paused');
                 });
             } else {
                 audio.pause();
                 btn.innerText = '▶';
+                btn.classList.add('paused');
             }
+        }
+
+        function skipAudio(seconds, id) {
+            if (currentPlayingId !== id || !audio.duration) return;
+            audio.currentTime = Math.max(0, Math.min(audio.currentTime + seconds, audio.duration));
         }
 
         function updateProgress() {
@@ -254,7 +286,9 @@
         function showError() {
             if (currentPlayingId === null) return;
             document.getElementById('player-error-' + currentPlayingId).classList.add('show');
-            document.getElementById('play-btn-' + currentPlayingId).innerText = '▶';
+            const btn = document.getElementById('play-btn-' + currentPlayingId);
+            btn.innerText = '▶';
+            btn.classList.add('paused');
         }
 
         function seekAudio(e, id) {
@@ -267,8 +301,11 @@
 
         function handleEnded() {
             if (currentPlayingId === null) return;
-            document.getElementById('play-btn-' + currentPlayingId).innerText = '▶';
+            const btn = document.getElementById('play-btn-' + currentPlayingId);
+            btn.innerText = '▶';
+            btn.classList.add('paused');
             document.getElementById('progress-fill-' + currentPlayingId).style.width = '0%';
+            document.getElementById('time-current-' + currentPlayingId).innerText = '0:00'; // Сброс времени
         }
 
         function formatTime(seconds) {
@@ -277,6 +314,19 @@
             const s = Math.floor(seconds % 60);
             return m + ':' + (s < 10 ? '0' : '') + s;
         }
+
+        // === УПРАВЛЕНИЕ С КЛАВИАТУРЫ ===
+        document.addEventListener('keydown', function(e) {
+            // Если фокус в поле ввода (на всякий случай), игнорируем
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            if (e.code === 'Space') {
+                e.preventDefault(); // Предотвращаем скролл страницы
+                if (currentPlayingId !== null) {
+                    togglePlay(currentPlayingId);
+                }
+            }
+        });
 
         // === ИНИЦИАЛИЗАЦИЯ ===
         audio.addEventListener('timeupdate', updateProgress);
