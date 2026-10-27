@@ -62,7 +62,6 @@
         .play-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,217,138,0.6); }
         .play-btn:active { transform: scale(0.95); }
         
-        /* Анимация пульсации, когда трек на паузе */
         .play-btn.paused { animation: pulse 2s infinite; }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(255, 217, 138, 0.4); }
@@ -105,7 +104,7 @@
     </section>
 
     <script>
-        // === ТВОИ МЕДИТАЦИИ ===
+        // === ТВОИ МЕДИТАЦИИ (ВАШИ РАБОЧИЕ ПУТИ) ===
         const meditations = [
             { id: 0,  num: "Медитация 0",  name: "Я есть", file: "audio/med0-ja-est.mp3" },
             { id: 1,  num: "Медитация 1",  name: "Точка Ноль", file: "audio/med1-tochka-nol.mp3" },
@@ -305,7 +304,7 @@
             btn.innerText = '▶';
             btn.classList.add('paused');
             document.getElementById('progress-fill-' + currentPlayingId).style.width = '0%';
-            document.getElementById('time-current-' + currentPlayingId).innerText = '0:00'; // Сброс времени
+            document.getElementById('time-current-' + currentPlayingId).innerText = '0:00'; 
         }
 
         function formatTime(seconds) {
@@ -317,11 +316,9 @@
 
         // === УПРАВЛЕНИЕ С КЛАВИАТУРЫ ===
         document.addEventListener('keydown', function(e) {
-            // Если фокус в поле ввода (на всякий случай), игнорируем
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-            
             if (e.code === 'Space') {
-                e.preventDefault(); // Предотвращаем скролл страницы
+                e.preventDefault(); 
                 if (currentPlayingId !== null) {
                     togglePlay(currentPlayingId);
                 }
