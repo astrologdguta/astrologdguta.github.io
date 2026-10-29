@@ -44,6 +44,40 @@
         ::-webkit-scrollbar-thumb { background: rgba(126, 200, 255, 0.4); border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(126, 200, 255, 0.6); }
 
+        /* --- КНОПКА МУЗЫКИ (В ПРАВОМ ВЕРХНЕМ УГЛУ) --- */
+        .music-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(26, 17, 37, 0.8);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .music-toggle-btn:hover {
+            background: rgba(255, 217, 138, 0.15);
+            box-shadow: 0 0 20px rgba(255, 217, 138, 0.4);
+            transform: scale(1.05);
+        }
+        .music-toggle-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--gold);
+            transition: 0.3s;
+        }
+        .music-toggle-btn.muted svg {
+            fill: var(--muted);
+        }
+
         /* --- 1. ГЛАВНЫЙ ЭКРАН --- */
         #hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; background: radial-gradient(circle at center, rgba(230, 216, 255, 0.1) 0%, rgba(18, 10, 31, 0.5) 100%); padding: 20px; }
         .zero-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; animation: breathe 6s infinite; z-index: -1; }
@@ -58,9 +92,24 @@
         /* --- 2. ВВОДНЫЙ ТЕКСТ --- */
         #intro { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
         .intro-box { max-width: 800px; text-align: center; background: rgba(26, 17, 37, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 40px 25px; }
-        .intro-box h2 { font-size: 2.2rem; margin-bottom: 20px; color: var(--gold); }
-        .intro-box p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; color: #e0d8ec; }
+        .intro-box h2 { font-size: 2.2rem; margin-bottom: 25px; color: var(--gold); }
+        .intro-box p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px; color: #e0d8ec; }
         .intro-box p strong { color: #fff; }
+        
+        .forces-grid { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
+        @media (min-width: 600px) { .forces-grid { flex-direction: row; justify-content: center; } }
+        .force-card { flex: 1; padding: 25px 20px; border-radius: var(--r-md); background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); transition: all 0.4s ease; cursor: default; }
+        .force-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .force-card p { font-size: 0.95rem; margin-bottom: 0; line-height: 1.5; }
+        
+        .force-gorgon h3 { color: var(--red); }
+        .force-gorgon:hover { border-color: var(--red); background: rgba(209, 74, 74, 0.05); box-shadow: 0 0 30px rgba(209, 74, 74, 0.2); transform: translateY(-5px); }
+        
+        .force-perseus h3 { color: var(--gold); }
+        .force-perseus:hover { border-color: var(--gold); background: rgba(255, 217, 138, 0.05); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); transform: translateY(-5px); }
+        
+        .force-alice h3 { color: var(--blue); }
+        .force-alice:hover { border-color: var(--blue); background: rgba(126, 200, 255, 0.05); box-shadow: 0 0 30px rgba(126, 200, 255, 0.2); transform: translateY(-5px); }
 
         /* --- 3. КНИГА "ТРИ СИЛЫ" --- */
         #book-forces { padding: 60px 20px; display: flex; flex-direction: column; align-items: center; background: transparent; }
@@ -103,11 +152,26 @@
         .zero-trigger .icon { font-size: 1.5rem; color: var(--gold); transition: transform 0.4s; }
         .zero-trigger.open .icon { transform: rotate(180deg); }
         .zero-content-wrapper { max-width: 800px; width: 100%; background-color: #d2f0e8; color: #005B4F; border-radius: var(--r-lg); margin-top: 15px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; padding: 0 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        .zero-content-wrapper.open { max-height: 1500px; padding: 40px 20px; }
+        .zero-content-wrapper.open { max-height: 1800px; padding: 40px 20px; }
         .zero-inner { text-align: center; }
         .zero-inner p { margin-bottom: 24px; font-size: 18px; line-height: 1.7; font-weight: 400; color: #005B4F; }
         .zero-inner p:last-of-type { margin-bottom: 0; }
-        .svg-container { width: 220px; height: 220px; margin: 40px auto; }
+        
+        /* --- НОВАЯ АНИМИРОВАННАЯ СПИРАЛЬ --- */
+        .spiral-container { width: 250px; height: 250px; margin: 40px auto 20px auto; position: relative; }
+        .spiral-svg { width: 100%; height: 100%; overflow: visible; }
+        
+        .spiral-outward { stroke: #c9a05a; stroke-width: 2.5; fill: none; stroke-linecap: round; opacity: 0.8; transform-origin: 50% 50%; animation: rotateOutward 30s linear infinite; }
+        .spiral-inward { stroke: #009688; stroke-width: 2.5; fill: none; stroke-linecap: round; transform-origin: 50% 50%; animation: rotateInward 20s linear infinite; }
+        
+        .runner-dot { fill: #009688; filter: drop-shadow(0 0 8px #009688); }
+        .runner-arrow { fill: #009688; }
+        .center-glow { fill: rgba(255, 255, 255, 0.8); filter: drop-shadow(0 0 15px #fff); animation: pulseGlow 3s ease-in-out infinite alternate; }
+        
+        @keyframes rotateOutward { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes rotateInward { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+        @keyframes pulseGlow { 0% { r: 4; opacity: 0.6; } 100% { r: 8; opacity: 1; } }
+        
         .btn-zero { background-color: #009688; color: white; padding: 16px 50px; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s; }
         .btn-zero:hover { background-color: #00796B; }
 
@@ -134,8 +198,11 @@
         .sc-text { font-size: 0.8rem; color: var(--text); line-height: 1.3; text-align: left; }
         .btn-submit { margin-top: 15px; padding: 18px; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: var(--r-md); cursor: pointer; width: 100%; font-weight: bold; font-family: var(--font-body); transition: 0.4s; font-size: 1rem; letter-spacing: 0.5px; }
         .btn-submit:hover { background: var(--gold); color: var(--bg); box-shadow: 0 0 25px rgba(255, 217, 138, 0.4); }
-        .result { display: none; margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        
+        .result { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: left; }
         .result-title { font-size: 1.3rem; color: var(--gold); margin-bottom: 15px; text-align: center; font-family: var(--font-title); }
+        .btn-show-result { display: block; margin-top: 15px; padding: 16px; color: var(--bg); background: var(--gold); border: none; border-radius: var(--r-md); font-weight: bold; text-align: center; cursor: pointer; width: 100%; font-family: var(--font-body); transition: 0.3s; font-size: 1rem; box-shadow: 0 5px 15px rgba(255, 217, 138, 0.3); }
+        .btn-show-result:hover { background: #fff; box-shadow: 0 0 25px rgba(255, 217, 138, 0.6); transform: translateY(-2px); }
         .res-item { margin-bottom: 15px; line-height: 1.5; font-size: 0.95rem; }
         .res-item strong { display: block; color: var(--muted); font-weight: normal; margin-bottom: 3px; }
         .t-shadow { color: var(--red); font-weight: bold; }
@@ -157,6 +224,7 @@
         .shield-trigger.open .icon { transform: rotate(180deg); }
         .shield-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(0, 0, 0, 0.2); border: 1px solid transparent; border-top: none; border-radius: 0 0 var(--r-md) var(--r-md); }
         .shield-wrapper.open { border-color: var(--gold); padding: 15px; }
+        
         .timeline { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .l-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); padding: 18px 20px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
         .l-card:hover { background: rgba(18, 10, 31, 0.95); border-color: var(--muted); transform: translateY(-2px); }
@@ -164,58 +232,159 @@
         .l-num { font-size: 1.2rem; font-weight: 600; color: var(--blue); width: 35px; transition: 0.3s; }
         .l-card.active .l-num { color: var(--gold); }
         .l-title { font-size: 1rem; font-weight: 400; }
+        
         .l-details { display: none; background: rgba(0, 0, 0, 0.5); border-radius: 0 0 var(--r-md) var(--r-md); padding: 20px; margin-top: -12px; text-align: left; border: 1px solid var(--gold); border-top: none; animation: fadeIn 0.3s ease-out; }
         .l-details.show { display: block; }
-        .d-block { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; }
-        .d-block:last-child { margin-bottom: 0; }
-        .d-block strong { display: block; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
-        .d-shadow strong { color: var(--red); }
-        .d-shadow { color: #ffb3b3; }
-        .d-light strong { color: var(--gold); }
-        .d-light { color: #fff3cc; }
-        .d-alice strong { color: var(--blue); }
-        .d-alice { color: #cceeff; }
+
+        /* Вложенные кнопки внутри Щита */
+        .inner-buttons { display: flex; flex-direction: column; gap: 10px; }
+        .inner-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text); padding: 12px 15px; border-radius: var(--r-md); cursor: pointer; text-align: left; font-family: var(--font-body); font-size: 0.95rem; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
+        .inner-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--muted); }
+        
+        .inner-content { display: none; padding: 15px; background: rgba(0,0,0,0.3); border-radius: var(--r-sm); margin-top: -5px; margin-bottom: 5px; border-left: 2px solid var(--blue); }
+        .inner-content.show { display: block; }
+        
+        .inner-content .d-block { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; }
+        .inner-content .d-block:last-child { margin-bottom: 0; }
+        .inner-content .d-block strong { display: block; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
+        .inner-content .d-shadow strong { color: var(--red); }
+        .inner-content .d-shadow { color: #ffb3b3; }
+        .inner-content .d-light strong { color: var(--gold); }
+        .inner-content .d-light { color: #fff3cc; }
+        .inner-content .d-alice strong { color: var(--blue); }
+        .inner-content .d-alice { color: #cceeff; }
+
+        /* Стили для текстов пути */
+        .path-text p { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.6; color: #ddd; }
+        .path-text strong { color: var(--gold); }
+        .path-text p:last-child { margin-bottom: 0; }
+
+        .btn-go-diary-inner { display: block; width: 100%; padding: 14px; background: var(--blue); color: var(--bg); border: none; border-radius: var(--r-md); font-weight: bold; font-size: 0.95rem; cursor: pointer; transition: 0.3s; text-align: center; margin-top: 15px; box-shadow: 0 5px 15px rgba(126,200,255,0.2); font-family: var(--font-body); }
+        .btn-go-diary-inner:hover { background: #fff; box-shadow: 0 0 20px rgba(126,200,255,0.5); }
 
         /* --- 7. КОМПАС --- */
         #balance { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
-        .balance-visual-area { position: relative; width: 100%; max-width: 500px; height: 380px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
-        .axis-text-btn { position: absolute; font-size: 0.85rem; font-weight: bold; text-align: center; background: rgba(18, 10, 31, 0.95); padding: 8px 12px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.2); z-index: 20; max-width: 130px; line-height: 1.2; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-family: var(--font-body); }
-        .btn-x { right: -10px; top: 50%; transform: translateY(-50%); color: var(--gold); border-color: var(--gold); }
-        .btn-y { left: -10px; top: 50%; transform: translateY(-50%); color: var(--blue); border-color: var(--blue); }
-        .btn-z { bottom: -10px; left: 50%; transform: translateX(-50%); color: var(--purple); border-color: var(--purple); }
-        .btn-avg { top: -10px; left: 50%; transform: translateX(-50%); color: #fff; border-color: #fff; font-size: 1rem; padding: 10px 20px; }
-        .visual-container { position: relative; width: 260px; height: 260px; background: rgba(0,0,0,0.5); border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 0 40px rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 10; }
+        #balance-wrapper { width: 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; }
+        
+        .c-title { text-align: center; margin-bottom: 25px; }
+        .c-title h2 { font-size: 2.4rem; margin-bottom: 15px; color: var(--gold); text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        
+        .help-btn { display: inline-flex; align-items: center; justify-content: center; background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 10px 20px; border-radius: 30px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-family: var(--font-body); margin-bottom: 15px; }
+        .help-btn:hover { background: rgba(255, 217, 138, 0.2); box-shadow: 0 0 15px rgba(255,217,138,0.3); }
+        
+        .help-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; background: rgba(0,0,0,0.4); border-radius: var(--r-md); text-align: left; width: 100%; max-width: 500px; margin: 0 auto 20px auto; padding: 0 20px; border: 1px solid transparent; }
+        .help-content.open { max-height: 500px; padding: 20px; border-color: rgba(255,255,255,0.1); }
+        .help-content p { margin-bottom: 10px; font-size: 0.9rem; color: #ddd; line-height: 1.5; }
+        .help-content p:last-child { margin-bottom: 0; }
+        .help-content strong { color: var(--gold); }
+
+        .balance-visual-area { position: relative; width: 100%; height: 360px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        
+        .visual-container { position: relative; width: 220px; height: 220px; background: rgba(0,0,0,0.5); border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 0 40px rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 10; }
         .axis-center { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 20px #fff; z-index: 10; }
         .axis-arrow { position: absolute; bottom: 50%; left: 50%; width: 4px; border-radius: 4px; transform-origin: bottom center; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.8s; opacity: 0.9; }
         .arrow-x { background: var(--gold); box-shadow: 0 0 15px var(--gold); z-index: 5; height: 80px; }
         .arrow-y { background: var(--blue); box-shadow: 0 0 15px var(--blue); z-index: 5; height: 80px; }
         .arrow-z { background: var(--purple); box-shadow: 0 0 15px var(--purple); z-index: 5; height: 80px; }
-        .arrow-average { background: #fff; box-shadow: 0 0 25px #fff; z-index: 6; width: 6px; height: 0px; transform: translateX(-50%); transition: all 0.8s ease-out; border-radius: 3px; }
-        .balance-box { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-lg); padding: 30px 20px; width: 100%; max-width: 500px; box-shadow: 0 15px 50px rgba(0,0,0,0.5); position: relative; z-index: 100; }
-        .balance-item { margin-bottom: 20px; text-align: left; position: relative; }
-        .balance-item label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.95rem; }
-        .custom-select-btn { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--r-md); color: var(--text); font-size: 0.95rem; font-family: var(--font-body); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .custom-select-btn:hover { border-color: var(--muted); }
-        .custom-select-btn.active { border-color: var(--gold); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
-        .custom-select-btn .arrow { color: var(--gold); transition: transform 0.3s; font-size: 1.2rem; }
-        .custom-select-btn.active .arrow { transform: rotate(180deg); }
-        .custom-options { position: absolute; top: 100%; left: 0; width: 100%; background: #1A1125; border: 1px solid var(--gold); border-top: none; border-radius: 0 0 var(--r-md) var(--r-md); max-height: 250px; overflow-y: auto; z-index: 200; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .custom-options.show { display: block; }
-        .custom-options::-webkit-scrollbar { width: 6px; }
-        .custom-options::-webkit-scrollbar-track { background: #120A1F; }
-        .custom-options::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-        .custom-option { padding: 12px 15px; color: var(--text); font-size: 0.9rem; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .custom-option:hover { background: rgba(255, 217, 138, 0.15); color: var(--gold); }
-        .custom-option.selected { background: rgba(255, 217, 138, 0.2); color: var(--gold); font-weight: 600; }
-        .balance-result { margin-top: 25px; padding: 25px 20px; background: rgba(0,0,0,0.7); border-radius: var(--r-md); text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.4s; }
-        .balance-result h3 { font-weight: 400; margin-bottom: 10px; font-size: 1.6rem; }
-        .balance-result p { font-size: 0.95rem; line-height: 1.6; color: #ddd; }
-        .state-ideal { border-color: var(--gold); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
-        .state-ideal h3 { color: var(--gold); }
-        .state-unbalance { border-color: var(--red); box-shadow: 0 0 30px rgba(209, 74, 74, 0.2); }
-        .state-unbalance h3 { color: var(--red); }
-        .state-neutral { border-color: #fff; box-shadow: 0 0 30px rgba(255, 255, 255, 0.1); }
-        .state-neutral h3 { color: #fff; }
+        
+        .arrow-average { 
+            background: repeating-linear-gradient(to top, #ffffff, #ffffff 6px, transparent 6px, transparent 12px);
+            z-index: 6; width: 4px; height: 0px; transform: translateX(-50%); transition: all 0.8s ease-out; border-radius: 2px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
+        }
+
+        .axis-btn {
+            position: absolute;
+            background: rgba(18, 10, 31, 0.95);
+            padding: 10px 15px;
+            border-radius: var(--r-md);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        
+        .axis-btn:hover { transform: scale(1.05); }
+        
+        .btn-logic { right: -10px; top: 50%; transform: translateY(-50%); color: var(--gold); border: 1px solid var(--gold); }
+        .btn-logic:hover { background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 20px rgba(255,217,138,0.3); }
+        
+        .btn-emotion { left: -10px; top: 50%; transform: translateY(-50%); color: var(--blue); border: 1px solid var(--blue); }
+        .btn-emotion:hover { background: rgba(126, 200, 255, 0.1); box-shadow: 0 0 20px rgba(126,200,255,0.3); }
+        
+        .btn-state { top: -10px; left: 50%; transform: translateX(-50%); color: var(--purple); border: 1px solid var(--purple); }
+        .btn-state:hover { background: rgba(179, 136, 255, 0.1); box-shadow: 0 0 20px rgba(179,136,255,0.3); }
+        
+        .btn-vector { bottom: -10px; left: 50%; transform: translateX(-50%); color: #fff; border: 1px dashed #fff; }
+        .btn-vector:hover { background: rgba(255,255,255,0.1); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .btn-vector.open { border-style: solid; background: rgba(255,255,255,0.1); }
+
+        .value-picker {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; max-width: 320px;
+            max-height: 250px; overflow-y: auto;
+            background: #1A1125;
+            border: 1px solid var(--gold);
+            border-radius: var(--r-md);
+            z-index: 100;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+        }
+        .value-picker.show { display: block; }
+        
+        .value-picker::-webkit-scrollbar { width: 6px; }
+        .value-picker::-webkit-scrollbar-track { background: #120A1F; }
+        .value-picker::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+        
+        .value-option { padding: 12px 15px; color: var(--text); font-size: 0.9rem; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
+        .value-option:hover { background: rgba(255, 217, 138, 0.15); color: var(--gold); }
+        .value-option.selected { background: rgba(255, 217, 138, 0.2); color: var(--gold); font-weight: 600; }
+        
+        .picker-title { padding: 15px; text-align: center; font-size: 1.1rem; font-family: var(--font-title); color: var(--gold); border-bottom: 1px dashed rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); position: sticky; top: 0; }
+
+        .vector-result-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; width: 100%; }
+        .vector-result-wrapper.open { max-height: 800px; margin-top: 10px; }
+        
+        .vector-result-content { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--r-md); padding: 20px; text-align: left; }
+        .vector-result-content h3 { font-size: 1.5rem; margin-bottom: 15px; text-align: center; }
+        .vector-result-content p { font-size: 0.95rem; line-height: 1.6; color: #ddd; }
+        
+        .res-ideal h3 { color: var(--gold); }
+        .res-unbalance h3 { color: var(--red); }
+        .res-neutral h3 { color: #fff; }
+        .res-mixed h3 { color: var(--purple); }
+
+        /* НОВАЯ КНОПКА РИТУАЛА В КОМПАСЕ */
+        .btn-ritual-compass {
+            display: block;
+            margin-top: 15px;
+            padding: 16px;
+            background: transparent;
+            border: 1.5px solid var(--blue);
+            color: var(--blue);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: var(--r-md);
+            transition: 0.4s;
+            text-align: center;
+            width: 100%;
+            letter-spacing: 0.5px;
+        }
+        .btn-ritual-compass:hover {
+            background: var(--blue);
+            color: var(--bg);
+            box-shadow: 0 0 25px rgba(126, 200, 255, 0.4);
+        }
 
         /* --- 8. МОЙ ПУТЬ --- */
         #my-path-section { width: 100%; display: flex; justify-content: center; padding: 40px 20px; background: transparent; }
@@ -225,8 +394,7 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 5, 20, 0.9); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 300; padding: 20px; }
         .modal-overlay.show { display: flex; animation: fadeIn 0.4s; }
         .modal-content { background: rgba(26, 17, 37, 0.98); border: 2px solid var(--gold); border-radius: var(--r-lg); padding: 30px 25px 25px 25px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 0 50px rgba(255, 217, 138, 0.15), inset 0 0 30px rgba(0,0,0,0.8); text-align: center; max-height: 85vh; overflow-y: auto; display: flex; flex-direction: column; }
-        
-        .modal-content h2 { margin-bottom: 20px; color: var(--gold); font-size: 2rem; clear: none; }
+        .modal-content h2 { margin-bottom: 20px; color: var(--gold); font-size: 2rem; }
         
         #current-view { display: flex; flex-direction: column; flex: 1; min-height: 0; }
         .tabs-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
@@ -271,29 +439,56 @@
         .btn-del-arch { background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; }
         .btn-del-arch:hover { background: var(--red); color: var(--text); transform: scale(1.1); }
 
-        .num-input-group { text-align: left; margin-bottom: 15px; }
-        .num-input-group label { display: block; color: var(--muted); font-size: 0.9rem; margin-bottom: 5px; }
-        .num-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); }
-        .btn-calc { width: 100%; padding: 15px; background: var(--purple); color: var(--bg); border: none; border-radius: var(--r-md); cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s; }
-        .btn-calc:hover { box-shadow: 0 0 20px rgba(179,136,255,0.5); background: #fff; }
+        .num-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); text-align: center; outline: none; }
+        .num-input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,217,138,0.2); }
+        .btn-calc { width: 100%; padding: 16px; background: var(--purple); color: var(--bg); border: none; border-radius: var(--r-md); cursor: pointer; font-weight: 600; font-size: 1rem; transition: 0.3s; margin-top: 10px; margin-bottom: 20px; }
+        .btn-calc:hover { box-shadow: 0 0 25px rgba(179,136,255,0.5); background: #fff; }
         
         #num-result { display: none; margin-top: 15px; text-align: left; animation: fadeIn 0.4s ease-out; }
         .result-tabs-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .result-tab-btn { background: rgba(0,0,0,0.3); border: 1px solid var(--purple); color: var(--text); padding: 12px 10px; border-radius: var(--r-md); cursor: pointer; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; transition: 0.3s; text-align: center; }
+        .result-tab-btn { background: rgba(0,0,0,0.3); border: 1px solid var(--purple); color: var(--text); padding: 14px 10px; border-radius: var(--r-md); cursor: pointer; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; transition: 0.3s; text-align: center; }
         .result-tab-btn:hover { background: rgba(179,136,255,0.1); }
         .result-tab-btn.active { background: var(--purple); color: var(--bg); border-color: var(--purple); font-weight: bold; box-shadow: 0 0 15px rgba(179,136,255,0.4); }
         .res-tab-content { display: none; animation: fadeIn 0.3s; }
         .res-tab-content.active { display: block; }
-        .text-block { background: rgba(0,0,0,0.2); padding: 20px; border-radius: var(--r-md); border-left: 4px solid var(--gold); margin-bottom: 15px; }
-        .text-block h3 { color: var(--gold); font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px dashed rgba(255,217,138,0.3); padding-bottom: 5px; }
+        
+        .text-block { background: rgba(0,0,0,0.3); padding: 20px; border-radius: var(--r-md); border-left: 4px solid var(--gold); border-top: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; }
+        .text-block h3 { color: var(--gold); font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px dashed rgba(255,217,138,0.3); padding-bottom: 10px; }
+        
         .item { margin-bottom: 15px; }
         .item:last-child { margin-bottom: 0; }
-        .item strong { display: block; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .item strong { display: block; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px; }
         .item p { font-size: 0.95rem; line-height: 1.6; color: #ddd; }
 
-        .day-log-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--blue); text-align: left; margin-bottom: 10px; }
-        .day-log-item .time { font-size: 0.8rem; color: var(--muted); }
-        .day-section-title { font-family: var(--font-title); color: var(--gold); font-size: 1.2rem; margin: 20px 0 10px 0; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+        .stats-wrapper { display: flex; align-items: flex-end; justify-content: space-between; height: 60px; gap: 5px; margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: var(--r-md); }
+        .stat-bar { flex: 1; background: rgba(255,255,255,0.1); border-radius: 4px; transition: height 0.4s; position: relative; min-height: 4px; }
+        .stat-bar.positive { background: var(--gold); }
+        .stat-bar.negative { background: var(--red); }
+        .stat-bar.zero { background: #fff; }
+        .stat-label { position: absolute; bottom: -20px; left: 0; width: 100%; text-align: center; font-size: 0.6rem; color: var(--muted); }
+
+        .btn-export { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--muted); color: var(--muted); border-radius: var(--r-md); cursor: pointer; font-size: 0.9rem; font-family: var(--font-body); transition: 0.3s; margin-top: 10px; width: 100%; }
+        .btn-export:hover { background: var(--muted); color: var(--bg); border-color: var(--muted); }
+
+        .mini-calendar { margin-top: 20px; background: rgba(0,0,0,0.3); border-radius: var(--r-md); padding: 15px; }
+        .mini-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .mini-cal-header h4 { font-size: 1rem; margin: 0; color: var(--gold); }
+        .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+        .mini-cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border-radius: 50%; cursor: pointer; transition: 0.2s; color: rgba(255,255,255,0.3); }
+        .mini-cal-day:hover { background: rgba(255,255,255,0.1); }
+        .mini-cal-day.has-data { color: var(--blue); font-weight: bold; border: 1px solid var(--blue); }
+        .mini-cal-day.today { background: var(--gold); color: var(--bg); font-weight: bold; }
+
+        .goal-section { margin-top: 20px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border-radius: var(--r-md); border: 1px solid rgba(179,136,255,0.3); }
+        .goal-section h4 { color: var(--purple); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body); font-weight: 500; }
+        .goal-input-group { display: flex; gap: 10px; margin-bottom: 10px; }
+        .goal-input { flex: 1; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; outline: none; }
+        .btn-set-goal { padding: 10px 15px; background: var(--purple); color: var(--bg); border: none; border-radius: var(--r-md); cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-set-goal:hover { background: #fff; box-shadow: 0 0 15px rgba(179,136,255,0.5); }
+        .goal-progress-wrapper { margin-top: 10px; }
+        .goal-progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 5px; }
+        .goal-progress-fill { height: 100%; background: var(--purple); width: 0%; transition: width 0.5s; box-shadow: 0 0 10px var(--purple); }
+        .goal-text { font-size: 0.85rem; color: var(--muted); text-align: right; }
 
         /* --- 9. МЕДИТАЦИИ --- */
         #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
@@ -355,6 +550,363 @@
         .book-btn:disabled { opacity: 0.2; cursor: not-allowed; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.3); }
         .page-num { color: var(--muted); font-style: italic; font-size: 0.9rem; font-family: var(--font-body); }
 
+        /* --- 11. МОДАЛЬНОЕ ОКНО РИТУАЛА --- */
+        #ritual-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1a112a 0%, #0d0814 70%); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 500; padding: 20px; text-align: center; transition: opacity 0.8s ease; opacity: 0; }
+        #ritual-modal.show { display: flex; opacity: 1; }
+
+        .ritual-scene {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .ritual-text-top {
+            font-family: var(--font-title);
+            color: var(--gold);
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .feet-container-ritual {
+            position: relative;
+            width: 320px;
+            height: 260px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .wings-svg-ritual {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 15px rgba(126, 200, 255, 0.4));
+            transition: all 0.6s ease;
+        }
+
+        .wing-path-r {
+            stroke: var(--blue);
+            stroke-width: 2;
+            fill: rgba(126, 200, 255, 0.03);
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.4s ease;
+        }
+        .wing-detail-r {
+            stroke: var(--blue);
+            stroke-width: 1.2;
+            fill: none;
+            stroke-linecap: round;
+            opacity: 0.5;
+        }
+        .foot-path-r {
+            stroke: var(--muted);
+            stroke-width: 1.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.8;
+            transition: all 0.4s ease;
+        }
+        .gold-string-r {
+            stroke: var(--gold);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-dasharray: 4 4;
+            opacity: 0.9;
+            transition: all 0.4s ease;
+        }
+
+        .ritual-scene.active .feet-container-ritual {
+            transform: translateY(-8px);
+        }
+        .ritual-scene.active .wings-svg-ritual {
+            filter: drop-shadow(0 0 30px rgba(126, 200, 255, 0.9));
+        }
+        .ritual-scene.active .wing-path-r {
+            fill: rgba(126, 200, 255, 0.15);
+        }
+        .ritual-scene.active .foot-path-r {
+            stroke: var(--blue);
+        }
+        .ritual-scene.active .gold-string-r {
+            stroke-dasharray: 0 100; 
+            opacity: 1;
+        }
+
+        .btn-enter-ritual-new {
+            padding: 16px 40px;
+            background: transparent;
+            border: 1.5px solid var(--blue);
+            color: var(--blue);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 40px;
+            transition: all 0.4s ease;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 15px rgba(126, 200, 255, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        .btn-enter-ritual-new:hover {
+            background: var(--blue);
+            color: var(--bg);
+            box-shadow: 0 0 30px rgba(126, 200, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .ritual-buttons-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+            z-index: 20;
+        }
+        .btn-ritual-back {
+            padding: 14px 30px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--muted);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.4s;
+        }
+        .btn-ritual-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        .btn-ritual-forward {
+            padding: 16px 40px;
+            background: var(--gold);
+            border: 1px solid var(--gold);
+            color: var(--bg);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.4s;
+            box-shadow: 0 0 20px rgba(255, 217, 138, 0.4);
+        }
+        .btn-ritual-forward:hover {
+            background: #fff;
+            border-color: #fff;
+            box-shadow: 0 0 30px rgba(255, 217, 138, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .final-screen-ritual {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 600;
+            animation: fadeIn 1.2s ease-out;
+        }
+        .final-screen-ritual.show {
+            display: flex;
+        }
+        .final-text-ritual {
+            font-family: var(--font-title);
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 217, 138, 0.3);
+        }
+        .final-sub-ritual {
+            color: var(--muted);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* --- НОВЫЙ ПУТЬ (ОСЬ РОСТА) --- */
+        #new-path-section {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a112a 0%, #0d0814 70%);
+            z-index: 550;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        #new-path-section.show {
+            display: flex;
+            opacity: 1;
+        }
+        .new-path-content {
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+        .new-path-title {
+            font-family: var(--font-title);
+            color: var(--gold);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 217, 138, 0.3);
+        }
+        .new-path-subtitle {
+            color: var(--blue);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .new-path-text {
+            color: #e0d8ec;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .axis-visual-new {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 40px auto;
+            position: relative;
+            perspective: 1000px;
+        }
+        .circle-3d {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .line-down {
+            position: absolute;
+            bottom: 50%; left: 50%;
+            width: 2px; height: 100px;
+            background: linear-gradient(to bottom, var(--red), transparent);
+            transform: translateX(-50%);
+            opacity: 0.5;
+        }
+        .line-up {
+            position: absolute;
+            bottom: 50%; left: 50%;
+            width: 4px; height: 150px;
+            background: linear-gradient(to top, var(--gold), #fff);
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px var(--gold);
+            animation: pulseUp 2s infinite alternate;
+        }
+        @keyframes pulseUp {
+            0% { height: 120px; opacity: 0.8; }
+            100% { height: 160px; opacity: 1; box-shadow: 0 0 30px #fff; }
+        }
+        .zero-point-vis {
+            position: absolute;
+            bottom: 50%; left: 50%;
+            width: 16px; height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            transform: translate(-50%, 50%);
+            box-shadow: 0 0 20px #fff;
+            z-index: 10;
+        }
+
+        .tips-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        @media (min-width: 600px) {
+            .tips-grid { flex-direction: row; }
+        }
+        .tip-card {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--r-md);
+            padding: 20px;
+            transition: 0.3s;
+        }
+        .tip-card:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .tip-card h4 {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .tip-card p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+        .tip-logic h4 { color: var(--gold); }
+        .tip-emotion h4 { color: var(--blue); }
+        .tip-state h4 { color: var(--purple); }
+
+        .new-path-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        .btn-save-new-path {
+            padding: 16px 40px;
+            background: var(--blue);
+            color: var(--bg);
+            border: none;
+            border-radius: 30px;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 0 20px rgba(126, 200, 255, 0.3);
+            width: 100%;
+            max-width: 350px;
+        }
+        .btn-save-new-path:hover {
+            background: #fff;
+            box-shadow: 0 0 30px rgba(126, 200, 255, 0.6);
+            transform: translateY(-2px);
+        }
+        .btn-back-from-new {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 10px;
+            transition: 0.3s;
+        }
+        .btn-back-from-new:hover {
+            color: #fff;
+        }
+
         /* --- ПОДВАЛ + КАЛЕНДАРЬ --- */
         #footer { padding: 50px 20px; background: rgba(18, 10, 31, 0.95); backdrop-filter: blur(10px); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); position: relative; }
         .calendar-section { max-width: 600px; margin: 0 auto 40px auto; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 25px 20px; }
@@ -387,16 +939,28 @@
             .section-title h2, .c-title h2 { font-size: 1.8rem; }
             .modal-content { padding: 20px 15px; }
             .book-container-legend { height: 520px; padding: 20px 15px; }
-            .svg-container { width: 180px; height: 180px; }
+            .spiral-container { width: 200px; height: 200px; }
             .visual-container { width: 220px; height: 220px; }
             .axis-text-btn { font-size: 0.75rem; padding: 6px 10px; }
             .med-main-trigger { font-size: 1.1rem; padding: 18px 15px; }
             .result-tab-btn { font-size: 0.8rem; padding: 10px 5px; }
             .play-btn { width: 55px; height: 55px; font-size: 22px; }
+            .feet-container-ritual { width: 280px; height: 210px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- КНОПКА ФОНОВОЙ МУЗЫКИ -->
+    <div class="music-toggle-btn muted" id="music-toggle" onclick="toggleMusic()">
+        <!-- Иконка динамика (по умолчанию перечеркнутая) -->
+        <svg id="icon-music-off" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+        <!-- Иконка динамика (включенная) -->
+        <svg id="icon-music-on" viewBox="0 0 24 24" style="display: none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+    </div>
+
+    <!-- Скрытое аудио для фоновой музыки -->
+    <audio id="bg-music" src="audio/bg-music.mp3" loop></audio>
 
     <!-- 1. ГЛАВНЫЙ ЭКРАН -->
     <section id="hero">
@@ -413,10 +977,24 @@
     <section id="intro">
         <div class="intro-box">
             <h2>Три силы внутри нас</h2>
-            <p>Мы привыкли смотреть на свою жизнь линейно: прошлое → настоящее → будущее. Но внутри нас всё устроено иначе.</p>
-            <p>Каждый человек одновременно живёт в трёх состояниях: <strong>в том, что тянет назад</strong>, <strong>в том, что ведёт вперёд</strong>, и <strong>в том, что показывает путь</strong>.</p>
-            <p>Чтобы объяснить эти внутренние силы, мы используем три архетипа: Горгона, Персей и Алиса.</p>
-            <p><strong>Это не сказка — это способ увидеть себя честно, без страха и без самообмана.</strong></p>
+            <p>Мы привыкли смотреть на свою жизнь линейно: прошлое → настоящее → будущее. Но внутри нас всё устроено иначе. Мы живем в трех состояниях одновременно.</p>
+            
+            <div class="forces-grid">
+                <div class="force-card force-gorgon">
+                    <h3>Горгона</h3>
+                    <p>Это то, что тянет назад. Наш прошлый опыт, страхи и старые обиды. Она не враг, она просто застывшее отражение.</p>
+                </div>
+                <div class="force-card force-perseus">
+                    <h3>Персей</h3>
+                    <p>Это то, что ведет вперед. Наша воля, ясность и смелость встретиться со своими страхами. Он держит Зеркало, чтобы видеть правду.</p>
+                </div>
+                <div class="force-card force-alice">
+                    <h3>Алиса</h3>
+                    <p>Это наш внутренний проводник. Любопытство, надежда и легкость. Она знает дорогу в новый мир.</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 30px;"><strong>Это не сказка.</strong> Это способ увидеть себя честно, без страха и без самообмана.</p>
         </div>
     </section>
 
@@ -480,24 +1058,37 @@
                 <p>Это момент, когда человек обнуляется, чтобы выбрать новое направление — чистое, честное, своё.</p>
                 <p>Персей освобождается от прошлого. Алиса показывает путь. Горгона остаётся позади — только как отражение, а не как реальность.</p>
                 <p>Только из Точки Ноль можно начать новый путь, который действительно ведёт вперёд.</p>
-                <div class="svg-container">
-                    <svg width="100%" height="100%" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                
+                <div class="spiral-container">
+                    <svg class="spiral-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <marker id="arrow-dark" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto">
-                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#004D40" />
+                            <marker id="arrow-gold" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#c9a05a" />
                             </marker>
-                            <marker id="arrow-light" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="4" markerHeight="4" orient="auto">
-                                <path d="M 10 0 L 0 5 L 10 10 z" fill="#009688" />
+                            <marker id="arrow-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#009688" />
                             </marker>
                         </defs>
-                        <g transform="translate(120, 120) rotate(-45)">
-                            <path d="M 0 0 C 10 0, 20 10, 20 20 C 20 35, 5 50, -15 45 C -40 40, -55 15, -45 -10 C -35 -40, 5 -55, 35 -40 C 70 -20, 80 25, 55 55 C 30 85, -20 90, -55 65 C -95 35, -95 -30, -50 -65 C -5 -100, 70 -85, 95 -30 C 110 10, 100 50, 70 75" stroke="#004D40" stroke-width="2.5" stroke-linecap="round" fill="none" marker-start="url(#arrow-dark)" marker-end="url(#arrow-dark)" />
-                            <path d="M 8 5 C 18 5, 28 15, 28 25 C 28 40, 12 55, -8 50 C -33 45, -48 20, -38 -5 C -28 -35, 12 -50, 42 -35 C 77 -15, 87 30, 62 60 C 37 90, -13 95, -48 70 C -88 40, -88 -25, -43 -60 C 2 -95, 77 -80, 102 -25 C 117 15, 107 55, 77 80" stroke="#009688" stroke-width="2.5" stroke-linecap="round" fill="none" marker-start="url(#arrow-light)" marker-end="url(#arrow-light)" />
-                            <circle cx="0" cy="0" r="5" fill="#009688" />
-                            <circle cx="0" cy="0" r="2.5" fill="#FFFFFF" />
+
+                        <g class="spiral-outward">
+                            <path id="path-out" d="M 120 120 C 130 120, 140 130, 140 140 C 140 155, 125 170, 105 165 C 80 160, 65 135, 75 110 C 85 80, 125 65, 155 80 C 190 100, 200 145, 175 175 C 150 205, 100 210, 65 185 C 25 155, 25 90, 70 55 C 115 20, 190 35, 215 90 C 230 130, 220 170, 190 195" stroke="#c9a05a" stroke-width="2.5" stroke-linecap="round" fill="none" marker-end="url(#arrow-gold)" />
                         </g>
+
+                        <g class="spiral-inward">
+                            <path id="path-in" d="M 198 200 C 228 175, 238 135, 223 95 C 198 40, 123 25, 78 60 C 33 95, 33 160, 73 190 C 108 215, 158 210, 183 180 C 208 150, 198 105, 163 85 C 133 70, 93 85, 83 115 C 73 140, 88 165, 113 170 C 133 175, 148 160, 148 145 C 148 135, 138 125, 128 125" stroke="#009688" stroke-width="2.5" stroke-linecap="round" fill="none" marker-end="url(#arrow-blue)" />
+                        </g>
+
+                        <g class="runner-group">
+                            <circle class="runner-dot" r="4" />
+                            <path class="runner-arrow" d="M -4 -4 L 4 0 L -4 4 Z" />
+                        </g>
+
+                        <path id="runner-guide" d="M 198 200 C 228 175, 238 135, 223 95 C 198 40, 123 25, 78 60 C 33 95, 33 160, 73 190 C 108 215, 158 210, 183 180 C 208 150, 198 105, 163 85 C 133 70, 93 85, 83 115 C 73 140, 88 165, 113 170 C 133 175, 148 160, 148 145 C 148 135, 138 125, 128 125" stroke="none" fill="none" />
+
+                        <circle class="center-glow" cx="120" cy="120" r="4" fill="#fff" />
                     </svg>
                 </div>
+
                 <a href="#diagnostics" class="btn-zero">Войти в Ноль</a>
             </div>
         </div>
@@ -519,10 +1110,10 @@
                         <div class="state-card" onclick="selectState(0, 'Точка Ноль (Гармония)', this)">
                             <span class="sc-num">0</span><span class="sc-text">Точка Ноль (Гармония)</span>
                         </div>
-                        <div class="state-card" onclick="selectState(1, 'Легкое беспокойство', this)">
-                            <span class="sc-num">1</span><span class="sc-text">Легкое беспокойство</span>
+                        <div class="state-card" onclick="selectState(1, 'Потеря опоры', this)">
+                            <span class="sc-num">1</span><span class="sc-text">Потеря опоры</span>
                         </div>
-                        <div class="state-card" onclick="selectState(2, 'Зависимость', this)">
+                        <div class="state-card" onclick="selectState(2, 'Зависимость от мнения', this)">
                             <span class="sc-num">2</span><span class="sc-text">Зависимость от мнения</span>
                         </div>
                         <div class="state-card" onclick="selectState(3, 'Хаос, расфокус', this)">
@@ -551,12 +1142,16 @@
                 <button type="submit" class="btn-submit">Узнать мою точку на спирали</button>
             </form>
             <div class="result" id="res-box">
-                <p class="result-title">Твой результат:</p>
-                <div class="res-item"><strong>Твой виток:</strong> <span id="r-vitok"></span></div>
-                <div class="res-item"><strong>Активная тень:</strong> <span id="r-shadow" class="t-shadow"></span></div>
-                <div class="res-item"><strong>Твой свет:</strong> <span id="r-light" class="t-light"></span></div>
-                <div class="res-item"><strong>Шаг Алисы:</strong> <span id="r-alice" class="t-alice"></span></div>
-                <button class="btn-show-shield" onclick="showShield()">🛡️ Открыть Щит Персея</button>
+                <button class="btn-show-result" id="btn-show-result" onclick="toggleResultDetails()">Твой результат</button>
+                <div id="result-details" style="display: none; margin-top: 20px;">
+                    <div class="res-item"><strong>Твой виток:</strong> <span id="r-vitok"></span></div>
+                    <div class="res-item"><strong>Активная тень:</strong> <span id="r-shadow" class="t-shadow"></span></div>
+                    <div class="res-item"><strong>Твой свет:</strong> <span id="r-light" class="t-light"></span></div>
+                    <div class="res-item"><strong>Шаг Алисы:</strong> <span id="r-alice" class="t-alice"></span></div>
+                    
+                    <button class="btn-show-shield" id="btn-show-shield" onclick="showShield()">🛡️ Открыть Щит Персея</button>
+                    <button class="btn-show-shield" id="btn-ritual" style="display: none; border-color: var(--blue); color: var(--blue);" onclick="openRitual()">✨ Оставить прошлое за порогом</button>
+                </div>
             </div>
         </div>
     </section>
@@ -580,56 +1175,61 @@
 
     <!-- 7. КОМПАС -->
     <section id="balance">
-        <div class="c-title">
-            <h2>Твоя точка сборки</h2>
-            <p>Ответь на три вопроса и построй свой Вектор Пути.</p>
-        </div>
-        <div class="balance-visual-area">
-            <div class="axis-text-btn btn-avg" id="ci-avg">Вектор: 0</div>
-            <div class="axis-text-btn btn-x" id="ci-x">Логика: 0</div>
-            <div class="axis-text-btn btn-y" id="ci-y">Эмоции: 0</div>
-            <div class="axis-text-btn btn-z" id="ci-z">Состояние: 0</div>
-            <div class="visual-container" id="visual-container">
-                <div class="axis-arrow arrow-x" id="vis-x"></div>
-                <div class="axis-arrow arrow-y" id="vis-y"></div>
-                <div class="axis-arrow arrow-z" id="vis-z"></div>
-                <div class="axis-arrow arrow-average" id="vis-avg"></div>
-                <div class="axis-center"></div>
-            </div>
-        </div>
-        <div class="balance-box">
-            <div class="balance-item">
-                <label>Логика: как работает твой ум?</label>
-                <div class="custom-select-btn" onclick="toggleCustom('logic')">
-                    <span id="label-logic">0 — Нейтральность, ровный ум</span>
-                    <span class="arrow">🔽</span>
+        <div id="balance-wrapper">
+            <div class="c-title">
+                <h2>Твоя точка сборки</h2>
+                <button class="help-btn" onclick="toggleHelp()">Как читать этот Компас?</button>
+                <div class="help-content" id="help-content">
+                    <p>Нажми на цветные кнопки вокруг круга, чтобы выбрать своё состояние.</p>
+                    <p><strong>🟡 Логика:</strong> как работает твой ум.</p>
+                    <p><strong>🔵 Эмоции:</strong> что чувствует твое сердце.</p>
+                    <p><strong>🟣 Состояние:</strong> как ощущается тело.</p>
+                    <p><strong>⚪ Вектор:</strong> сумма всех трех. Нажми на него, чтобы узнать свой результат.</p>
                 </div>
-                <div class="custom-options" id="options-logic"></div>
             </div>
-            <div class="balance-item">
-                <label>Эмоции: что ты чувствуешь?</label>
-                <div class="custom-select-btn" onclick="toggleCustom('emotion')">
-                    <span id="label-emotion">0 — Ровная нейтральность</span>
-                    <span class="arrow">🔽</span>
+            
+            <div class="balance-visual-area">
+                <div class="axis-btn btn-state" onclick="openPicker('state')">
+                    <span>Состояние: <span id="ci-z">0</span></span>
                 </div>
-                <div class="custom-options" id="options-emotion"></div>
-            </div>
-            <div class="balance-item">
-                <label>Состояние: как ощущается тело?</label>
-                <div class="custom-select-btn" onclick="toggleCustom('state')">
-                    <span id="label-state">0 — Нейтральное состояние</span>
-                    <span class="arrow">🔽</span>
+                <div class="axis-btn btn-logic" onclick="openPicker('logic')">
+                    <span>Логика: <span id="ci-x">0</span></span>
                 </div>
-                <div class="custom-options" id="options-state"></div>
+                <div class="axis-btn btn-emotion" onclick="openPicker('emotion')">
+                    <span>Эмоции: <span id="ci-y">0</span></span>
+                </div>
+                <div class="axis-btn btn-vector" id="btn-vector" onclick="toggleVectorResult()">
+                    <span id="ci-avg">Вектор: 0</span>
+                    <span style="font-size: 0.8rem; margin-left:5px;">🔽</span>
+                </div>
+    
+                <div class="visual-container" id="visual-container">
+                    <div class="axis-arrow arrow-x" id="vis-x"></div>
+                    <div class="axis-arrow arrow-y" id="vis-y"></div>
+                    <div class="axis-arrow arrow-z" id="vis-z"></div>
+                    <div class="axis-arrow arrow-average" id="vis-avg"></div>
+                    <div class="axis-center"></div>
+                </div>
+    
+                <div class="value-picker" id="value-picker">
+                    <div class="picker-title" id="picker-title">Выбери значение</div>
+                    <div id="picker-options"></div>
+                </div>
             </div>
-            <div class="balance-result state-neutral" id="balance-result">
-                <h3 id="balance-title">Ты в Точке Ноль</h3>
-                <p id="balance-text">Векторы в идеальном балансе. Пребывай в этом состоянии.</p>
+            
+            <div class="vector-result-wrapper" id="vector-result-wrapper">
+                <div class="vector-result-content" id="vector-result-content">
+                    <h3 id="balance-title">Заголовок</h3>
+                    <p id="balance-text">Текст</p>
+                    <button class="btn-ritual-compass" id="btn-ritual-compass" onclick="openRitual()" style="display: none;">
+                        ✨ Оставить прошлое за порогом
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 8. МОЙ ПУТЬ (ТЕПЕРЬ ВСЕГДА ВИДЕН) -->
+    <!-- 8. МОЙ ПУТЬ -->
     <section id="my-path-section" style="display: flex;">
         <button class="open-book-btn" onclick="openModal()">
             <span class="icon">✨</span> Мой путь
@@ -700,32 +1300,43 @@
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             
-            <!-- ГЛАВНОЕ МЕНЮ -->
             <div id="current-view">
                 <h2>Личный кабинет</h2>
-                <div class="tabs-grid">
+                
+                <div class="mini-calendar">
+                    <div class="mini-cal-header">
+                        <h4 id="mini-cal-title">Октябрь 2026</h4>
+                    </div>
+                    <div class="mini-cal-grid" id="mini-cal-grid"></div>
+                </div>
+
+                <div class="tabs-grid" style="margin-top: 20px;">
                     <button class="tab-btn tab-path" onclick="showPath()">✨ Твой текущий путь</button>
                     <button class="tab-btn tab-diary" onclick="showDiary()">📖 Мой дневник</button>
                     <button class="tab-btn tab-archive" onclick="showArchive()">📜 Мой архив (Витки)</button>
                     <button class="tab-btn tab-num" onclick="showNumerology()">🔢 Нумерология</button>
                 </div>
-                <!-- НОВАЯ КНОПКА ЗАКРЫТИЯ КАБИНЕТА -->
+
+                <div class="goal-section" id="goal-section"></div>
+
                 <button class="btn-back" onclick="closeModal()" style="margin-top: 20px;">✕ Закрыть кабинет</button>
             </div>
 
-            <!-- ТЕКУЩИЙ ПУТЬ -->
             <div id="path-view">
                 <h2>Твой текущий путь</h2>
                 <div class="modal-grid">
                     <div class="mod-item"><span>Текущий виток</span><strong id="m-vitok" style="color: #fff;">...</strong></div>
-                    <div class="mod-item" style="border-left-color: var(--red);"><span>Активная тень</span><strong class="t-shadow" id="m-shadow" style="color: #ffb3b3;">...</strong></div>
-                    <div class="mod-item" style="border-left-color: var(--gold);"><span>Твой свет</span><strong class="t-light" id="m-light" style="color: #fff3cc;">...</strong></div>
-                    <div class="mod-item" style="border-left-color: var(--blue);"><span>Следующий шаг Алисы</span><strong class="t-alice" id="m-alice" style="color: #cceeff;">...</strong></div>
+                    <div class="mod-item" style="border-left-color: var(--red);"><span>Активная тень</span><strong id="m-shadow" style="color: #ffb3b3;">...</strong></div>
+                    <div class="mod-item" style="border-left-color: var(--gold);"><span>Твой свет</span><strong id="m-light" style="color: #fff3cc;">...</strong></div>
+                    <div class="mod-item" style="border-left-color: var(--blue);"><span>Следующий шаг Алисы</span><strong id="m-alice" style="color: #cceeff;">...</strong></div>
                 </div>
+
+                <div style="text-align: left; margin-bottom: 5px; font-size: 0.9rem; color: var(--muted);">Твой вектор за последние 7 дней:</div>
+                <div class="stats-wrapper" id="stats-wrapper"></div>
+
                 <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
 
-            <!-- ДНЕВНИК -->
             <div id="diary-view">
                 <h2>Мой дневник</h2>
                 <div style="margin-bottom: 20px;">
@@ -734,38 +1345,37 @@
                 </div>
                 <h3 style="color: var(--gold); font-size: 1.2rem; margin-bottom: 10px; text-align: left;">История записей</h3>
                 <div class="scrollable-list"><div id="diary-list"></div></div>
+                <button class="btn-export" onclick="exportDiary()">📥 Экспорт дневника (.txt)</button>
                 <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
 
-            <!-- АРХИВ -->
             <div id="archive-view">
                 <h2>Мой архив</h2>
                 <div class="scrollable-list"><div class="archive-list" id="archive-list"></div></div>
+                <button class="btn-export" onclick="exportArchive()">📥 Экспорт архива (.json)</button>
                 <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
 
-            <!-- НУМЕРОЛОГИЯ -->
             <div id="numerology-view">
                 <h2>Нумерология</h2>
                 
-                <!-- Ввод дат (3 окна с автопереходом) -->
                 <div style="text-align: left; margin-bottom: 5px; color: var(--muted); font-size: 0.9rem;">Дата рождения</div>
-                <div class="date-row" style="display:flex; gap:10px; margin-bottom:15px;">
-                    <div style="flex:1;"><input type="text" id="b-day" class="num-input" placeholder="ДД" maxlength="2" style="text-align:center;" oninput="autoJump(this, 'b-month')"></div>
-                    <div style="flex:1;"><input type="text" id="b-month" class="num-input" placeholder="ММ" maxlength="2" style="text-align:center;" oninput="autoJump(this, 'b-year')"></div>
-                    <div style="flex:1;"><input type="text" id="b-year" class="num-input" placeholder="ГГГГ" maxlength="4" style="text-align:center;" oninput="autoJump(this, 'c-day')"></div>
+                <div style="display:flex; gap:10px; margin-bottom:15px;">
+                    <div style="flex:1;"><input type="text" id="b-day" class="num-input" placeholder="ДД" maxlength="2" oninput="autoJump(this, 'b-month')"></div>
+                    <div style="flex:1;"><input type="text" id="b-month" class="num-input" placeholder="ММ" maxlength="2" oninput="autoJump(this, 'b-year')"></div>
+                    <div style="flex:1;"><input type="text" id="b-year" class="num-input" placeholder="ГГГГ" maxlength="4" oninput="autoJump(this, 'c-day')"></div>
                 </div>
 
                 <div style="text-align: left; margin-bottom: 5px; color: var(--muted); font-size: 0.9rem;">Дата прохождения</div>
-                <div class="date-row" style="display:flex; gap:10px; margin-bottom:20px;">
-                    <div style="flex:1;"><input type="text" id="c-day" class="num-input" placeholder="ДД" maxlength="2" style="text-align:center;" oninput="autoJump(this, 'c-month')"></div>
-                    <div style="flex:1;"><input type="text" id="c-month" class="num-input" placeholder="ММ" maxlength="2" style="text-align:center;" oninput="autoJump(this, 'c-year')"></div>
-                    <div style="flex:1;"><input type="text" id="c-year" class="num-input" placeholder="ГГГГ" maxlength="4" style="text-align:center;"></div>
+                <div style="display:flex; gap:10px; margin-bottom:20px;">
+                    <div style="flex:1;"><input type="text" id="c-day" class="num-input" placeholder="ДД" maxlength="2" oninput="autoJump(this, 'c-month')"></div>
+                    <div style="flex:1;"><input type="text" id="c-month" class="num-input" placeholder="ММ" maxlength="2" oninput="autoJump(this, 'c-year')"></div>
+                    <div style="flex:1;"><input type="text" id="c-year" class="num-input" placeholder="ГГГГ" maxlength="4"></div>
                 </div>
                 
                 <button class="btn-calc" onclick="calcNumerology()">Рассчитать</button>
+                
                 <div id="num-result">
-                    <!-- Сетка для 4 кнопок -->
                     <div class="result-tabs-nav">
                         <button class="result-tab-btn active" onclick="openResTab('res-birth', this)">Число рождения</button>
                         <button class="result-tab-btn" onclick="openResTab('res-passage', this)">Число прохождения</button>
@@ -773,31 +1383,28 @@
                         <button class="result-tab-btn" onclick="openResTab('res-rec', this)">Рекомендации</button>
                     </div>
 
-                    <!-- Вкладка 1: Число рождения -->
                     <div class="res-tab-content active" id="res-birth">
                         <div class="text-block">
                             <h3 id="title-birth">Число рождения: X</h3>
                             <div class="item"><strong>Суть</strong><p id="text-b-essence"></p></div>
                             <div class="item"><strong>Свет</strong><p id="text-b-light"></p></div>
                             <div class="item"><strong>Тень</strong><p id="text-b-shadow"></p></div>
-                            <div class="item"><strong>Кармический урок</strong><p id="text-b-karma"></p></div>
+                            <div class="item"><strong>Урок</strong><p id="text-b-karma"></p></div>
                             <div class="item"><strong>Задача</strong><p id="text-b-task"></p></div>
                         </div>
                     </div>
 
-                    <!-- Вкладка 2: Число прохождения -->
                     <div class="res-tab-content" id="res-passage">
                         <div class="text-block">
                             <h3 id="title-passage">Число прохождения: Y</h3>
                             <div class="item"><strong>Суть периода</strong><p id="text-p-essence"></p></div>
                             <div class="item"><strong>Задачи</strong><p id="text-p-tasks"></p></div>
                             <div class="item"><strong>Вызовы</strong><p id="text-p-challenges"></p></div>
-                            <div class="item"><strong>Дхармический урок</strong><p id="text-p-dharma"></p></div>
+                            <div class="item"><strong>Урок периода</strong><p id="text-p-dharma"></p></div>
                             <div class="item"><strong>Потенциал</strong><p id="text-p-potential"></p></div>
                         </div>
                     </div>
 
-                    <!-- Вкладка 3: Взаимодействие -->
                     <div class="res-tab-content" id="res-interaction">
                         <div class="text-block">
                             <h3 id="title-interaction">Взаимодействие X и Y</h3>
@@ -809,7 +1416,6 @@
                         </div>
                     </div>
 
-                    <!-- Вкладка 4: Рекомендации -->
                     <div class="res-tab-content" id="res-rec">
                         <div class="text-block">
                             <h3>Рекомендации</h3>
@@ -822,27 +1428,145 @@
                 
                 <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
-            
+
             <div id="day-view">
-                <h2>Детали дня</h2>
+                <h2 id="day-title">Детали дня</h2>
                 <div class="scrollable-list" id="day-log-list"></div>
-                <button class="btn-back" onclick="closeModal()">Закрыть</button>
+                <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО РИТУАЛА -->
+    <div id="ritual-modal">
+        <div class="ritual-scene" id="ritual-scene">
+            <div class="ritual-text-top">Оставь свою обувь за порогом</div>
+
+            <div class="feet-container-ritual" id="feet-block-ritual">
+                <svg class="wings-svg-ritual" viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+                    
+                    <path class="foot-path-r" d="M 125 70 C 110 70, 105 90, 105 110 C 105 140, 112 170, 120 200 C 125 215, 130 220, 135 220 C 140 220, 145 215, 148 200 C 155 170, 145 140, 145 110 C 145 90, 140 70, 125 70 Z" />
+                    <path class="foot-path-r" d="M 108 70 Q 110 60 114 62 Q 117 52 122 56 Q 125 45 130 50 Q 135 45 138 56 Q 142 52 145 62 Q 148 60 150 70" stroke-width="1.2" />
+
+                    <path class="foot-path-r" d="M 175 70 C 190 70, 195 90, 195 110 C 195 140, 188 170, 180 200 C 175 215, 170 220, 165 220 C 160 220, 155 215, 152 200 C 145 170, 155 140, 155 110 C 155 90, 160 70, 175 70 Z" />
+                    <path class="foot-path-r" d="M 192 70 Q 190 60 186 62 Q 183 52 178 56 Q 175 45 170 50 Q 165 45 162 56 Q 158 52 155 62 Q 152 60 150 70" stroke-width="1.2" />
+
+                    <path class="wing-path-r" d="M 120 200 C 80 220, 20 240, 10 200 C 0 160, 40 120, 105 150 C 80 170, 50 190, 120 200 Z" />
+                    <path class="wing-detail-r" d="M 115 195 C 80 210, 40 220, 30 200 C 20 180, 50 150, 100 160" />
+
+                    <path class="wing-path-r" d="M 180 200 C 220 220, 280 240, 290 200 C 300 160, 260 120, 195 150 C 220 170, 250 190, 180 200 Z" />
+                    <path class="wing-detail-r" d="M 185 195 C 220 210, 260 220, 270 200 C 280 180, 250 150, 200 160" />
+
+                    <path class="gold-string-r" d="M 108 130 Q 125 120 142 130" />
+                    <path class="gold-string-r" d="M 158 130 Q 175 120 192 130" />
+                </svg>
+            </div>
+
+            <button class="btn-enter-ritual-new" id="enter-btn-ritual" onmouseenter="activateHoverRitual()" onmouseleave="deactivateHoverRitual()" onclick="enterPointRitual()">
+                Обуть чистые сандалии
+            </button>
+        </div>
+    </div>
+
+    <!-- ФИНАЛЬНЫЙ ЭКРАН РИТУАЛА (ОБНОВЛЕННЫЙ) -->
+    <div class="final-screen-ritual" id="final-screen-ritual">
+        <div class="final-text-ritual">Сандалии обуты</div>
+        <div class="final-sub-ritual">Порог пройден. Точка Ноль ждет.</div>
+        
+        <p style="color: var(--muted); margin-top: 20px; max-width: 400px; font-size: 0.95rem; line-height: 1.6;">
+            Это важный момент. Ты прошел путь. Теперь у тебя есть выбор: остаться в привычном круге или сделать шаг в неизвестность.
+        </p>
+
+        <div class="ritual-buttons-group">
+            <button class="btn-ritual-back" onclick="closeRitualAndReturn()">Вернуться назад</button>
+            <button class="btn-ritual-forward" onclick="goToNewPath()">🚀 Пойти в Новый Путь</button>
+        </div>
+    </div>
+
+    <!-- НОВЫЙ ПУТЬ (ОСЬ РОСТА) - СКРЫТЫЙ БЛОК -->
+    <div id="new-path-section">
+        <div class="new-path-content">
+            <h2 class="new-path-title">Твой Новый Вектор</h2>
+            <div class="new-path-subtitle">Рост над собой. Движение в Небо.</div>
+            
+            <div class="new-path-text">
+                <p><strong>Точка Ноль — это не остановка. Это твоя новая ось.</strong></p>
+                <p>Ты прошел путь и нашел баланс. Теперь ты можешь не просто стоять в центре, а подниматься по этой оси вверх. Это твой рост над собой.</p>
+                <p>Ты в идеальном центре. Твой Ум, Сердце и Состояние звучат в унисон. Только в этом абсолютном триединстве, когда все три вектора равны, ты можешь начать движение строго вверх. Не отклоняясь ни в хаос, ни в холод. По центральной оси. К себе настоящему.</p>
+            </div>
+
+            <!-- 3D Визуализация -->
+            <div class="axis-visual-new">
+                <div class="circle-3d">
+                    <div class="line-down"></div>
+                    <div class="line-up"></div>
+                    <div class="zero-point-vis"></div>
+                </div>
+            </div>
+
+            <!-- Подсказки -->
+            <h3 style="color: #fff; margin-bottom: 20px; font-family: var(--font-body); font-weight: 500;">Как удержаться в Точке Ноль:</h3>
+            <div class="tips-grid">
+                <div class="tip-card tip-logic">
+                    <h4>Логика: Кристальная ясность</h4>
+                    <p>Твой ум больше не спорит с сердцем. Он в идеальном балансе. Ты видишь суть вещей без страха и иллюзий. Чтобы удерживать эту ось, не позволяй уму уходить в крайности. Если мысли начинают уводить тебя в сторону от этого покоя, просто возвращайся в тишину. Твоя задача — держать этот вектор равновесия, чтобы расти вверх.</p>
+                </div>
+                <div class="tip-card tip-emotion">
+                    <h4>Эмоции: Благодарность и покой</h4>
+                    <p>Ты в точке настоящего. Ушли обиды, ушли страхи. Осталось только чистое чувство благодарности и спокойствия. Твоя ценность не зависит от внешних зеркал. Удерживай это тепло, не позволяй эмоциям раскачивать тебя. Когда Сердце открыто и спокойно одновременно, оно резонирует с Логикой и Телом, создавая ту самую вертикаль.</p>
+                </div>
+                <div class="tip-card tip-state">
+                    <h4>Состояние: Вибрация настоящего</h4>
+                    <p>Это не просто физическое расслабление. Это высокая вибрация твоего истинного Я. Тело стало идеальным проводником. Оно свободно от зажимов и старых блоков. Ощути эту легкость и поток. Когда твоя вибрация чиста и совпадает с чистотой Ума и Сердца, ты поднимаешься по центральной оси. Ты — сама гармония.</p>
+                </div>
+            </div>
+
+            <div class="new-path-actions">
+                <button class="btn-save-new-path" onclick="saveNewPathState()">✍️ Записать это состояние в дневник</button>
+                <button class="btn-back-from-new" onclick="closeNewPathAndReturn()">Вернуться в лабиринт</button>
             </div>
         </div>
     </div>
 
     <script>
+        // === ЛОГИКА ФОНОВОЙ МУЗЫКИ ===
+        const bgMusic = document.getElementById('bg-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const iconMusicOff = document.getElementById('icon-music-off');
+        const iconMusicOn = document.getElementById('icon-music-on');
+        let isMusicPlaying = false;
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicToggle.classList.add('muted');
+                iconMusicOff.style.display = 'block';
+                iconMusicOn.style.display = 'none';
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicToggle.classList.remove('muted');
+                    iconMusicOff.style.display = 'none';
+                    iconMusicOn.style.display = 'block';
+                    isMusicPlaying = true;
+                }).catch(e => {
+                    console.log("Автовоспроизведение заблокировано браузером. Нужен клик пользователя.");
+                });
+            }
+        }
+
         // === ДАННЫЕ ===
         const nData = {
             0: { s: "Отсутствие тени", l: "Чистое Я", a: "Пребывать в покое." },
-            1: { s: "Легкое беспокойство", l: "Ясный импульс", a: "Остановиться и увидеть точку ухода." },
-            2: { s: "Зависимость", l: "Союз с собой", a: "Увидеть, что зеркало — не истина." },
+            1: { s: "Импульсивность", l: "Чистый импульс", a: "Остановиться и увидеть точку ухода." },
+            2: { s: "Зависимость от мнения", l: "Союз с собой", a: "Увидеть, что зеркало — не истина." },
             3: { s: "Хаос, расфокус", l: "Творческий поток", a: "Собрать внимание в одну линию." },
             4: { s: "Жесткий контроль", l: "Опора, порядок", a: "Отпустить то, что не твоё." },
             5: { s: "Бегство", l: "Свобода выбора", a: "Перестать убегать от себя." },
             6: { s: "Спасательство", l: "Гармония", a: "Вернуть энергию себе." },
             7: { s: "Холод, уход в голову", l: "Мудрость", a: "Вернуться в тело." },
-            8: { s: "Давление, контроль", l: "Внутренняя сила", a: "Перестать давить на мир." },
+            8: { s: "Давление на мир", l: "Внутренняя сила", a: "Перестать давить на мир." },
             9: { s: "Крайняя точка", l: "Завершение цикла", a: "Увидеть, что дальше — только внутрь." }
         };
 
@@ -858,6 +1582,30 @@
             { id: 8, t: "Сила", s: "Давление.", l: "Внутренняя сила.", a: "Перестать давить на мир." },
             { id: 9, t: "Удаление", s: "Крайняя точка.", l: "Завершение цикла.", a: "Увидеть, что дальше — только внутрь." }
         ];
+
+        const pathTexts = {
+            9: "<p><strong>Осознание:</strong> Ты на дне. Внутри пусто, и кажется, что дальше только тьма. Ты устал, разочаровался, и больше нет сил притворяться. Это не слабость. Это честность. Ты больше не можешь жить по-старому. И именно здесь, в этой тишине, рождается новая точка отсчёта.</p><p><strong>Поворот:</strong> Вспомни притчу о блудном сыне. Он дошёл до самого дна, ел вместе со свиньями, и только там, в грязи, вспомнил, что у отца его есть дом. Твоя девятка — это тот самый момент. Это не конец. Это дверь. Спираль больше не несёт тебя вниз. Ты можешь развернуть её прямо сейчас.</p>",
+            8: "<p><strong>Осознание:</strong> Ты привык(ла) брать всё на себя. Ты давишь на мир, на людей, на себя. Кажется, что если ослабить хватку — всё рухнет. Но на самом деле под этой бронёй ты боишься потерять контроль и остаться без защиты.</p><p><strong>Поворот:</strong> Настоящая сила — не в том, чтобы ломать. Настоящая сила — в мягкости. Персей держит Щит не для того, чтобы нападать, а чтобы защитить себя от собственных страхов. Ты можешь быть сильным, не разрушая. Ты можешь быть опорой, не превращаясь в тюремщика.</p>",
+            7: "<p><strong>Осознание:</strong> Ты закрыл(а) свои чувства в глухой ящик. Ум работает, логика на месте, но внутри — холод и пустота. Ты прячешься в голове, потому что в теле слишком больно. Ты думаешь, что так безопаснее. Но это не безопасность. Это заморозка.</p><p><strong>Поворот:</strong> Алиса не боится хаоса, она идёт через него с любопытством. Твои чувства — это не слабость. Это компас. Если ты их отключишь, ты потеряешь себя. Ты не потерян(а). Ты просто оттаиваешь. И это больно, но это жизнь.</p>",
+            6: "<p><strong>Осознание:</strong> Ты так долго спасал(а) всех вокруг, что забыл(а) о себе. Ты отдаёшь свою энергию другим, ждёшь благодарности, но остаёшься опустошённым. Ты думаешь, что твоя ценность в том, чтобы быть нужным. Но это ловушка.</p><p><strong>Поворот:</strong> Ты не обязан(а) спасать весь мир. Алиса не спасает других, она показывает путь. Ты не можешь налить воду из пустого кувшина. Когда ты позаботишься о себе, твоя забота станет лёгкой и искренней, а не жертвенной.</p>",
+            5: "<p><strong>Осознание:</strong> Ты хочешь всё бросить и убежать. Сменить обстановку, работу, город, людей — лишь бы не чувствовать то, что чувствуешь сейчас. Тебе кажется, что где-то там, в другом месте, будет легче. Но ты уже знаешь правду: от себя не убежать.</p><p><strong>Поворот:</strong> Персей не убегал от Горгоны. Он встретился с ней лицом к лицу, но через отражение. Ты можешь посмотреть на свою ситуацию не напрямую, а через Зеркало — без страха, без паники. Ты не застрял(а). Ты просто боишься сделать шаг. Но шаг — это и есть выход.</p>",
+            4: "<p><strong>Осознание:</strong> Ты пытаешься всё предусмотреть. Расписание, планы, правила, ожидания. Ты держишь всё под контролем, но внутри тебя живёт страх: а вдруг что-то пойдёт не так? Ты цепляешься за старые правила, потому что боишься перемен. Но контроль — это иллюзия безопасности.</p><p><strong>Поворот:</strong> Алиса не планирует каждый шаг. Она идёт вперёд с открытым сердцем. Персей отпускает прошлое. Ты можешь быть опорой, не превращаясь в тюремщика для себя и других. Настоящая опора — это гибкость. Это умение адаптироваться, не теряя себя.</p>",
+            3: "<p><strong>Осознание:</strong> Ты берёшься за всё сразу. Мысли скачут, дела не доводятся до конца, в голове шум. Ты чувствуешь, что тонешь в суете и не можешь собраться. Ты хочешь всё успеть, но в итоге не успеваешь ничего.</p><p><strong>Поворот:</strong> Алиса, попадая в хаос, не пытается объять необъятное. Она просто делает один шаг, потом ещё один. Ты не обязан(а) сделать всё сегодня. Собери внимание в одну линию. Выбери одно самое важное дело и доведи его до конца. Остальное подождёт.</p>",
+            2: "<p><strong>Осознание:</strong> Ты так сильно хочешь понравиться, что теряешь себя. Ты соглашаешься на то, что тебе не нравится. Ты подстраиваешься под других, чтобы не быть отвергнутым. Ты живёшь в зеркалах чужих ожиданий и не узнаёшь себя в отражении.</p><p><strong>Поворот:</strong> Чужие слова — это лишь отражение, а не истина. Ты не обязан(а) всем нравиться. Ты не обязан(а) быть удобным(ой). Ты ценен(на) уже потому, что ты есть. Персей не смотрит на Горгону напрямую, он смотрит в Зеркало. Посмотри на своё отражение и скажи: «Я вижу себя настоящего(ую). И я принимаю себя».</p>",
+            1: "<p><strong>Осознание:</strong> Ты чувствуешь, что сбился(лась) с пути. Что-то внутри тревожно, но непонятно от чего. Ты вроде бы делаешь всё правильно, но нет ясности. Это лёгкое беспокойство, потеря опоры, точка ухода от себя. Но ты ещё не упал(а) далеко. Это идеальный момент, чтобы остановиться.</p><p><strong>Поворот:</strong> Чистый импульс — это дар. Он ещё не увёл тебя в сторону. Ты просто чувствуешь энергию, которая ищет направления. Алиса уже рядом с тобой. Персей держит Щит. Ты на самом первом шаге. И именно сейчас ты можешь сделать первый шаг внутрь, к своей Точке Ноль.</p>"
+        };
+
+        const returnPathData = {
+            9: "<p><strong>Первый шаг домой:</strong> Скажи себе вслух: «Я больше не хочу так. Я готов(а) вернуться». Это не магия, это намерение. Ты уже сделал первый шаг. Теперь посмотри на свою Горгону и скажи ей: «Я вижу тебя. Ты — моё прошлое. Но не моё будущее».</p>",
+            8: "<p><strong>Первый шаг домой:</strong> Сделай сегодня одно дело, которое тебе не обязательно контролировать. Позволь другому человеку решить что-то за тебя. Скажи вслух: «Я отпускаю хватку. Я позволяю жизни течь». Почувствуй, как груз падает с плеч.</p>",
+            7: "<p><strong>Первый шаг домой:</strong> Закрой глаза и прислушайся к телу. Почувствуй, как ты дышишь. Положи руку на грудь и скажи себе: «Я здесь. Я живой(ая). Я возвращаюсь». Потом запиши в дневник всё, что чувствуешь, даже если это просто «холодно».</p>",
+            6: "<p><strong>Первый шаг домой:</strong> Сегодня сделай что-то только для себя. Не для других, не для работы. Просто для себя. Скажи: «Я возвращаю свою энергию себе. Я имею право на заботу». И запиши в дневник одну вещь, которую ты сделаешь для себя завтра.</p>",
+            5: "<p><strong>Первый шаг домой:</strong> Остановись. Прямо сейчас. Подними этот невидимый Щит и посмотри на то, от чего бежишь. Скажи: «Я не буду убегать. Я встречусь с этим. Я справлюсь». И запиши в дневник одну вещь, которую ты решишь сделать, чтобы изменить ситуацию изнутри.</p>",
+            4: "<p><strong>Первый шаг домой:</strong> Сегодня сделай что-то, что не входило в твои планы. Скажи себе: «Я отпускаю контроль. Я позволяю жизни удивить меня». Почувствуй, как становится легче. И запиши в дневник, что ты почувствовал(а), когда позволил(а) себе не контролировать.</p>",
+            3: "<p><strong>Первый шаг домой:</strong> Остановись и сделай глубокий вдох. Выбери одну задачу на сегодня, которая важна для тебя. Скажи себе: «Я делаю это одно дело. Остальное подождёт. Я в порядке». И запиши в дневник эту задачу, чтобы зафиксировать своё намерение.</p>",
+            2: "<p><strong>Первый шаг домой:</strong> Сегодня скажи «нет» тому, что тебе не по душе. Хотя бы одну маленькую вещь. Скажи: «Я уважаю свои границы. Моя ценность не зависит от чужого мнения». И запиши в дневник, что ты почувствовал(а), когда позволил(а) себе быть собой.</p>",
+            1: "<p><strong>Первый шаг домой:</strong> Остановись на минуту. Закрой глаза и задай себе вопрос: «Куда я сейчас иду? Это моё желание или чужое?». Не нужно отвечать сразу. Просто побудь в тишине. Скажи себе: «Я возвращаюсь к себе. Я слышу свой внутренний голос». И запиши в дневник любое ощущение, которое пришло.</p>"
+        };
 
         const meditations = [
             { id: 0,  num: "Медитация 0",  name: "Я есть", file: "audio/med0-ja-est.mp3" },
@@ -876,13 +1624,67 @@
 
         const balanceData = {
             logic: [
-                { v: -9, t: "Полный хаос, мысли рвутся" }, { v: -8, t: "Сильная тревога, ум скачет" }, { v: -7, t: "Перегруз, мысли давят" }, { v: -6, t: "Сильный туман, внимание рассыпается" }, { v: -5, t: "Неуверенность, логика не работает" }, { v: -4, t: "Рассеянность, сложно структурировать" }, { v: -3, t: "Медленные мысли, но управляемые" }, { v: -2, t: "Лёгкий туман, но я держусь" }, { v: -1, t: "Нестабильная ясность, скачки" }, { v: 0, t: "Нейтральность, ровный ум" }, { v: 1, t: "Лёгкая ясность" }, { v: 2, t: "Спокойная собранность" }, { v: 3, t: "Ум работает ровно" }, { v: 4, t: "Хорошая структурность" }, { v: 5, t: "Ясность, решения приходят" }, { v: 6, t: "Чёткая логика, ясные выводы" }, { v: 7, t: "Высокая ясность, ум быстрый" }, { v: 8, t: "Прозрачность мышления, поток" }, { v: 9, t: "Лазерная ясность, «вижу всё»" }
+                { v: -9, t: "В голове полный хаос, мысли обрывочны, я не могу сосредоточиться ни на чем." },
+                { v: -8, t: "Сильная тревога, мысли скачут, я теряю контроль над своими размышлениями." },
+                { v: -7, t: "Ум перегружен, мысли давят, любое решение кажется невыносимо сложным." },
+                { v: -6, t: "Сильный туман в голове, внимание рассеяно, я постоянно отвлекаюсь." },
+                { v: -5, t: "Неуверенность, логика отказывает, я не понимаю, что происходит." },
+                { v: -4, t: "Рассеянность, мне сложно выстроить четкий план или структурировать мысли." },
+                { v: -3, t: "Мысли замедлены, я с трудом соображаю, но могу управлять ходом размышлений." },
+                { v: -2, t: "Легкий туман, небольшая заторможенность, но я держу себя в руках." },
+                { v: -1, t: "Ясность нестабильна, меня бросает из стороны в сторону, но я справляюсь." },
+                { v: 0, t: "Спокойный, ясный ум. Я вижу вещи такими, какие они есть. Без иллюзий." },
+                { v: 1, t: "Легкая ясность, мысли текут ровно, я вижу ситуацию четко." },
+                { v: 2, t: "Спокойная собранность, я чувствую контроль над своими мыслями." },
+                { v: 3, t: "Ум работает ровно и четко, я быстро нахожу нужные решения." },
+                { v: 4, t: "Хорошая структурность, я легко планирую и вижу всю картину." },
+                { v: 5, t: "Ясность и проницательность, решения приходят сами собой." },
+                { v: 6, t: "Четкая логика, глубокие выводы, я быстро анализирую информацию." },
+                { v: 7, t: "Высокая ясность, ум работает как часы, я вижу все детали." },
+                { v: 8, t: "Прозрачность мышления, поток идей, я нахожу нестандартные решения." },
+                { v: 9, t: "Лазерная ясность. Я вижу суть вещей насквозь, мой ум абсолютно чист." }
             ],
             emotion: [
-                { v: -9, t: "Эмоциональная закрытость, холод" }, { v: -8, t: "Сильная обида, боль, сжатие" }, { v: -7, t: "Тревога, страх, внутренний дрожь" }, { v: -6, t: "Напряжение, раздражение" }, { v: -5, t: "Эмоциональная тяжесть" }, { v: -4, t: "Негативный фон, недовольство" }, { v: -3, t: "Приглушенность, отсутствие тепла" }, { v: -2, t: "Лёгкая тревога" }, { v: -1, t: "Нестабильность, колебания" }, { v: 0, t: "Ровная нейтральность" }, { v: 1, t: "Мягкость" }, { v: 2, t: "Спокойствие" }, { v: 3, t: "Лёгкое тепло" }, { v: 4, t: "Радость" }, { v: 5, t: "Открытость" }, { v: 6, t: "Доверие" }, { v: 7, t: "Вдохновение" }, { v: 8, t: "Сильная любовь к миру" }, { v: 9, t: "Расширение, состояние «света»" }
+                { v: -9, t: "Полная эмоциональная закрытость. Внутри ледяной холод, я не чувствую ничего." },
+                { v: -8, t: "Сильная обида, боль, внутреннее сжатие. Мне тяжело дышать." },
+                { v: -7, t: "Тревога и страх, внутренняя дрожь, ощущение, что вот-вот что-то случится." },
+                { v: -6, t: "Напряжение и раздражение, меня всё раздражает, я на взводе." },
+                { v: -5, t: "Эмоциональная тяжесть, подавленность, нет сил радоваться." },
+                { v: -4, t: "Негативный фон, недовольство собой и окружающими." },
+                { v: -3, t: "Приглушенность, отсутствие тепла, я как будто в тумане." },
+                { v: -2, t: "Легкая тревога, беспокойство, но это не выбивает меня из колеи." },
+                { v: -1, t: "Нестабильность, эмоции колеблются, но я возвращаюсь в баланс." },
+                { v: 0, t: "Ровная нейтральность. Тепло, спокойствие и принятие. Я чувствую мир, но не завишу от него." },
+                { v: 1, t: "Мягкость, легкое тепло, появляется улыбка." },
+                { v: 2, t: "Спокойствие и умиротворение, я в гармонии с собой." },
+                { v: 3, t: "Лёгкое тепло, открытость, радость от простых вещей." },
+                { v: 4, t: "Радость, желание делиться теплом с другими." },
+                { v: 5, t: "Открытость, доверие к миру и людям." },
+                { v: 6, t: "Глубокое доверие, ощущение безопасности и любви." },
+                { v: 7, t: "Вдохновение, восторг, состояние полета." },
+                { v: 8, t: "Сильная любовь к миру, чувство единения со всем сущим." },
+                { v: 9, t: "Расширение. Состояние «света», абсолютное блаженство и покой." }
             ],
             state: [
-                { v: -9, t: "Полный упадок, отсутствие энергии" }, { v: -8, t: "Сильная слабость" }, { v: -7, t: "Вялость, медленное движение" }, { v: -6, t: "Тело «падает», нет потока" }, { v: -5, t: "Низкая вибрация" }, { v: -4, t: "Тяжёлый фон" }, { v: -3, t: "Усталость" }, { v: -2, t: "Замедленность" }, { v: -1, t: "Нестабильная энергия" }, { v: 0, t: "Нейтральное состояние" }, { v: 1, t: "Лёгкий тонус" }, { v: 2, t: "Стабильная энергия" }, { v: 3, t: "Лёгкость" }, { v: 4, t: "Приятное движение" }, { v: 5, t: "Поток" }, { v: 6, t: "Живость" }, { v: 7, t: "Высокая вибрация" }, { v: 8, t: "Сильная энергия" }, { v: 9, t: "Состояние полёта, мощная частота" }
+                { v: -9, t: "Полный упадок. Тело тяжелое, будто из него ушла вся энергия. Нет сил двигаться." },
+                { v: -8, t: "Сильная слабость, тело не слушается, любое движение дается с трудом." },
+                { v: -7, t: "Вялость, медленное движение, тело просит покоя." },
+                { v: -6, t: "Тело «падает», нет потока энергии, ощущение тяжести в мышцах." },
+                { v: -5, t: "Низкая вибрация, тело зажато, чувствуется дискомфорт." },
+                { v: -4, t: "Тяжёлый фон, усталость, я чувствую себя разбитым." },
+                { v: -3, t: "Усталость, легкая слабость, но я могу двигаться." },
+                { v: -2, t: "Замедленность, легкий дискомфорт, тело просит отдыха." },
+                { v: -1, t: "Нестабильная энергия, то прилив, то отлив." },
+                { v: 0, t: "Нейтральное состояние. Тело расслаблено, дыхание ровное. Ощущение внутреннего комфорта." },
+                { v: 1, t: "Лёгкий тонус, тело просыпается, появляется желание двигаться." },
+                { v: 2, t: "Стабильная энергия, я чувствую себя бодрым." },
+                { v: 3, t: "Лёгкость, тело движется с удовольствием." },
+                { v: 4, t: "Приятное движение, чувство силы в теле." },
+                { v: 5, t: "Поток, энергия бьет ключом, хочется свернуть горы." },
+                { v: 6, t: "Живость, отличное самочувствие, тело слушается идеально." },
+                { v: 7, t: "Высокая вибрация, тело легкое, как перышко." },
+                { v: 8, t: "Сильная энергия, ощущение полета и невероятной мощи." },
+                { v: 9, t: "Состояние полёта. Тело невесомо, мощная частота, я чувствую себя частью Вселенной." }
             ]
         };
 
@@ -953,24 +1755,80 @@
         ];
 
         const vedicData = {
-            1: { essence: "Пробуждение Атмы. Рождение индивидуальности.", light: "Лидерство, воля, внутренний стержень.", shadow: "Эго, одиночество, страх слабости.", karma: "Научиться стоять на своих ногах.", task: "Пробудить Атму и сформировать опору." },
-            2: { essence: "Чувствительность Атмы. Энергия сердца.", light: "Эмпатия, гармония, мягкость.", shadow: "Зависимость, страх одиночества.", karma: "Научиться чувствовать, сохраняя границы.", task: "Создать баланс между собой и другими." },
-            3: { essence: "Выражение Атмы. Творчество, поток.", light: "Вдохновение, радость, креатив.", shadow: "Хаос, поверхностность.", karma: "Научиться говорить правду.", task: "Открыть поток выражения Атмы." },
-            4: { essence: "Структура Атмы. Порядок, форма.", light: "Надёжность, системность.", shadow: "Жёсткость, страх перемен.", karma: "Научиться строить, а не разрушать.", task: "Создать форму, которая поддерживает." },
-            5: { essence: "Свобода Атмы. Движение, опыт.", light: "Гибкость, адаптация.", shadow: "Хаос, импульсивность.", karma: "Научиться свободе без разрушения.", task: "Исследовать мир и расширять границы." },
-            6: { essence: "Гармония Атмы. Дом, забота.", light: "Тепло, поддержка, эстетика.", shadow: "Контроль, спасательство.", karma: "Научиться ответственности без жертвенности.", task: "Создать красоту и баланс вокруг." },
-            7: { essence: "Истина Атмы. Духовность, смысл.", light: "Интуиция, мудрость.", shadow: "Изоляция, сомнения.", karma: "Научиться доверять миру.", task: "Познавать истину и соединяться с Атмой." },
-            8: { essence: "Сила Атмы. Реализация, зрелость.", light: "Мощь, влияние, созидание.", shadow: "Давление, страх потери контроля.", karma: "Научиться управлять силой без разрушения.", task: "Реализовать потенциал Атмы." },
-            9: { essence: "Завершение Атмы. Мудрость, переход.", light: "Гуманность, глубина.", shadow: "Усталость, жертвенность.", karma: "Научиться отпускать и завершать.", task: "Завершить цикл и подняться выше." }
+            1: { 
+                essence: "Вы — прирожденный лидер и первооткрыватель. Ваша внутренняя природа требует самостоятельности. Вы здесь, чтобы прокладывать свой собственный путь, не оглядываясь на толпу.",
+                light: "Ваша суперсила — это воля и внутренний стержень. Вы способны зажечь других своей идеей, взять ответственность и повести за собой.",
+                shadow: "Это ваша Горгона. Когда вы теряете центр, ваша сила превращается в эгоизм. Вы можете стать жестким, начать подавлять других или, наоборот, замкнуться в гордом одиночестве.",
+                karma: "Научиться быть лидером, не подавляя, а вдохновляя. Понять, что настоящая сила — не в том, чтобы все было по-вашему, а в умении слышать других, оставаясь собой.",
+                task: "Пробудить свою волю, найти внутреннюю опору и научиться стоять на своих ногах. Ваша задача — стать тем самым Персеем, который уверенно держит свой Щит."
+            },
+            2: { 
+                essence: "Вы — душа компании и миротворец. Ваша природа — это чувствительность, умение слышать сердцем и создавать гармонию вокруг себя. Вы — тот самый мост между людьми.",
+                light: "Ваша суперсила — эмпатия и мягкость. Вы умеете поддержать в трудную минуту, найти нужные слова и объединить даже самых разных людей.",
+                shadow: "Ваша Тень — это зависимость от чужого мнения и страх одиночества. Вы можете раствориться в других, забыв о себе, или начать манипулировать из-за страха потерять связь.",
+                karma: "Научиться чувствовать другого человека, но при этом сохранять свои собственные границы. Не жертвовать собой ради чужого одобрения.",
+                task: "Создать баланс между «я» и «мы». Научиться любить и принимать любовь, не теряя при этом свою Точку Ноль."
+            },
+            3: { 
+                essence: "Вы — творец и вдохновитель. Ваша природа — это поток, радость, самовыражение и легкость. Вам жизненно необходимо делиться собой с миром, будь то через искусство, общение или идеи.",
+                light: "Ваша суперсила — креативность и оптимизм. Вы, как Алиса, умеете видеть волшебство в обыденном и привносить радость в любой коллектив.",
+                shadow: "Ваша Тень — это хаос и поверхностность. Вы можете распыляться по мелочам, браться за всё сразу и не доводить до конца. Иногда вы прячетесь за маской весельчака, чтобы не показывать свою грусть.",
+                karma: "Научиться направлять свой творческий поток в русло. Быть честным в самовыражении, не боясь показать свои настоящие чувства, а не только удобные.",
+                task: "Открыть поток своего выражения. Найти то дело, которое будет вас по-настоящему зажигать, и довести его до результата."
+            },
+            4: { 
+                essence: "Вы — строитель и опора. Ваша природа — это надежность, порядок и желание создать прочный фундамент. Вы — тот человек, на котором держится мир, который ценит стабильность.",
+                light: "Ваша суперсила — системность и трудолюбие. Вы умеете превращать хаос в структуру, планировать и доводить начатое до идеала.",
+                shadow: "Ваша Тень — это жесткость и страх перемен. Когда вы теряете центр, вы начинаете всё контролировать, цепляетесь за старые правила и сопротивляетесь новому, даже если оно к лучшему.",
+                karma: "Научиться быть гибким. Понять, что настоящая опора — не в жестких рамках, а в умении адаптироваться к изменениям, сохраняя свой стержень.",
+                task: "Создать форму, которая поддерживает. Построить свой дом (в прямом и переносном смысле), в котором будет безопасно и тепло вам и вашим близким."
+            },
+            5: { 
+                essence: "Вы — человек движения и свободы. Ваша внутренняя природа требует простора, новых впечатлений и опыта. Вам тесно в жестких рамках, и вы чувствуете себя живым только в движении.",
+                light: "Ваша суперсила — гибкость и адаптация. Вы, как Алиса, легко подстраиваетесь под любые обстоятельства, быстро учитесь новому и приносите в любую ситуацию свежесть.",
+                shadow: "Ваша Тень — это хаос и импульсивность. Вы можете начать метаться, бросать дела на полпути, принимать разрушительные решения только чтобы избежать скуки или рутины.",
+                karma: "Научиться быть свободным, не разрушая. Понять, что настоящая свобода — это не бегство от обязательств, а умение выбирать свой путь осознанно.",
+                task: "Исследовать этот мир, пробовать новое, но при этом обрести внутренний стержень. Когда вы найдете свою Точку Ноль, страсть к переменам станет вашей силой."
+            },
+            6: { 
+                essence: "Вы — хранитель очага и сердце мира. Ваша природа — это забота, тепло и любовь. Вы стремитесь создать вокруг себя пространство, где всем будет хорошо и уютно.",
+                light: "Ваша суперсила — эстетика и поддержка. Вы умеете окружить заботой, создать красоту и дать чувство безопасности своим близким.",
+                shadow: "Ваша Тень — это контроль и спасательство. Вы можете начать жить жизнью других людей, забывая о себе, или, наоборот, душить своей заботой, требуя благодарности.",
+                karma: "Научиться заботиться без жертвенности. Понять, что вы не обязаны спасать весь мир. Позаботьтесь сначала о себе — и тогда ваша забота будет искренней и легкой.",
+                task: "Создать гармонию внутри себя и вокруг. Научиться брать ответственность только за свою жизнь, не пытаясь контролировать чужие."
+            },
+            7: { 
+                essence: "Вы — искатель истины и мудрец. Ваша природа — это глубина, интуиция и желание понять, как всё устроено. Вы не любите поверхностность и всегда ищете скрытый смысл.",
+                light: "Ваша суперсила — внутренняя мудрость и интуиция. Вы умеете видеть суть вещей, чувствовать ложь и находить ответы там, где другие видят лишь пустоту.",
+                shadow: "Ваша Тень — это изоляция и сомнения. Когда вы теряете центр, вы уходите в свой мир, закрываетесь от людей, начинаете всё анализировать и сомневаться во всём.",
+                karma: "Научиться доверять миру и людям. Понять, что уединение — это отдых, а не способ сбежать от жизни. Спуститься с небес на землю.",
+                task: "Познавать истину, соединяясь с реальностью. Найти свой внутренний свет и поделиться им с миром, а не прятать его в одиночестве."
+            },
+            8: { 
+                essence: "Вы — воплощение силы и реализации. Ваша природа — это мощь, амбиции и способность управлять материальным миром. Вы пришли, чтобы достигать больших целей и влиять на реальность.",
+                light: "Ваша суперсила — созидание и влияние. Вы умеете достигать поставленных целей, брать на себя ответственность за большие проекты и вести за собой.",
+                shadow: "Ваша Тень — это давление и страх потери контроля. Вы можете начать манипулировать людьми, давить авторитетом или с головой уйти в материальное, забыв о душе.",
+                karma: "Научиться управлять силой без разрушения. Понять, что настоящая власть — это ответственность, а не право подавлять. Использовать свою мощь для созидания.",
+                task: "Реализовать свой потенциал. Достичь успеха, но при этом остаться человеком. Ваша задача — стать сильным, но не жестким."
+            },
+            9: { 
+                essence: "Вы — завершитель цикла и старый мудрый дух в молодом теле. Ваша природа — это гуманность, глубина и понимание того, что всё в этом мире временно.",
+                light: "Ваша суперсила — мудрость и сострадание. Вы умеете понимать людей на глубоком уровне, отпускать прошлое и видеть картину целиком. Вы — тот самый мудрый проводник.",
+                shadow: "Ваша Тень — это усталость и жертвенность. Вы можете начать чувствовать себя жертвой обстоятельств, разочаровываться в людях и отдавать больше, чем у вас есть, истощая себя.",
+                karma: "Научиться отпускать и завершать. Понять, что иногда нужно сказать «нет» и уйти, чтобы на смену старому пришло новое. Не тащить на себе чужой груз.",
+                task: "Завершить свой цикл. Научиться прощать, отпускать старые обиды и подниматься на новый уровень осознания. Делиться своей мудростью, но не навязывать её."
+            }
         };
 
         // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
         let currentVals = { logic: 0, emotion: 0, state: 0 };
+        let activePicker = null;
         let currentPlayingId = null;
         let currentLegendPage = 0;
         let calViewYear = new Date().getFullYear();
         let calViewMonth = new Date().getMonth();
         let saveTimeout = null;
+        let currentReturnState = null;
 
         // === АВТОПЕРЕХОД ДЛЯ ДАТ ===
         function autoJump(currentInput, nextInputId) {
@@ -1017,21 +1875,36 @@
             document.getElementById('state-trigger').classList.remove('open');
             document.getElementById('states-wrapper').classList.remove('open');
         }
+        
         function calc(e) {
             e.preventDefault();
             const stateVal = parseInt(document.getElementById('selected-state').value);
             if (isNaN(stateVal)) { alert("Пожалуйста, сначала выбери состояние из списка."); return; }
             
+            currentReturnState = stateVal;
+
+            // Управление кнопками
+            const btnShield = document.getElementById('btn-show-shield');
+            const btnRitual = document.getElementById('btn-ritual');
+
             if (stateVal === 0) {
                 document.getElementById('r-vitok').innerText = 'Точка Ноль';
                 document.getElementById('r-shadow').innerText = 'Отсутствие тени';
                 document.getElementById('r-light').innerText = 'Чистое Я';
                 document.getElementById('r-alice').innerText = 'Пребывать в покое и гармонии.';
+                
+                // Прячем Щит, Показываем Ритуал
+                btnShield.style.display = 'none';
+                btnRitual.style.display = 'block';
             } else {
                 document.getElementById('r-vitok').innerText = 'Виток №' + stateVal;
                 document.getElementById('r-shadow').innerText = nData[stateVal].s;
                 document.getElementById('r-light').innerText = nData[stateVal].l;
                 document.getElementById('r-alice').innerText = nData[stateVal].a;
+                
+                // Показываем Щит, прячем Ритуал
+                btnShield.style.display = 'block';
+                btnRitual.style.display = 'none';
             }
 
             const now = new Date();
@@ -1054,6 +1927,15 @@
             const box = document.getElementById('res-box');
             box.style.display = 'block';
             box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function toggleResultDetails() {
+            const details = document.getElementById('result-details');
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+            } else {
+                details.style.display = 'none';
+            }
         }
 
         // === 6. ЩИТ ПЕРСЕЯ ===
@@ -1094,6 +1976,17 @@
             }
             document.getElementById('shield-wrapper').style.maxHeight = 'none';
         }
+
+        // Вложенные кнопки
+        function toggleInnerContent(id) {
+            const content = document.getElementById('inner-' + id);
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+            } else {
+                content.classList.add('show');
+            }
+        }
+
         function renderShield() {
             const tl = document.getElementById('timeline');
             tl.innerHTML = '';
@@ -1107,128 +2000,284 @@
                 const d = document.createElement('div');
                 d.className = 'l-details';
                 d.id = 'd-' + l.id;
-                d.innerHTML = `
-                    <div class="d-block d-shadow"><strong>Горгона (Тень):</strong> ${l.s}</div>
-                    <div class="d-block d-light"><strong>Персей (Свет):</strong> ${l.l}</div>
-                    <div class="d-block d-alice"><strong>Шаг Алисы:</strong> ${l.a}</div>
-                `;
+                
+                let buttonsHtml = '';
+                let contentsHtml = '';
+                
+                if (l.id === 0) {
+                    buttonsHtml = `
+                        <div class="inner-buttons">
+                            <button class="inner-btn" onclick="toggleInnerContent('info-0')">Кто я здесь?</button>
+                            <div class="inner-content" id="inner-info-0">
+                                <div class="d-block d-shadow"><strong>Горгона (Тень):</strong> ${l.s}</div>
+                                <div class="d-block d-light"><strong>Персей (Свет):</strong> ${l.l}</div>
+                                <div class="d-block d-alice"><strong>Шаг Алисы:</strong> ${l.a}</div>
+                            </div>
+                            <button class="inner-btn" onclick="toggleInnerContent('path-0')">Где ты сейчас?</button>
+                            <div class="inner-content" id="inner-path-0">
+                                <div class="path-text"><p>Вы в Точке Ноль. Это ваш дом, ваша опора и точка отсчета. Вы в гармонии, и сейчас вам не нужно никуда бежать. Просто побудьте здесь, в этом покое, и наслаждайтесь тишиной.</p></div>
+                            </div>
+                            <button class="inner-btn" onclick="toggleInnerContent('return-0')">Обратный путь</button>
+                            <div class="inner-content" id="inner-return-0">
+                                <div class="path-text"><p>Вы уже вернулись. Ноль не требует от вас усилий. Ваша задача — сохранить это состояние. Благодарите себя за путь и разрешите себе просто быть.</p></div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    buttonsHtml = `
+                        <div class="inner-buttons">
+                            <button class="inner-btn" onclick="toggleInnerContent('info-${l.id}')">Кто я здесь?</button>
+                            <div class="inner-content" id="inner-info-${l.id}">
+                                <div class="d-block d-shadow"><strong>Горгона (Тень):</strong> ${l.s}</div>
+                                <div class="d-block d-light"><strong>Персей (Свет):</strong> ${l.l}</div>
+                                <div class="d-block d-alice"><strong>Шаг Алисы:</strong> ${l.a}</div>
+                            </div>
+                            
+                            <button class="inner-btn" onclick="toggleInnerContent('path-${l.id}')">Где ты сейчас?</button>
+                            <div class="inner-content" id="inner-path-${l.id}">
+                                <div class="path-text">${pathTexts[l.id] || 'Текст в разработке...'}</div>
+                            </div>
+                            
+                            <button class="inner-btn" onclick="toggleInnerContent('return-${l.id}')">Обратный путь</button>
+                            <div class="inner-content" id="inner-return-${l.id}">
+                                <div class="path-text">${returnPathData[l.id] || 'Текст в разработке...'}</div>
+                                <button class="btn-go-diary-inner" onclick="goToDiaryFromShield()">✍️ Записать в дневник</button>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                d.innerHTML = buttonsHtml;
                 tl.appendChild(c);
                 tl.appendChild(d);
             });
         }
 
+        function goToDiaryFromShield() {
+            document.getElementById('modal').classList.add('show'); 
+            showCurrent(); 
+            showDiary(); 
+        }
+
         // === 7. КОМПАС ===
-        function buildBalanceList(type) {
-            const container = document.getElementById('options-' + type);
-            container.innerHTML = '';
+        function toggleHelp() {
+            document.getElementById('help-content').classList.toggle('open');
+        }
+
+        function toggleVectorResult() {
+            const wrapper = document.getElementById('vector-result-wrapper');
+            const btn = document.getElementById('btn-vector');
+            wrapper.classList.toggle('open');
+            btn.classList.toggle('open');
+        }
+
+        function openPicker(type) {
+            const picker = document.getElementById('value-picker');
+            const title = document.getElementById('picker-title');
+            const optionsContainer = document.getElementById('picker-options');
+            
+            if (activePicker === type && picker.classList.contains('show')) {
+                closePicker();
+                return;
+            }
+
+            activePicker = type;
+            optionsContainer.innerHTML = '';
+            
+            if (type === 'logic') { title.innerText = "Логика (Ум)"; }
+            if (type === 'emotion') { title.innerText = "Эмоции (Сердце)"; }
+            if (type === 'state') { title.innerText = "Состояние (Тело)"; }
+
             balanceData[type].forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'custom-option' + (item.v === 0 ? ' selected' : '');
+                div.className = 'value-option' + (item.v === currentVals[type] ? ' selected' : '');
                 div.innerText = (item.v > 0 ? '+' : '') + item.v + ' — ' + item.t;
-                div.onclick = (e) => { e.stopPropagation(); selectBalanceOption(type, item.v, item.t); };
-                container.appendChild(div);
+                div.onclick = (e) => { 
+                    e.stopPropagation(); 
+                    selectValue(type, item.v); 
+                };
+                optionsContainer.appendChild(div);
             });
+
+            picker.classList.add('show');
         }
-        function toggleCustom(type) {
-            const currentBtn = document.querySelector(`[onclick="toggleCustom('${type}')"]`);
-            const currentList = document.getElementById('options-' + type);
-            if (currentList.classList.contains('show')) {
-                currentBtn.classList.remove('active');
-                currentList.classList.remove('show');
-                return; 
-            }
-            document.querySelectorAll('.custom-select-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.custom-options').forEach(l => l.classList.remove('show'));
-            currentBtn.classList.add('active');
-            currentList.classList.add('show');
+
+        function closePicker() {
+            document.getElementById('value-picker').classList.remove('show');
+            activePicker = null;
         }
-        function selectBalanceOption(type, val, text) {
+
+        function selectValue(type, val) {
             currentVals[type] = val;
-            const prefix = val > 0 ? '+' : '';
-            document.getElementById('label-' + type).innerText = prefix + val + ' — ' + text;
-            const container = document.getElementById('options-' + type);
-            Array.from(container.children).forEach(child => child.classList.remove('selected'));
-            Array.from(container.children).find(child => child.innerText.includes(text)).classList.add('selected');
-            document.querySelectorAll('.custom-select-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.custom-options').forEach(l => l.classList.remove('show'));
+            document.getElementById('ci-' + (type === 'logic' ? 'x' : type === 'emotion' ? 'y' : 'z')).innerText = (val > 0 ? '+' : '') + val;
+            closePicker();
             updateBalance();
         }
+
         function updateBalance() {
             const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
-            const resultBox = document.getElementById('balance-result');
-            const title = document.getElementById('balance-title');
-            const text = document.getElementById('balance-text');
+            
             const avgVal = Math.round((x + y + z) / 3);
-
-            document.getElementById('ci-x').innerText = 'Логика: ' + (x > 0 ? '+' : '') + x;
-            document.getElementById('ci-y').innerText = 'Эмоции: ' + (y > 0 ? '+' : '') + y;
-            document.getElementById('ci-z').innerText = 'Состояние: ' + (z > 0 ? '+' : '') + z;
             document.getElementById('ci-avg').innerText = 'Вектор: ' + (avgVal > 0 ? '+' : '') + avgVal;
 
+            let resultTitle = "";
             let resultText = "";
-            if (avgVal >= 4) {
-                resultText = "Ты движешься вверх. Три области поддерживают друг друга, создавая единый поток. Состояние роста, ясности и высокой частоты.";
-                resultBox.className = "balance-result state-ideal"; 
-            } else if (avgVal <= -4) {
-                resultText = "Сейчас твой путь направлен вниз. Одна или несколько областей требуют мягкого восстановления. Это сигнал о том, что нужна забота.";
-                resultBox.className = "balance-result state-unbalance"; 
-            } else {
-                resultText = "Ты близок к Точке Ноль. Логика, эмоции и вибрация стремятся к согласованию. Это состояние стабилизации и внутреннего баланса.";
-                resultBox.className = "balance-result state-neutral"; 
-            }
+            let className = "";
             
-            title.innerText = "Вектор Пути: " + (avgVal > 0 ? '+' : '') + avgVal;
-            text.innerText = resultText;
+            const btnRitualCompass = document.getElementById('btn-ritual-compass');
+
+            const pX = Math.sign(x), pY = Math.sign(y), pZ = Math.sign(z);
+
+            if (pX > 0 && pY > 0 && pZ > 0) {
+                resultTitle = "Ты в потоке";
+                resultText = "Все три вектора в плюсе. Твоя Горгона отступила. Ум ясен, Сердце открыто, Тело полно сил. Персей держит Щит уверенно. Алиса говорит: «Это время действовать. Запомни это чувство».";
+                className = "res-ideal";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            } 
+            else if (pX < 0 && pY < 0 && pZ < 0) {
+                resultTitle = "Ты уходишь от себя";
+                resultText = "Горгона атакует со всех сторон. Ум в тумане, Сердце болит, Тело обессилено. Но помни: даже на дне Персей рядом. Алиса шепчет: «Сейчас не время для подвигов. Просто выживи и пережди эту ночь».";
+                className = "res-unbalance";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX === 0 && pY === 0 && pZ === 0) {
+                resultTitle = "Абсолютная Точка Ноль";
+                resultText = "Ты в идеальном центре. Всё затихло. Ум, Сердце и Тело отдыхают. Горгона молчит. Персей опустил Щит. Алиса улыбается. Сейчас не нужно ничего исправлять. Просто побудь в этой тишине.";
+                className = "res-neutral";
+                // ПОКАЗЫВАЕМ КНОПКУ РИТУАЛА
+                if(btnRitualCompass) btnRitualCompass.style.display = 'block';
+            }
+            else if (pX > 0 && pY > 0 && pZ < 0) {
+                resultTitle = "Импульс на двоих";
+                resultText = "Ум и Сердце в огне! Но Горгона забрала твою физическую силу. Тело просит остановки. Алиса предупреждает: «Ты можешь перегореть, если не остановишься. Сделай паузу, иначе твой огонь сожжет тебя».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX > 0 && pY < 0 && pZ > 0) {
+                resultTitle = "Бунт эмоций";
+                resultText = "Снаружи ты сильный: ум четкий, тело в тонусе. Но Горгона ударила в самое сердце. Твои эмоции в глубоком минусе. Алиса говорит: «Ты запер себя в броню. Позволь себе быть уязвимым. Поговори с кем-то о том, что чувствуешь».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX < 0 && pY > 0 && pZ > 0) {
+                resultTitle = "Туман в голове";
+                resultText = "Тело чувствует себя хорошо, эмоции ровные. Но Горгона затуманила твой разум. Алиса советует: «Не пытайся решать важные вопросы прямо сейчас. Доверься телу. Займись рутиной. Ясность вернется, когда ум отдохнет».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX < 0 && pY < 0 && pZ > 0) {
+                resultTitle = "Опора на тело";
+                resultText = "Внутри шторм: Горгона путает мысли и сжимает сердце. Но твой Персей — это Тело. Оно еще полно сил. Алиса говорит: «Не пытайся решить всё в голове. Иди в движение! Спорт, прогулка — это твой якорь. Через тело ты сбросишь напряжение».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX < 0 && pY > 0 && pZ < 0) {
+                resultTitle = "Опора на сердце";
+                resultText = "Горгона атакует ум и тело. Ум окутан туманом, тело просит пощады. Но твой Персей — это Эмоции. Алиса подсказывает: «Не напрягай ум. Сейчас твой главный ресурс — чувства. Поговори с тем, кому доверяешь. Когда сердце согреется, ум и тело подтянутся».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX > 0 && pY < 0 && pZ < 0) {
+                resultTitle = "Опора на разум";
+                resultText = "Горгона забрала тепло и энергию. Но твой Персей — это Логика. Твой ум ясен, он видит ситуацию трезво. Алиса советует: «Используй свой ясный ум, чтобы структурировать день. Опираясь на логику, ты дашь себе время, пока тело и эмоции не восстановятся».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX > 0 && pY === 0 && pZ === 0) {
+                resultTitle = "Ясный ум";
+                resultText = "Твое тело и эмоции в покое, но Ум проснулся и рвется в бой. Горгона не может тебя достать. Персей дает тебе ясность. Алиса говорит: «Это хорошее время, чтобы подумать и спланировать». ";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX < 0 && pY === 0 && pZ === 0) {
+                resultTitle = "Мысли в тумане";
+                resultText = "Эмоции и тело спокойны, но Ум окутан туманом. Горгона путает твои мысли. Алиса говорит: «Не принимай важных решений сегодня. Дай уму отдохнуть».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX === 0 && pY > 0 && pZ === 0) {
+                resultTitle = "Тепло в сердце";
+                resultText = "Ум и Тело нейтральны, но Сердце наполнено теплом. Горгона не может пробить эту защиту. Алиса говорит: «Поделись этим теплом с близкими».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX === 0 && pY < 0 && pZ === 0) {
+                resultTitle = "Холод в сердце";
+                resultText = "Ум ясен, Тело в порядке, но внутри Сердца холод. Горгона задела твои чувства. Алиса советует: «Не закрывайся. Позволь себе погрустить, но не оставайся в этом одиночестве надолго».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX === 0 && pY === 0 && pZ > 0) {
+                resultTitle = "Прилив сил";
+                resultText = "Ум и Эмоции в покое, но Тело полно энергии. Горгона не может тебя остановить. Алиса говорит: «Используй эту силу с умом. Сделай то, что давно откладывал».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else if (pX === 0 && pY === 0 && pZ < 0) {
+                resultTitle = "Упадок сил";
+                resultText = "Ум и Эмоции нейтральны, но Тело обессилено. Горгона забрала твою энергию. Алиса советует: «Сейчас твой главный друг — отдых. Не заставляй себя делать подвиги».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+            else {
+                resultTitle = "Внутренний конфликт";
+                resultText = "Твоя внутренняя система в хаосе. Горгона и Персей бьются не на жизнь, а на смерть. Ум кричит одно, Сердце чувствует противоположное. Алиса говорит: «Остановись. Признай, что сейчас ты не можешь найти ответ. Побудь в тишине. Позволь буре утихнуть».";
+                className = "res-mixed";
+                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
+            }
+
+            document.getElementById('balance-title').innerText = resultTitle;
+            document.getElementById('balance-text').innerText = resultText;
+            
+            const contentBox = document.getElementById('vector-result-content');
+            contentBox.className = "vector-result-content " + className;
 
             const arrowX = document.getElementById('vis-x');
-            arrowX.style.height = (60 + Math.abs(x) * 5) + 'px';
-            arrowX.style.transform = `translateX(-50%) rotate(${x >= 0 ? 45 - (x * 4) : -45 + (x * 4)}deg)`;
             const arrowY = document.getElementById('vis-y');
-            arrowY.style.height = (60 + Math.abs(y) * 5) + 'px';
-            arrowY.style.transform = `translateX(-50%) rotate(${y >= 0 ? -45 + (y * 4) : 45 + (y * 4)}deg)`;
             const arrowZ = document.getElementById('vis-z');
-            arrowZ.style.height = (60 + Math.abs(z) * 5) + 'px';
-            arrowZ.style.transform = `translateX(-50%) rotate(${z >= 0 ? 0 : 180}deg)`;
             const arrowAvg = document.getElementById('vis-avg');
-            arrowAvg.style.height = (80 + Math.abs(avgVal) * 7) + 'px';
-            
-            if (avgVal >= 4) {
-                 arrowAvg.style.transform = `translateX(-50%) rotate(0deg)`;
-                 arrowAvg.style.background = 'var(--gold)';
-                 arrowAvg.style.boxShadow = '0 0 30px var(--gold)';
-                 arrowAvg.style.opacity = '1';
-            } else if (avgVal <= -4) {
-                 arrowAvg.style.transform = `translateX(-50%) rotate(180deg)`;
-                 arrowAvg.style.background = 'var(--red)';
-                 arrowAvg.style.boxShadow = '0 0 30px var(--red)';
-                 arrowAvg.style.opacity = '1';
-            } else {
-                 arrowAvg.style.transform = `translateX(-50%) rotate(0deg)`;
-                 arrowAvg.style.background = '#fff';
-                 arrowAvg.style.boxShadow = '0 0 20px #fff';
-                 arrowAvg.style.opacity = '0.8';
-            }
 
-            if (saveTimeout) clearTimeout(saveTimeout);
-            saveTimeout = setTimeout(() => { saveToCalendar(x, y, z, avgVal, resultText); }, 1500);
-        }
-        function saveToCalendar(x, y, z, avg, text) {
-            const now = new Date();
-            const dateKey = now.toISOString().split('T')[0]; 
-            const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
-            if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
-            if (!Array.isArray(calData[dateKey].compass)) calData[dateKey].compass = [];
-            const lastEntry = calData[dateKey].compass[calData[dateKey].compass.length - 1];
-            if (lastEntry && lastEntry.x === x && lastEntry.y === y && lastEntry.z === z) return;
-            calData[dateKey].compass.push({ time: timeStr, x, y, z, avg, text });
-            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
-            renderCalendar();
+            const angleX = x >= 0 ? 90 : -90;
+            const lengthX = 60 + Math.abs(x) * 5;
+            arrowX.style.height = lengthX + 'px';
+            arrowX.style.transform = `translateX(-50%) rotate(${angleX}deg)`;
+
+            const angleY = y >= 0 ? 0 : 180;
+            const lengthY = 60 + Math.abs(y) * 5;
+            arrowY.style.height = lengthY + 'px';
+            arrowY.style.transform = `translateX(-50%) rotate(${angleY}deg)`;
+
+            const angleZ = z >= 0 ? 45 : -135;
+            const lengthZ = 60 + Math.abs(z) * 5;
+            arrowZ.style.height = lengthZ + 'px';
+            arrowZ.style.transform = `translateX(-50%) rotate(${angleZ}deg)`;
+
+            let avgAngle = 0;
+            if (avgVal >= 4) {
+                avgAngle = 0;
+            } else if (avgVal <= -4) {
+                avgAngle = 180;
+            } else {
+                avgAngle = avgVal >= 0 ? 90 : -90; 
+            }
+            
+            const finalAvgLength = 80 + Math.abs(avgVal) * 5; 
+            arrowAvg.style.height = finalAvgLength + 'px';
+            arrowAvg.style.transform = `translateX(-50%) rotate(${avgAngle}deg)`;
         }
 
         // === 8. МОЙ ПУТЬ ===
-        function openModal() { showCurrent(); document.getElementById('modal').classList.add('show'); }
-        function closeModal() { document.getElementById('modal').classList.remove('show'); }
+        function openModal() { 
+            showCurrent(); 
+            document.getElementById('modal').classList.add('show'); 
+            renderMiniCalendar();
+            renderGoal();
+        }
+        
+        function closeModal() { 
+            document.getElementById('modal').classList.remove('show'); 
+        }
+
         function showCurrent() {
             document.getElementById('path-view').style.display = 'none';
             document.getElementById('diary-view').style.display = 'none';
@@ -1236,7 +2285,323 @@
             document.getElementById('numerology-view').style.display = 'none';
             document.getElementById('day-view').style.display = 'none';
             document.getElementById('current-view').style.display = 'block';
+            renderMiniCalendar();
+            renderGoal();
         }
+
+        // --- РАСЧЕТ НУМЕРОЛОГИИ ---
+        function openResTab(tabId, btnElement) {
+            document.querySelectorAll('.result-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.res-tab-content').forEach(content => content.classList.remove('active'));
+            btnElement.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function calcNumerology() {
+            const bDay = document.getElementById('b-day').value.trim();
+            const bMonth = document.getElementById('b-month').value.trim();
+            const bYear = document.getElementById('b-year').value.trim();
+
+            const cDay = document.getElementById('c-day').value.trim();
+            const cMonth = document.getElementById('c-month').value.trim();
+            const cYear = document.getElementById('c-year').value.trim();
+
+            if (!bDay || !bMonth || !bYear || !cDay || !cMonth || !cYear) {
+                alert('Пожалуйста, заполните все поля для обеих дат.');
+                return;
+            }
+
+            const sumDigits = (day, month, year) => {
+                const str = day + month + year;
+                let sum = 0;
+                for (let i = 0; i < str.length; i++) { if (!isNaN(parseInt(str[i]))) sum += parseInt(str[i]); }
+                let f = sum;
+                while (f > 9) { f = Math.floor(f / 10) + (f % 10); }
+                return f;
+            };
+
+            const birthNum = sumDigits(bDay, bMonth, bYear);
+            const currentNum = sumDigits(cDay, cMonth, cYear);
+
+            const bData = vedicData[birthNum];
+            const pData = vedicData[currentNum];
+
+            document.getElementById('num-result').style.display = 'block';
+
+            document.getElementById('title-birth').innerText = `Число рождения: ${birthNum}`;
+            document.getElementById('text-b-essence').innerText = bData.essence;
+            document.getElementById('text-b-light').innerText = bData.light;
+            document.getElementById('text-b-shadow').innerText = bData.shadow;
+            document.getElementById('text-b-karma').innerText = bData.karma;
+            document.getElementById('text-b-task').innerText = bData.task;
+
+            document.getElementById('title-passage').innerText = `Число прохождения: ${currentNum}`;
+            document.getElementById('text-p-essence').innerText = pData.essence;
+            document.getElementById('text-p-tasks').innerText = pData.task;
+            document.getElementById('text-p-challenges').innerText = pData.shadow;
+            document.getElementById('text-p-dharma').innerText = pData.karma;
+            document.getElementById('text-p-potential').innerText = "Раскрытие через " + pData.light.toLowerCase();
+
+            document.getElementById('title-interaction').innerText = `Взаимодействие ${birthNum} и ${currentNum}`;
+            document.getElementById('text-i-meaning').innerText = `Как ваша природа (${birthNum}) сочетается с задачами текущего периода (${currentNum}).`;
+            document.getElementById('text-i-positive').innerText = `Усиливается: ${bData.light} + ${pData.light}`;
+            document.getElementById('text-i-conflicts').innerText = `Возможен конфликт: ${bData.shadow} и ${pData.shadow}`;
+            document.getElementById('text-i-task').innerText = `Главная задача: синтез ${bData.task.toLowerCase()} и ${pData.task.toLowerCase()}.`;
+            document.getElementById('text-i-gift').innerText = `Возможность: объединить энергии чисел ${birthNum} и ${currentNum}, чтобы выйти на новый уровень.`;
+
+            document.getElementById('text-r-practice').innerText = "Развивайте в себе: " + pData.light.toLowerCase();
+            document.getElementById('text-r-avoid').innerText = "Избегайте: " + pData.shadow.toLowerCase();
+            document.getElementById('text-r-formulas').innerText = `«Я проживаю свой путь осознанно. Мой урок сейчас — это число ${currentNum}»`;
+
+            document.querySelectorAll('.result-tab-btn')[0].click();
+            document.getElementById('num-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // --- СТАТИСТИКА (ГРАФИК) ---
+        function renderStats() {
+            const wrapper = document.getElementById('stats-wrapper');
+            wrapper.innerHTML = '';
+            
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            let compass = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            
+            let last7Days = [];
+            for (let i = 6; i >= 0; i--) {
+                let d = new Date();
+                d.setDate(d.getDate() - i);
+                let dateKey = d.toISOString().split('T')[0];
+                let dayAvg = 0;
+                
+                if (compass[dateKey] && compass[dateKey].compass && compass[dateKey].compass.length > 0) {
+                    let sum = 0;
+                    compass[dateKey].compass.forEach(c => sum += c.avg);
+                    dayAvg = Math.round(sum / compass[dateKey].compass.length);
+                } else if (diary.some(note => note.date.includes(d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })))) {
+                    let dayNotes = diary.filter(note => note.date.includes(d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })));
+                    let sum = 0;
+                    dayNotes.forEach(n => sum += n.avg);
+                    dayAvg = Math.round(sum / dayNotes.length);
+                }
+                
+                last7Days.push({ date: d, avg: dayAvg });
+            }
+
+            last7Days.forEach(day => {
+                let bar = document.createElement('div');
+                bar.className = 'stat-bar';
+                let height = Math.min(100, Math.abs(day.avg) * 10 + 10);
+                bar.style.height = height + '%';
+                
+                if (day.avg > 0) bar.classList.add('positive');
+                else if (day.avg < 0) bar.classList.add('negative');
+                else bar.classList.add('zero');
+                
+                let label = document.createElement('div');
+                label.className = 'stat-label';
+                label.innerText = day.date.toLocaleDateString('ru-RU', { weekday: 'short' });
+                bar.appendChild(label);
+                
+                bar.title = `Вектор: ${day.avg}`;
+                wrapper.appendChild(bar);
+            });
+        }
+
+        // --- ЭКСПОРТ ---
+        function exportDiary() {
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            if (diary.length === 0) { alert('Дневник пуст'); return; }
+            let text = "МОЙ ДНЕВНИК (ТОЧКА НОЛЬ)\n\n";
+            diary.forEach(note => {
+                text += `[${note.date}] (Виток: ${note.vitok || '—'})\n`;
+                text += `Текст: ${note.text}\n`;
+                text += `Логика: ${note.x} | Эмоции: ${note.y} | Состояние: ${note.z} | Вектор: ${note.avg}\n`;
+                text += `-----------------------------------\n`;
+            });
+            downloadFile(text, 'my_diary.txt', 'text/plain');
+        }
+
+        function exportArchive() {
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            if (history.length === 0) { alert('Архив пуст'); return; }
+            let text = JSON.stringify(history, null, 2);
+            downloadFile(text, 'my_archive.json', 'application/json');
+        }
+
+        function downloadFile(content, fileName, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // --- МИНИ-КАЛЕНДАРЬ ---
+        function renderMiniCalendar() {
+            const grid = document.getElementById('mini-cal-grid');
+            grid.innerHTML = '';
+            const title = document.getElementById('mini-cal-title');
+            
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+            title.innerText = `${monthNames[month]} ${year}`;
+            
+            ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].forEach(d => {
+                let div = document.createElement('div');
+                div.style.fontSize = '0.7rem';
+                div.style.color = 'var(--muted)';
+                div.innerText = d;
+                grid.appendChild(div);
+            });
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            
+            for (let i = 0; i < startOffset; i++) {
+                grid.appendChild(document.createElement('div'));
+            }
+            
+            let calendarData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            
+            for (let i = 1; i <= daysInMonth; i++) {
+                let dayStr = i < 10 ? '0' + i : i;
+                let monthStr = (month + 1) < 10 ? '0' + (month + 1) : (month + 1);
+                let dateKey = `${year}-${monthStr}-${dayStr}`;
+                
+                let div = document.createElement('div');
+                div.className = 'mini-cal-day';
+                div.innerText = i;
+                
+                if (i === now.getDate()) div.classList.add('today');
+                
+                if (calendarData[dateKey]) {
+                    div.classList.add('has-data');
+                    div.onclick = () => showDayDetails(calendarData[dateKey], `${i}.${monthStr}.${year}`);
+                }
+                
+                grid.appendChild(div);
+            }
+        }
+
+        function showDayDetails(dayData, dateLabel) {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('path-view').style.display = 'none';
+            document.getElementById('archive-view').style.display = 'none';
+            document.getElementById('diary-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'none';
+            document.getElementById('day-view').style.display = 'flex';
+            document.getElementById('day-title').innerText = 'Детали дня: ' + dateLabel;
+            
+            const list = document.getElementById('day-log-list');
+            list.innerHTML = '';
+            
+            if (!dayData) {
+                list.innerHTML = '<p style="color: var(--muted); text-align: center; padding: 20px 0;">Нет записей.</p>';
+                return;
+            }
+            
+            if (dayData.vitok && dayData.vitok.length > 0) {
+                let title = document.createElement('div');
+                title.style.cssText = 'font-family: var(--font-title); color: var(--gold); font-size: 1.2rem; margin: 10px 0; text-align: left;';
+                title.innerText = 'Витки:';
+                list.appendChild(title);
+                dayData.vitok.forEach(v => {
+                    let div = document.createElement('div');
+                    div.className = 'diary-entry';
+                    div.style.borderLeftColor = 'var(--red)';
+                    div.innerHTML = `<div class="text" style="color: var(--gold);">Виток №${v.vitok}</div><div class="metrics"><span>Тень: ${v.shadow}</span><span>Свет: ${v.light}</span></div>`;
+                    list.appendChild(div);
+                });
+            }
+            
+            if (dayData.compass && dayData.compass.length > 0) {
+                let title = document.createElement('div');
+                title.style.cssText = 'font-family: var(--font-title); color: var(--blue); font-size: 1.2rem; margin: 10px 0; text-align: left;';
+                title.innerText = 'Показатели компаса:';
+                list.appendChild(title);
+                dayData.compass.forEach(c => {
+                    let div = document.createElement('div');
+                    div.className = 'diary-entry';
+                    div.style.borderLeftColor = 'var(--blue)';
+                    div.innerHTML = `<div class="time">${c.time}</div><div class="metrics"><span>Логика: ${c.x}</span><span>Эмоции: ${c.y}</span><span>Состояние: ${c.z}</span><span style="color: var(--gold);">Вектор: ${c.avg}</span></div>`;
+                    list.appendChild(div);
+                });
+            }
+            
+            if (dayData.diary && dayData.diary.length > 0) {
+                let title = document.createElement('div');
+                title.style.cssText = 'font-family: var(--font-title); color: var(--gold); font-size: 1.2rem; margin: 10px 0; text-align: left;';
+                title.innerText = 'Записи дневника:';
+                list.appendChild(title);
+                dayData.diary.forEach(d => {
+                    let div = document.createElement('div');
+                    div.className = 'diary-entry';
+                    div.innerHTML = `<div class="text">"${d.text}"</div><div class="metrics"><span>Вектор: ${d.avg}</span></div>`;
+                    list.appendChild(div);
+                });
+            }
+        }
+
+        // --- ЦЕЛИ ---
+        function renderGoal() {
+            const goalSection = document.getElementById('goal-section');
+            let goal = JSON.parse(localStorage.getItem('tochkaNolGoal'));
+            
+            if (!goal) {
+                goalSection.innerHTML = `
+                    <h4>🎯 Моя цель</h4>
+                    <div class="goal-input-group">
+                        <input type="text" id="goal-name" class="goal-input" placeholder="Например: 5 медитаций">
+                        <input type="number" id="goal-target" class="goal-input" style="width: 70px;" placeholder="Кол-во" min="1">
+                        <button class="btn-set-goal" onclick="setGoal()">OK</button>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--muted);">Поставь цель и отслеживай прогресс.</p>
+                `;
+            } else {
+                let progress = Math.min(100, Math.round((goal.current / goal.target) * 100));
+                goalSection.innerHTML = `
+                    <h4>🎯 ${goal.name}</h4>
+                    <div class="goal-progress-wrapper">
+                        <div class="goal-progress-bar">
+                            <div class="goal-progress-fill" style="width: ${progress}%;"></div>
+                        </div>
+                        <div class="goal-text">Выполнено: ${goal.current} из ${goal.target} (${progress}%)</div>
+                    </div>
+                    <button class="btn-export" style="margin-top: 10px; border-color: var(--red); color: var(--red);" onclick="resetGoal()">Сбросить цель</button>
+                `;
+            }
+        }
+
+        function setGoal() {
+            const name = document.getElementById('goal-name').value.trim();
+            const target = parseInt(document.getElementById('goal-target').value);
+            if (!name || !target || target < 1) { alert('Заполните название и количество.'); return; }
+            localStorage.setItem('tochkaNolGoal', JSON.stringify({ name: name, target: target, current: 0 }));
+            renderGoal();
+        }
+
+        function resetGoal() {
+            if (confirm('Сбросить текущую цель?')) {
+                localStorage.removeItem('tochkaNolGoal');
+                renderGoal();
+            }
+        }
+
+        function updateGoalProgress() {
+            let goal = JSON.parse(localStorage.getItem('tochkaNolGoal'));
+            if (!goal) return;
+            goal.current += 1;
+            localStorage.setItem('tochkaNolGoal', JSON.stringify(goal));
+            renderGoal();
+        }
+
+        // --- ТЕКУЩИЙ ПУТЬ ---
         function showPath() {
             document.getElementById('current-view').style.display = 'none';
             document.getElementById('path-view').style.display = 'flex';
@@ -1249,11 +2614,14 @@
                 document.getElementById('m-alice').innerText = data.alice;
             } else {
                 document.getElementById('m-vitok').innerText = 'Нет данных';
-                document.getElementById('m-shadow').innerText = 'Пройди диагностику';
+                document.getElementById('m-shadow').innerText = 'Пройди диагностику на сайте';
                 document.getElementById('m-light').innerText = '...';
                 document.getElementById('m-alice').innerText = '...';
             }
+            renderStats(); 
         }
+
+        // --- ДНЕВНИК ---
         function showDiary() {
             document.getElementById('current-view').style.display = 'none';
             document.getElementById('diary-view').style.display = 'flex';
@@ -1266,56 +2634,22 @@
                 const div = document.createElement('div');
                 div.className = 'diary-entry';
                 let color = (item.avg >= 4) ? 'var(--gold)' : ((item.avg <= -4) ? 'var(--red)' : '#fff');
-                let vitokBadge = item.vitok ? `<span class="vitok-badge" style="display:inline-block; background: rgba(126,200,255,0.15); color: var(--blue); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 8px;">Виток №${item.vitok}</span>` : '';
+                let vitokBadge = item.vitok ? `<span style="display:inline-block; background: rgba(126,200,255,0.15); color: var(--blue); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 8px;">Виток №${item.vitok}</span>` : '';
                 div.innerHTML = `
                     ${vitokBadge}
                     <span class="time">${item.date}</span>
                     <div class="text">"${item.text}"</div>
-                    <div class="metrics">
-                        <span>Логика: ${item.x}</span><span>Эмоции: ${item.y}</span><span>Состояние: ${item.z}</span>
-                        <span style="color:${color}; font-weight:bold;">Вектор: ${item.avg}</span>
-                    </div>
+                    <div class="metrics"><span>Логика: ${item.x}</span><span>Эмоции: ${item.y}</span><span>Состояние: ${item.z}</span><span style="color:${color}; font-weight:bold;">Вектор: ${item.avg}</span></div>
                     <button class="btn-del" onclick="deleteDiaryNote(${realIndex})" title="Удалить">✕</button>
                 `;
                 list.appendChild(div);
             });
         }
-        function showArchive() {
-            document.getElementById('current-view').style.display = 'none';
-            document.getElementById('archive-view').style.display = 'flex';
-            const list = document.getElementById('archive-list');
-            list.innerHTML = '';
-            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            if (history.length === 0) { list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой архив пока пуст.</p>'; return; }
-            history.slice().reverse().forEach((item, index) => {
-                const realIndex = history.length - 1 - index;
-                const div = document.createElement('div');
-                div.className = 'archive-item';
-                div.innerHTML = `
-                    <div class="archive-info">
-                        <h4>Виток №${item.vitok} (${item.shadow})</h4>
-                        <p>Шаг: ${item.alice}</p>
-                        <span class="archive-date">Пройдено: ${item.date}</span>
-                    </div>
-                    <button class="btn-del-arch" onclick="deleteFromArchive(${realIndex})" title="Удалить">✕</button>
-                `;
-                list.appendChild(div);
-            });
-        }
-        function showNumerology() {
-            document.getElementById('current-view').style.display = 'none';
-            document.getElementById('numerology-view').style.display = 'flex';
-        }
-        function deleteFromArchive(index) {
-            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            history.splice(index, 1);
-            localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
-            showArchive();
-        }
+
         function saveDiaryNote() {
             const text = document.getElementById('diary-text').value.trim();
             if (!text) { alert('Напиши что-нибудь перед сохранением.'); return; }
-            const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
+            const x = 0, y = 0, z = 0; 
             const avg = Math.round((x + y + z) / 3);
             let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
             let currentVitok = history.length > 0 ? history[history.length - 1].vitok : null;
@@ -1333,25 +2667,51 @@
             if (!Array.isArray(calData[dateKey].diary)) calData[dateKey].diary = [];
             calData[dateKey].diary.push(newNote);
             localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+            updateGoalProgress();
             document.getElementById('diary-text').value = '';
             alert('Запись сохранена!');
-            renderCalendar();
             showDiary(); 
         }
+
         function deleteDiaryNote(index) {
             if (!confirm('Удалить эту запись?')) return;
             let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
             diary.splice(index, 1);
             localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
-            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
-            Object.keys(calData).forEach(key => {
-                if (calData[key].diary) {
-                    calData[key].diary = calData[key].diary.filter(note => diary.some(d => d.timestamp === note.timestamp));
-                }
-            });
-            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
-            renderCalendar();
             showDiary();
+        }
+
+        // --- АРХИВ ---
+        function showArchive() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('archive-view').style.display = 'flex';
+            const list = document.getElementById('archive-list');
+            list.innerHTML = '';
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            if (history.length === 0) { list.innerHTML = '<p style="color: var(--muted); text-align: center;">Твой архив пока пуст.</p>'; return; }
+            history.slice().reverse().forEach((item, index) => {
+                const realIndex = history.length - 1 - index;
+                const div = document.createElement('div');
+                div.className = 'archive-item';
+                div.innerHTML = `
+                    <div class="archive-info"><h4>Виток №${item.vitok} (${item.shadow})</h4><p>Шаг: ${item.alice}</p><span class="archive-date">Пройдено: ${item.date}</span></div>
+                    <button class="btn-del-arch" onclick="deleteFromArchive(${realIndex})" title="Удалить">✕</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function deleteFromArchive(index) {
+            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+            history.splice(index, 1);
+            localStorage.setItem('tochkaNolHistory', JSON.stringify(history));
+            showArchive();
+        }
+
+        // --- НУМЕРОЛОГИЯ ---
+        function showNumerology() {
+            document.getElementById('current-view').style.display = 'none';
+            document.getElementById('numerology-view').style.display = 'flex';
         }
 
         // === 9. МЕДИТАЦИИ ===
@@ -1426,6 +2786,15 @@
             const currentWrapper = document.getElementById('wrapper-' + id);
             const mainWrapper = document.getElementById('med-content-wrapper');
             
+            // Автоматически выключаем фоновую музыку при включении медитации
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicToggle.classList.add('muted');
+                iconMusicOff.style.display = 'block';
+                iconMusicOn.style.display = 'none';
+                isMusicPlaying = false;
+            }
+
             if (currentWrapper.classList.contains('open')) { 
                 closeAllPlayers(); 
                 audio.pause(); 
@@ -1682,84 +3051,83 @@
             document.getElementById('modal').classList.add('show');
         }
 
-        // === НУМЕРОЛОГИЯ ===
-        function openResTab(tabId, btnElement) {
-            document.querySelectorAll('.result-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.res-tab-content').forEach(content => content.classList.remove('active'));
+        // === РИТУАЛ (НОВЫЙ БЛОК) ===
+        function openRitual() {
+            const modal = document.getElementById('ritual-modal');
+            const scene = document.getElementById('ritual-scene');
+            modal.classList.add('show');
+            scene.classList.remove('active');
             
-            btnElement.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
+            // Сброс финального экрана
+            document.getElementById('final-screen-ritual').classList.remove('show');
+            modal.style.display = 'flex'; // Возвращаем видимость модалке
         }
 
-        function calcNumerology() {
-            const bDay = document.getElementById('b-day').value.trim();
-            const bMonth = document.getElementById('b-month').value.trim();
-            const bYear = document.getElementById('b-year').value.trim();
+        function activateHoverRitual() {
+            document.getElementById('ritual-scene').classList.add('active');
+        }
 
-            const cDay = document.getElementById('c-day').value.trim();
-            const cMonth = document.getElementById('c-month').value.trim();
-            const cYear = document.getElementById('c-year').value.trim();
+        function deactivateHoverRitual() {
+            document.getElementById('ritual-scene').classList.remove('active');
+        }
 
-            if (!bDay || !bMonth || !bYear || !cDay || !cMonth || !cYear) {
-                alert('Пожалуйста, заполните все поля для обеих дат.');
-                return;
-            }
+        function enterPointRitual() {
+            // При нажатии активируем анимацию
+            activateHoverRitual();
+            
+            // Через 400мс скрываем ритуал и показываем финальный экран
+            setTimeout(() => {
+                document.getElementById('ritual-modal').classList.remove('show');
+                document.getElementById('ritual-modal').style.display = 'none';
+                document.getElementById('final-screen-ritual').classList.add('show');
+            }, 400);
+        }
 
-            const sumDigits = (day, month, year) => {
-                const str = day + month + year;
-                let sum = 0;
-                for (let i = 0; i < str.length; i++) { if (!isNaN(parseInt(str[i]))) sum += parseInt(str[i]); }
-                let f = sum;
-                while (f > 9) { f = Math.floor(f / 10) + (f % 10); }
-                return f;
-            };
+        // === ЛОГИКА НОВОГО ПУТИ ===
+        
+        function closeRitualAndReturn() {
+            document.getElementById('final-screen-ritual').classList.remove('show');
+            // Плавно скроллим наверх к главному экрану
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            const birthNum = sumDigits(bDay, bMonth, bYear);
-            const currentNum = sumDigits(cDay, cMonth, cYear);
+        function goToNewPath() {
+            document.getElementById('final-screen-ritual').classList.remove('show');
+            document.getElementById('new-path-section').classList.add('show');
+        }
 
-            const bData = vedicData[birthNum];
-            const pData = vedicData[currentNum];
+        function closeNewPathAndReturn() {
+            document.getElementById('new-path-section').classList.remove('show');
+            // Скроллим к Компасу
+            document.getElementById('balance').scrollIntoView({ behavior: 'smooth' });
+        }
 
-            document.getElementById('num-result').style.display = 'block';
-
-            // Блок 1
-            document.getElementById('title-birth').innerText = `Число рождения: ${birthNum}`;
-            document.getElementById('text-b-essence').innerText = bData.essence;
-            document.getElementById('text-b-light').innerText = bData.light;
-            document.getElementById('text-b-shadow').innerText = bData.shadow;
-            document.getElementById('text-b-karma').innerText = bData.karma;
-            document.getElementById('text-b-task').innerText = bData.task;
-
-            // Блок 2
-            document.getElementById('title-passage').innerText = `Число прохождения: ${currentNum}`;
-            document.getElementById('text-p-essence').innerText = pData.essence;
-            document.getElementById('text-p-tasks').innerText = pData.task;
-            document.getElementById('text-p-challenges').innerText = pData.shadow;
-            document.getElementById('text-p-dharma').innerText = pData.karma;
-            document.getElementById('text-p-potential').innerText = "Раскрытие через " + pData.light.toLowerCase();
-
-            // Блок 3
-            document.getElementById('title-interaction').innerText = `Взаимодействие ${birthNum} и ${currentNum}`;
-            document.getElementById('text-i-meaning').innerText = `Как энергия ${birthNum} входит в период ${currentNum}.`;
-            document.getElementById('text-i-positive').innerText = `Усиливается: ${bData.light} + ${pData.light}`;
-            document.getElementById('text-i-conflicts').innerText = `Возможен конфликт: ${bData.shadow} и ${pData.shadow}`;
-            document.getElementById('text-i-task').innerText = `Главная задача: синтез ${bData.task.toLowerCase()} и ${pData.task.toLowerCase()}.`;
-            document.getElementById('text-i-gift').innerText = `Возможность: объединить ${birthNum} и ${currentNum}.`;
-
-            // Блок 4
-            document.getElementById('text-r-practice').innerText = "Развивайте в себе " + pData.light.toLowerCase();
-            document.getElementById('text-r-avoid').innerText = "Избегайте " + pData.shadow.toLowerCase();
-            document.getElementById('text-r-formulas').innerText = `«Я прохожу урок числа ${currentNum}»`;
-
-            document.querySelectorAll('.result-tab-btn')[0].click();
-            document.getElementById('num-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function saveNewPathState() {
+            // Закрываем новый путь
+            document.getElementById('new-path-section').classList.remove('show');
+            
+            // Открываем модальное окно дневника
+            document.getElementById('modal').classList.add('show'); 
+            showCurrent(); 
+            showDiary(); 
+            
+            // Подставляем текст в поле дневника
+            const diaryText = document.getElementById('diary-text');
+            diaryText.value = "Я прошел(ла) ритуал Точки Ноль и вышел(ла) на новый вектор. Мои ощущения сейчас: ";
+            
+            // Фокусируемся на поле
+            setTimeout(() => {
+                diaryText.focus();
+                diaryText.setSelectionRange(diaryText.value.length, diaryText.value.length);
+            }, 500);
         }
 
         // === ИНИЦИАЛИЗАЦИЯ ===
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('.custom-select-btn')) {
+            if (!e.target.closest('.custom-select-btn') && !e.target.closest('.value-picker') && !e.target.closest('.axis-btn')) {
                 document.querySelectorAll('.custom-select-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.custom-options').forEach(l => l.classList.remove('show'));
+                closePicker();
             }
         });
 
@@ -1780,14 +3148,41 @@
         audio.addEventListener('ended', handleEnded);
 
         window.onload = function() {
-            buildBalanceList('logic');
-            buildBalanceList('emotion');
-            buildBalanceList('state');
             updateBalance();
             renderCalendar();
             renderMeditations();
             renderShield();
             updateLegend();
+            
+            // Запуск анимации бегущей точки
+            const runnerGroup = document.querySelector('.runner-group');
+            const runnerGuide = document.getElementById('runner-guide');
+            
+            if(runnerGroup && runnerGuide) {
+                const pathLength = runnerGuide.getTotalLength();
+                let start = null;
+                const duration = 15000; 
+
+                function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = (timestamp - start) / duration;
+                    
+                    if (progress > 1) {
+                        start = timestamp;
+                    }
+                    
+                    const currentProgress = progress % 1; 
+                    const point = runnerGuide.getPointAtLength(currentProgress * pathLength);
+                    const nextPoint = runnerGuide.getPointAtLength(Math.min(pathLength, (currentProgress * pathLength) + 1));
+                    const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * (180 / Math.PI);
+
+                    runnerGroup.setAttribute('transform', `translate(${point.x}, ${point.y}) rotate(${angle})`);
+                    
+                    requestAnimationFrame(step);
+                }
+                
+                requestAnimationFrame(step);
+            }
         };
     </script>
 </body>
