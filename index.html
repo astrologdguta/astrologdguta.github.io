@@ -45,10 +45,16 @@
         ::-webkit-scrollbar-thumb:hover { background: rgba(126, 200, 255, 0.6); }
 
         /* --- КНОПКА МУЗЫКИ (В ПРАВОМ ВЕРХНЕМ УГЛУ) --- */
-        .music-toggle-btn {
+        .music-control-wrapper {
             position: fixed;
             top: 20px;
             right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .music-toggle-btn {
             width: 45px;
             height: 45px;
             background: rgba(26, 17, 37, 0.8);
@@ -58,10 +64,10 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 1000;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            flex-shrink: 0;
         }
         .music-toggle-btn:hover {
             background: rgba(255, 217, 138, 0.15);
@@ -76,6 +82,31 @@
         }
         .music-toggle-btn.muted svg {
             fill: var(--muted);
+        }
+
+        /* Ползунок громкости для верхней кнопки */
+        .volume-slider-container {
+            background: rgba(26, 17, 37, 0.9);
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .music-control-wrapper:hover .volume-slider-container,
+        .music-control-wrapper.active .volume-slider-container {
+            opacity: 1;
+            width: 120px;
+        }
+        .volume-slider-container input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: var(--gold);
         }
 
         /* --- 1. ГЛАВНЫЙ ЭКРАН --- */
@@ -493,6 +524,29 @@
         /* --- 9. МЕДИТАЦИИ --- */
         #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
         .med-section-wrapper { width: 100%; max-width: 800px; display: flex; flex-direction: column; }
+        
+        /* Новый регулятор громкости для медитаций */
+        .med-volume-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: var(--r-md);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .med-volume-control span {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        .med-volume-control input[type="range"] {
+            width: 200px;
+            cursor: pointer;
+            accent-color: var(--gold);
+        }
+
         .med-main-trigger { width: 100%; background: linear-gradient(135deg, rgba(126, 200, 255, 0.1), rgba(255, 217, 138, 0.1)); border: 1px solid var(--gold); border-radius: var(--r-lg); padding: 22px 25px; color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.4s; box-shadow: 0 0 20px rgba(255, 217, 138, 0.1); letter-spacing: 1px; }
         .med-main-trigger:hover { background: linear-gradient(135deg, rgba(126, 200, 255, 0.2), rgba(255, 217, 138, 0.2)); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
         .med-main-trigger.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-color: var(--blue); color: var(--blue); }
@@ -946,15 +1000,22 @@
             .result-tab-btn { font-size: 0.8rem; padding: 10px 5px; }
             .play-btn { width: 55px; height: 55px; font-size: 22px; }
             .feet-container-ritual { width: 280px; height: 210px; }
+            .volume-slider-container { width: 80px; }
+            .med-volume-control input[type="range"] { width: 120px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- КНОПКА ФОНОВОЙ МУЗЫКИ -->
-    <div class="music-toggle-btn muted" id="music-toggle" onclick="toggleMusic()">
-        <svg id="icon-music-off" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-        <svg id="icon-music-on" viewBox="0 0 24 24" style="display: none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+    <!-- КНОПКА ФОНОВОЙ МУЗЫКИ И ГРОМКОСТЬ -->
+    <div class="music-control-wrapper" id="music-wrapper">
+        <div class="volume-slider-container">
+            <input type="range" id="bg-volume-slider" min="0" max="1" step="0.01" value="0.5">
+        </div>
+        <div class="music-toggle-btn muted" id="music-toggle" onclick="toggleMusic(event)">
+            <svg id="icon-music-off" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+            <svg id="icon-music-on" viewBox="0 0 24 24" style="display: none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </div>
     </div>
 
     <!-- Скрытое аудио для фоновой музыки -->
@@ -1242,6 +1303,12 @@
         </div>
         
         <div class="med-section-wrapper">
+            <!-- НОВЫЙ РЕГУЛЯТОР ГРОМКОСТИ ДЛЯ МЕДИТАЦИЙ -->
+            <div class="med-volume-control">
+                <span>Громкость:</span>
+                <input type="range" id="med-volume-slider" min="0" max="1" step="0.01" value="0.8">
+            </div>
+
             <div class="med-main-trigger" id="med-main-trigger" onclick="toggleMeditations()">
                 <span>Погрузиться в медитации</span>
                 <span class="icon">🔽</span>
@@ -1467,7 +1534,7 @@
         </div>
     </div>
 
-    <!-- ФИНАЛЬНЫЙ ЭКРАН РИТУАЛА (ОБНОВЛЕННЫЙ) -->
+    <!-- ФИНАЛЬНЫЙ ЭКРАН РИТУАЛА -->
     <div class="final-screen-ritual" id="final-screen-ritual">
         <div class="final-text-ritual">Сандалии обуты</div>
         <div class="final-sub-ritual">Порог пройден. Точка Ноль ждет.</div>
@@ -1482,7 +1549,7 @@
         </div>
     </div>
 
-    <!-- НОВЫЙ ПУТЬ (ОСЬ РОСТА) - СКРЫТЫЙ БЛОК -->
+    <!-- НОВЫЙ ПУТЬ (ОСЬ РОСТА) -->
     <div id="new-path-section">
         <div class="new-path-content">
             <h2 class="new-path-title">Твой Новый Вектор</h2>
@@ -1528,14 +1595,53 @@
     </div>
 
     <script>
-        // === ЛОГИКА ФОНОВОЙ МУЗЫКИ ===
+        // === ЛОГИКА МУЗЫКИ И ГРОМКОСТИ ===
         const bgMusic = document.getElementById('bg-music');
         const musicToggle = document.getElementById('music-toggle');
         const iconMusicOff = document.getElementById('icon-music-off');
         const iconMusicOn = document.getElementById('icon-music-on');
+        const bgVolumeSlider = document.getElementById('bg-volume-slider');
+        const medVolumeSlider = document.getElementById('med-volume-slider');
+        
         let isMusicPlaying = false;
+        let savedBgVolume = parseFloat(localStorage.getItem('bgVolume')) || 0.5;
+        let savedMedVolume = parseFloat(localStorage.getItem('medVolume')) || 0.8;
 
-        function toggleMusic() {
+        // Инициализация громкости при загрузке
+        bgMusic.volume = savedBgVolume;
+        bgVolumeSlider.value = savedBgVolume;
+        medVolumeSlider.value = savedMedVolume;
+
+        // Обработчик для верхнего ползунка
+        bgVolumeSlider.addEventListener('input', function(e) {
+            const val = parseFloat(e.target.value);
+            bgMusic.volume = val;
+            localStorage.setItem('bgVolume', val);
+            
+            // Если ползунок на 0, показываем перечеркнутую иконку
+            if (val === 0 && isMusicPlaying) {
+                musicToggle.classList.add('muted');
+                iconMusicOff.style.display = 'block';
+                iconMusicOn.style.display = 'none';
+            } else if (val > 0 && isMusicPlaying) {
+                musicToggle.classList.remove('muted');
+                iconMusicOff.style.display = 'none';
+                iconMusicOn.style.display = 'block';
+            }
+        });
+
+        // Обработчик для ползунка медитаций
+        medVolumeSlider.addEventListener('input', function(e) {
+            const val = parseFloat(e.target.value);
+            audio.volume = val;
+            localStorage.setItem('medVolume', val);
+        });
+
+        function toggleMusic(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
             if (isMusicPlaying) {
                 bgMusic.pause();
                 musicToggle.classList.add('muted');
@@ -1548,8 +1654,13 @@
                     iconMusicOff.style.display = 'none';
                     iconMusicOn.style.display = 'block';
                     isMusicPlaying = true;
+                    // Восстанавливаем громкость, если она была 0
+                    if (bgMusic.volume === 0) {
+                        bgMusic.volume = 0.5;
+                        bgVolumeSlider.value = 0.5;
+                    }
                 }).catch(e => {
-                    console.log("Автовоспроизведение заблокировано браузером. Нужен клик пользователя.");
+                    console.log("Автовоспроизведение заблокировано браузером.");
                 });
             }
         }
@@ -2821,6 +2932,7 @@
             
             audio.src = file;
             audio.load();
+            audio.volume = savedMedVolume; // Применяем сохраненную громкость
             currentPlayingId = id;
             
             const btn = document.getElementById('play-btn-' + id);
