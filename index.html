@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Точка Ноль</title>
-    <link rel="icon" href="bg.png" type="image/png">
+    
+    <!-- ФАВИКОН ДЛЯ ВСЕХ БРАУЗЕРОВ И СОЦСЕТЕЙ -->
+    <link rel="icon" href="https://astrologdguta.github.io/bg.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://astrologdguta.github.io/bg.png">
+    <meta property="og:image" content="https://astrologdguta.github.io/bg.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -19,6 +24,7 @@
             --gold: #FFD98A; 
             --red: #D14A4A;
             --purple: #B388FF;
+            --teal: #009688;
             --font-title: 'Italiana', serif;
             --font-body: 'Inter', sans-serif;
             --r-sm: 8px;
@@ -44,7 +50,82 @@
         ::-webkit-scrollbar-thumb { background: rgba(126, 200, 255, 0.4); border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(126, 200, 255, 0.6); }
 
-        /* --- КНОПКА МУЗЫКИ (В ПРАВОМ ВЕРХНЕМ УГЛУ) --- */
+        /* --- ЭКРАН БЛОКИРОВКИ --- */
+        #lock-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a112a 0%, #0d0814 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease;
+        }
+        #lock-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .lock-box {
+            background: rgba(26, 17, 37, 0.9);
+            border: 2px solid var(--gold);
+            border-radius: var(--r-lg);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 217, 138, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+        .lock-box h2 {
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .lock-box p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+        .lock-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--blue);
+            border-radius: var(--r-md);
+            color: #fff;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+        .lock-input:focus {
+            box-shadow: 0 0 15px rgba(126, 200, 255, 0.3);
+        }
+        .lock-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gold);
+            color: var(--bg);
+            border: none;
+            border-radius: var(--r-md);
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .lock-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 217, 138, 0.5);
+        }
+        .lock-error {
+            color: var(--red);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* --- КНОПКА МУЗЫКИ И ГРОМКОСТЬ --- */
         .music-control-wrapper {
             position: fixed;
             top: 20px;
@@ -83,8 +164,6 @@
         .music-toggle-btn.muted svg {
             fill: var(--muted);
         }
-
-        /* Ползунок громкости для верхней кнопки */
         .volume-slider-container {
             background: rgba(26, 17, 37, 0.9);
             border: 1px solid var(--gold);
@@ -120,7 +199,7 @@
         .btn-main { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: var(--font-body); font-weight: 500; }
         .btn-main:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
 
-        /* --- 2. ВВОДНЫЙ ТЕКСТ --- */
+        /* --- ОСТАЛЬНЫЕ СТИЛИ --- */
         #intro { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
         .intro-box { max-width: 800px; text-align: center; background: rgba(26, 17, 37, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 40px 25px; }
         .intro-box h2 { font-size: 2.2rem; margin-bottom: 25px; color: var(--gold); }
@@ -132,22 +211,17 @@
         .force-card { flex: 1; padding: 25px 20px; border-radius: var(--r-md); background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); transition: all 0.4s ease; cursor: default; }
         .force-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
         .force-card p { font-size: 0.95rem; margin-bottom: 0; line-height: 1.5; }
-        
         .force-gorgon h3 { color: var(--red); }
         .force-gorgon:hover { border-color: var(--red); background: rgba(209, 74, 74, 0.05); box-shadow: 0 0 30px rgba(209, 74, 74, 0.2); transform: translateY(-5px); }
-        
         .force-perseus h3 { color: var(--gold); }
         .force-perseus:hover { border-color: var(--gold); background: rgba(255, 217, 138, 0.05); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); transform: translateY(-5px); }
-        
         .force-alice h3 { color: var(--blue); }
         .force-alice:hover { border-color: var(--blue); background: rgba(126, 200, 255, 0.05); box-shadow: 0 0 30px rgba(126, 200, 255, 0.2); transform: translateY(-5px); }
 
-        /* --- 3. КНИГА "ТРИ СИЛЫ" --- */
         #book-forces { padding: 60px 20px; display: flex; flex-direction: column; align-items: center; background: transparent; }
         .section-title { text-align: center; margin-bottom: 30px; }
         .section-title h2 { font-size: 2.4rem; color: var(--gold); margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .section-title p { color: var(--muted); font-size: 1rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-        
         .book-container { width: 100%; max-width: 600px; background: rgba(26, 17, 37, 0.9); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.2), inset 0 0 20px rgba(0,0,0,0.8); padding: 30px 25px; display: flex; flex-direction: column; font-family: 'Georgia', 'Times New Roman', serif; margin-bottom: 40px; }
         .toc { display: flex; flex-direction: column; gap: 10px; }
         .toc-btn { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--text); padding: 15px 20px; border-radius: var(--r-md); cursor: pointer; text-align: left; font-family: var(--font-body); font-size: 1rem; font-weight: 500; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
@@ -175,7 +249,6 @@
         .action-btn.btn-alice:hover { background: var(--blue); color: var(--bg); box-shadow: 0 0 20px rgba(126, 200, 255, 0.4); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 4. ТОЧКА НОЛЬ --- */
         #zero-point { display: flex; flex-direction: column; align-items: center; padding: 20px 20px 60px 20px; background: transparent; }
         .zero-trigger { max-width: 800px; width: 100%; background: rgba(18, 10, 31, 0.85); border: 1px solid var(--gold); border-radius: var(--r-lg); padding: 25px 20px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
         .zero-trigger:hover { background: rgba(18, 10, 31, 0.95); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
@@ -188,25 +261,19 @@
         .zero-inner p { margin-bottom: 24px; font-size: 18px; line-height: 1.7; font-weight: 400; color: #005B4F; }
         .zero-inner p:last-of-type { margin-bottom: 0; }
         
-        /* --- НОВАЯ АНИМИРОВАННАЯ СПИРАЛЬ --- */
         .spiral-container { width: 250px; height: 250px; margin: 40px auto 20px auto; position: relative; }
         .spiral-svg { width: 100%; height: 100%; overflow: visible; }
-        
         .spiral-outward { stroke: #c9a05a; stroke-width: 2.5; fill: none; stroke-linecap: round; opacity: 0.8; transform-origin: 50% 50%; animation: rotateOutward 30s linear infinite; }
         .spiral-inward { stroke: #009688; stroke-width: 2.5; fill: none; stroke-linecap: round; transform-origin: 50% 50%; animation: rotateInward 20s linear infinite; }
-        
         .runner-dot { fill: #009688; filter: drop-shadow(0 0 8px #009688); }
         .runner-arrow { fill: #009688; }
         .center-glow { fill: rgba(255, 255, 255, 0.8); filter: drop-shadow(0 0 15px #fff); animation: pulseGlow 3s ease-in-out infinite alternate; }
-        
         @keyframes rotateOutward { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes rotateInward { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
         @keyframes pulseGlow { 0% { r: 4; opacity: 0.6; } 100% { r: 8; opacity: 1; } }
-        
         .btn-zero { background-color: #009688; color: white; padding: 16px 50px; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s; }
         .btn-zero:hover { background-color: #00796B; }
 
-        /* --- 5. ДИАГНОСТИКА --- */
         #diagnostics { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; background: transparent; }
         .diag-box { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-lg); padding: 30px 20px; max-width: 600px; width: 100%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .diag-box h2 { font-size: 2.2rem; margin-bottom: 10px; color: var(--text); }
@@ -229,9 +296,7 @@
         .sc-text { font-size: 0.8rem; color: var(--text); line-height: 1.3; text-align: left; }
         .btn-submit { margin-top: 15px; padding: 18px; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: var(--r-md); cursor: pointer; width: 100%; font-weight: bold; font-family: var(--font-body); transition: 0.4s; font-size: 1rem; letter-spacing: 0.5px; }
         .btn-submit:hover { background: var(--gold); color: var(--bg); box-shadow: 0 0 25px rgba(255, 217, 138, 0.4); }
-        
         .result { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: left; }
-        .result-title { font-size: 1.3rem; color: var(--gold); margin-bottom: 15px; text-align: center; font-family: var(--font-title); }
         .btn-show-result { display: block; margin-top: 15px; padding: 16px; color: var(--bg); background: var(--gold); border: none; border-radius: var(--r-md); font-weight: bold; text-align: center; cursor: pointer; width: 100%; font-family: var(--font-body); transition: 0.3s; font-size: 1rem; box-shadow: 0 5px 15px rgba(255, 217, 138, 0.3); }
         .btn-show-result:hover { background: #fff; box-shadow: 0 0 25px rgba(255, 217, 138, 0.6); transform: translateY(-2px); }
         .res-item { margin-bottom: 15px; line-height: 1.5; font-size: 0.95rem; }
@@ -242,7 +307,6 @@
         .btn-show-shield { display: block; margin-top: 20px; padding: 16px; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: var(--r-md); font-weight: bold; text-align: center; cursor: pointer; width: 100%; font-family: var(--font-body); transition: 0.3s; font-size: 1rem; }
         .btn-show-shield:hover { background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 25px rgba(255, 217, 138, 0.2); }
 
-        /* --- 6. ЩИТ ПЕРСЕЯ --- */
         #course { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; display: none; }
         .c-title { text-align: center; margin-bottom: 30px; }
         .c-title h2 { font-size: 2.4rem; margin-bottom: 10px; color: var(--gold); text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
@@ -255,7 +319,6 @@
         .shield-trigger.open .icon { transform: rotate(180deg); }
         .shield-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(0, 0, 0, 0.2); border: 1px solid transparent; border-top: none; border-radius: 0 0 var(--r-md) var(--r-md); }
         .shield-wrapper.open { border-color: var(--gold); padding: 15px; }
-        
         .timeline { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .l-card { background: rgba(18, 10, 31, 0.85); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); padding: 18px 20px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
         .l-card:hover { background: rgba(18, 10, 31, 0.95); border-color: var(--muted); transform: translateY(-2px); }
@@ -263,18 +326,13 @@
         .l-num { font-size: 1.2rem; font-weight: 600; color: var(--blue); width: 35px; transition: 0.3s; }
         .l-card.active .l-num { color: var(--gold); }
         .l-title { font-size: 1rem; font-weight: 400; }
-        
         .l-details { display: none; background: rgba(0, 0, 0, 0.5); border-radius: 0 0 var(--r-md) var(--r-md); padding: 20px; margin-top: -12px; text-align: left; border: 1px solid var(--gold); border-top: none; animation: fadeIn 0.3s ease-out; }
         .l-details.show { display: block; }
-
-        /* Вложенные кнопки внутри Щита */
         .inner-buttons { display: flex; flex-direction: column; gap: 10px; }
         .inner-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text); padding: 12px 15px; border-radius: var(--r-md); cursor: pointer; text-align: left; font-family: var(--font-body); font-size: 0.95rem; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
         .inner-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--muted); }
-        
         .inner-content { display: none; padding: 15px; background: rgba(0,0,0,0.3); border-radius: var(--r-sm); margin-top: -5px; margin-bottom: 5px; border-left: 2px solid var(--blue); }
         .inner-content.show { display: block; }
-        
         .inner-content .d-block { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; }
         .inner-content .d-block:last-child { margin-bottom: 0; }
         .inner-content .d-block strong { display: block; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
@@ -284,149 +342,70 @@
         .inner-content .d-light { color: #fff3cc; }
         .inner-content .d-alice strong { color: var(--blue); }
         .inner-content .d-alice { color: #cceeff; }
-
-        /* Стили для текстов пути */
         .path-text p { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.6; color: #ddd; }
         .path-text strong { color: var(--gold); }
         .path-text p:last-child { margin-bottom: 0; }
-
         .btn-go-diary-inner { display: block; width: 100%; padding: 14px; background: var(--blue); color: var(--bg); border: none; border-radius: var(--r-md); font-weight: bold; font-size: 0.95rem; cursor: pointer; transition: 0.3s; text-align: center; margin-top: 15px; box-shadow: 0 5px 15px rgba(126,200,255,0.2); font-family: var(--font-body); }
         .btn-go-diary-inner:hover { background: #fff; box-shadow: 0 0 20px rgba(126,200,255,0.5); }
 
-        /* --- 7. КОМПАС --- */
         #balance { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
         #balance-wrapper { width: 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; }
-        
         .c-title { text-align: center; margin-bottom: 25px; }
         .c-title h2 { font-size: 2.4rem; margin-bottom: 15px; color: var(--gold); text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        
         .help-btn { display: inline-flex; align-items: center; justify-content: center; background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 10px 20px; border-radius: 30px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-family: var(--font-body); margin-bottom: 15px; }
         .help-btn:hover { background: rgba(255, 217, 138, 0.2); box-shadow: 0 0 15px rgba(255,217,138,0.3); }
-        
         .help-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; background: rgba(0,0,0,0.4); border-radius: var(--r-md); text-align: left; width: 100%; max-width: 500px; margin: 0 auto 20px auto; padding: 0 20px; border: 1px solid transparent; }
         .help-content.open { max-height: 500px; padding: 20px; border-color: rgba(255,255,255,0.1); }
         .help-content p { margin-bottom: 10px; font-size: 0.9rem; color: #ddd; line-height: 1.5; }
         .help-content p:last-child { margin-bottom: 0; }
         .help-content strong { color: var(--gold); }
-
         .balance-visual-area { position: relative; width: 100%; height: 360px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-        
         .visual-container { position: relative; width: 220px; height: 220px; background: rgba(0,0,0,0.5); border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 0 40px rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 10; }
         .axis-center { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 20px #fff; z-index: 10; }
         .axis-arrow { position: absolute; bottom: 50%; left: 50%; width: 4px; border-radius: 4px; transform-origin: bottom center; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.8s; opacity: 0.9; }
         .arrow-x { background: var(--gold); box-shadow: 0 0 15px var(--gold); z-index: 5; height: 80px; }
         .arrow-y { background: var(--blue); box-shadow: 0 0 15px var(--blue); z-index: 5; height: 80px; }
         .arrow-z { background: var(--purple); box-shadow: 0 0 15px var(--purple); z-index: 5; height: 80px; }
-        
-        .arrow-average { 
-            background: repeating-linear-gradient(to top, #ffffff, #ffffff 6px, transparent 6px, transparent 12px);
-            z-index: 6; width: 4px; height: 0px; transform: translateX(-50%); transition: all 0.8s ease-out; border-radius: 2px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
-        }
-
-        .axis-btn {
-            position: absolute;
-            background: rgba(18, 10, 31, 0.95);
-            padding: 10px 15px;
-            border-radius: var(--r-md);
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            white-space: nowrap;
-        }
-        
+        .arrow-average { background: repeating-linear-gradient(to top, #ffffff, #ffffff 6px, transparent 6px, transparent 12px); z-index: 6; width: 4px; height: 0px; transform: translateX(-50%); transition: all 0.8s ease-out; border-radius: 2px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.8)); }
+        .axis-btn { position: absolute; background: rgba(18, 10, 31, 0.95); padding: 10px 15px; border-radius: var(--r-md); font-family: var(--font-body); font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 20; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .axis-btn:hover { transform: scale(1.05); }
-        
         .btn-logic { right: -10px; top: 50%; transform: translateY(-50%); color: var(--gold); border: 1px solid var(--gold); }
         .btn-logic:hover { background: rgba(255, 217, 138, 0.1); box-shadow: 0 0 20px rgba(255,217,138,0.3); }
-        
         .btn-emotion { left: -10px; top: 50%; transform: translateY(-50%); color: var(--blue); border: 1px solid var(--blue); }
         .btn-emotion:hover { background: rgba(126, 200, 255, 0.1); box-shadow: 0 0 20px rgba(126,200,255,0.3); }
-        
         .btn-state { top: -10px; left: 50%; transform: translateX(-50%); color: var(--purple); border: 1px solid var(--purple); }
         .btn-state:hover { background: rgba(179, 136, 255, 0.1); box-shadow: 0 0 20px rgba(179,136,255,0.3); }
-        
         .btn-vector { bottom: -10px; left: 50%; transform: translateX(-50%); color: #fff; border: 1px dashed #fff; }
         .btn-vector:hover { background: rgba(255,255,255,0.1); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
         .btn-vector.open { border-style: solid; background: rgba(255,255,255,0.1); }
-
-        .value-picker {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%; max-width: 320px;
-            max-height: 250px; overflow-y: auto;
-            background: #1A1125;
-            border: 1px solid var(--gold);
-            border-radius: var(--r-md);
-            z-index: 100;
-            display: none;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-        }
+        .value-picker { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 320px; max-height: 250px; overflow-y: auto; background: #1A1125; border: 1px solid var(--gold); border-radius: var(--r-md); z-index: 100; display: none; box-shadow: 0 10px 40px rgba(0,0,0,0.9); }
         .value-picker.show { display: block; }
-        
         .value-picker::-webkit-scrollbar { width: 6px; }
         .value-picker::-webkit-scrollbar-track { background: #120A1F; }
         .value-picker::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-        
         .value-option { padding: 12px 15px; color: var(--text); font-size: 0.9rem; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
         .value-option:hover { background: rgba(255, 217, 138, 0.15); color: var(--gold); }
         .value-option.selected { background: rgba(255, 217, 138, 0.2); color: var(--gold); font-weight: 600; }
-        
         .picker-title { padding: 15px; text-align: center; font-size: 1.1rem; font-family: var(--font-title); color: var(--gold); border-bottom: 1px dashed rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); position: sticky; top: 0; }
-
         .vector-result-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; width: 100%; }
         .vector-result-wrapper.open { max-height: 800px; margin-top: 10px; }
-        
         .vector-result-content { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--r-md); padding: 20px; text-align: left; }
         .vector-result-content h3 { font-size: 1.5rem; margin-bottom: 15px; text-align: center; }
         .vector-result-content p { font-size: 0.95rem; line-height: 1.6; color: #ddd; }
-        
         .res-ideal h3 { color: var(--gold); }
         .res-unbalance h3 { color: var(--red); }
         .res-neutral h3 { color: #fff; }
         .res-mixed h3 { color: var(--purple); }
+        .btn-ritual-compass { display: block; margin-top: 15px; padding: 16px; background: transparent; border: 1.5px solid var(--blue); color: var(--blue); font-family: var(--font-body); font-size: 1rem; font-weight: 600; cursor: pointer; border-radius: var(--r-md); transition: 0.4s; text-align: center; width: 100%; letter-spacing: 0.5px; }
+        .btn-ritual-compass:hover { background: var(--blue); color: var(--bg); box-shadow: 0 0 25px rgba(126, 200, 255, 0.4); }
 
-        /* НОВАЯ КНОПКА РИТУАЛА В КОМПАСЕ */
-        .btn-ritual-compass {
-            display: block;
-            margin-top: 15px;
-            padding: 16px;
-            background: transparent;
-            border: 1.5px solid var(--blue);
-            color: var(--blue);
-            font-family: var(--font-body);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: var(--r-md);
-            transition: 0.4s;
-            text-align: center;
-            width: 100%;
-            letter-spacing: 0.5px;
-        }
-        .btn-ritual-compass:hover {
-            background: var(--blue);
-            color: var(--bg);
-            box-shadow: 0 0 25px rgba(126, 200, 255, 0.4);
-        }
-
-        /* --- 8. МОЙ ПУТЬ --- */
         #my-path-section { width: 100%; display: flex; justify-content: center; padding: 40px 20px; background: transparent; }
         .open-book-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 20px 40px; background: linear-gradient(135deg, rgba(126, 200, 255, 0.1), rgba(255, 217, 138, 0.1)); color: var(--blue); border: 2px solid var(--blue); border-radius: var(--r-lg); font-size: 1.2rem; font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: 0.4s; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 30px rgba(126, 200, 255, 0.15); }
         .open-book-btn:hover { background: linear-gradient(135deg, rgba(126, 200, 255, 0.3), rgba(255, 217, 138, 0.3)); color: #fff; box-shadow: 0 0 40px rgba(126, 200, 255, 0.4); transform: translateY(-3px); border-color: #fff; }
-        
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 5, 20, 0.9); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 300; padding: 20px; }
         .modal-overlay.show { display: flex; animation: fadeIn 0.4s; }
         .modal-content { background: rgba(26, 17, 37, 0.98); border: 2px solid var(--gold); border-radius: var(--r-lg); padding: 30px 25px 25px 25px; max-width: 600px; width: 100%; position: relative; box-shadow: 0 0 50px rgba(255, 217, 138, 0.15), inset 0 0 30px rgba(0,0,0,0.8); text-align: center; max-height: 85vh; overflow-y: auto; display: flex; flex-direction: column; }
         .modal-content h2 { margin-bottom: 20px; color: var(--gold); font-size: 2rem; }
-        
         #current-view { display: flex; flex-direction: column; flex: 1; min-height: 0; }
         .tabs-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
         .tab-btn { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-md); padding: 18px; color: var(--text); font-family: var(--font-body); font-size: 1.05rem; font-weight: 500; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px; text-align: left; }
@@ -439,16 +418,13 @@
         .tab-archive:hover { border-color: var(--muted); color: var(--muted); box-shadow: 0 0 15px rgba(209,196,233,0.2); }
         .tab-num { border-left: 4px solid var(--purple); }
         .tab-num:hover { border-color: var(--purple); color: var(--purple); box-shadow: 0 0 15px rgba(179,136,255,0.2); }
-
         #path-view, #diary-view, #archive-view, #numerology-view, #day-view { display: none; flex-direction: column; flex: 1; min-height: 0; animation: fadeIn 0.3s; }
         .modal-grid { display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 20px; }
         .mod-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border-left: 4px solid var(--blue); }
         .mod-item span { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
         .mod-item strong { font-size: 1.1rem; }
-        
         .btn-back { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--text); border-radius: var(--r-md); cursor: pointer; font-size: 1rem; transition: 0.3s; font-family: var(--font-body); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; }
         .btn-back:hover { background: var(--muted); color: var(--bg); border-color: var(--muted); }
-        
         .diary-input { width: 100%; height: 100px; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid rgba(126, 200, 255, 0.4); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); margin-bottom: 15px; resize: none; outline: none; transition: 0.3s; font-size: 0.95rem; }
         .diary-input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,217,138,0.2); }
         .btn-save { width: 100%; padding: 15px; background: var(--blue); color: var(--bg); border: none; border-radius: var(--r-md); cursor: pointer; font-weight: 600; font-family: var(--font-body); transition: 0.3s; font-size: 1rem; }
@@ -461,7 +437,6 @@
         .diary-entry .metrics span { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; }
         .diary-entry .btn-del { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; font-size: 1rem; background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
         .diary-entry .btn-del:hover { background: var(--red); color: #fff; }
-
         .archive-list { display: flex; flex-direction: column; gap: 10px; text-align: left; }
         .archive-item { background: rgba(0,0,0,0.4); padding: 18px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
         .archive-info h4 { font-weight: normal; margin-bottom: 5px; color: var(--gold); font-size: 1rem; }
@@ -469,12 +444,10 @@
         .archive-date { font-size: 0.75rem; color: var(--blue); margin-top: 5px; display: block; }
         .btn-del-arch { background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; }
         .btn-del-arch:hover { background: var(--red); color: var(--text); transform: scale(1.1); }
-
         .num-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--purple); border-radius: var(--r-md); color: #fff; font-family: var(--font-body); text-align: center; outline: none; }
         .num-input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,217,138,0.2); }
         .btn-calc { width: 100%; padding: 16px; background: var(--purple); color: var(--bg); border: none; border-radius: var(--r-md); cursor: pointer; font-weight: 600; font-size: 1rem; transition: 0.3s; margin-top: 10px; margin-bottom: 20px; }
         .btn-calc:hover { box-shadow: 0 0 25px rgba(179,136,255,0.5); background: #fff; }
-        
         #num-result { display: none; margin-top: 15px; text-align: left; animation: fadeIn 0.4s ease-out; }
         .result-tabs-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .result-tab-btn { background: rgba(0,0,0,0.3); border: 1px solid var(--purple); color: var(--text); padding: 14px 10px; border-radius: var(--r-md); cursor: pointer; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; transition: 0.3s; text-align: center; }
@@ -482,25 +455,20 @@
         .result-tab-btn.active { background: var(--purple); color: var(--bg); border-color: var(--purple); font-weight: bold; box-shadow: 0 0 15px rgba(179,136,255,0.4); }
         .res-tab-content { display: none; animation: fadeIn 0.3s; }
         .res-tab-content.active { display: block; }
-        
         .text-block { background: rgba(0,0,0,0.3); padding: 20px; border-radius: var(--r-md); border-left: 4px solid var(--gold); border-top: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; }
         .text-block h3 { color: var(--gold); font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px dashed rgba(255,217,138,0.3); padding-bottom: 10px; }
-        
         .item { margin-bottom: 15px; }
         .item:last-child { margin-bottom: 0; }
         .item strong { display: block; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px; }
         .item p { font-size: 0.95rem; line-height: 1.6; color: #ddd; }
-
         .stats-wrapper { display: flex; align-items: flex-end; justify-content: space-between; height: 60px; gap: 5px; margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: var(--r-md); }
         .stat-bar { flex: 1; background: rgba(255,255,255,0.1); border-radius: 4px; transition: height 0.4s; position: relative; min-height: 4px; }
         .stat-bar.positive { background: var(--gold); }
         .stat-bar.negative { background: var(--red); }
         .stat-bar.zero { background: #fff; }
         .stat-label { position: absolute; bottom: -20px; left: 0; width: 100%; text-align: center; font-size: 0.6rem; color: var(--muted); }
-
         .btn-export { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--muted); color: var(--muted); border-radius: var(--r-md); cursor: pointer; font-size: 0.9rem; font-family: var(--font-body); transition: 0.3s; margin-top: 10px; width: 100%; }
         .btn-export:hover { background: var(--muted); color: var(--bg); border-color: var(--muted); }
-
         .mini-calendar { margin-top: 20px; background: rgba(0,0,0,0.3); border-radius: var(--r-md); padding: 15px; }
         .mini-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .mini-cal-header h4 { font-size: 1rem; margin: 0; color: var(--gold); }
@@ -509,7 +477,6 @@
         .mini-cal-day:hover { background: rgba(255,255,255,0.1); }
         .mini-cal-day.has-data { color: var(--blue); font-weight: bold; border: 1px solid var(--blue); }
         .mini-cal-day.today { background: var(--gold); color: var(--bg); font-weight: bold; }
-
         .goal-section { margin-top: 20px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border-radius: var(--r-md); border: 1px solid rgba(179,136,255,0.3); }
         .goal-section h4 { color: var(--purple); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body); font-weight: 500; }
         .goal-input-group { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -521,32 +488,11 @@
         .goal-progress-fill { height: 100%; background: var(--purple); width: 0%; transition: width 0.5s; box-shadow: 0 0 10px var(--purple); }
         .goal-text { font-size: 0.85rem; color: var(--muted); text-align: right; }
 
-        /* --- 9. МЕДИТАЦИИ --- */
         #meditations { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; background: transparent; }
         .med-section-wrapper { width: 100%; max-width: 800px; display: flex; flex-direction: column; }
-        
-        /* Новый регулятор громкости для медитаций */
-        .med-volume-control {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: var(--r-md);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .med-volume-control span {
-            color: var(--gold);
-            font-size: 0.9rem;
-        }
-        .med-volume-control input[type="range"] {
-            width: 200px;
-            cursor: pointer;
-            accent-color: var(--gold);
-        }
-
+        .med-volume-control { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: var(--r-md); border: 1px solid rgba(255,255,255,0.1); }
+        .med-volume-control span { color: var(--gold); font-size: 0.9rem; }
+        .med-volume-control input[type="range"] { width: 200px; cursor: pointer; accent-color: var(--gold); }
         .med-main-trigger { width: 100%; background: linear-gradient(135deg, rgba(126, 200, 255, 0.1), rgba(255, 217, 138, 0.1)); border: 1px solid var(--gold); border-radius: var(--r-lg); padding: 22px 25px; color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.4s; box-shadow: 0 0 20px rgba(255, 217, 138, 0.1); letter-spacing: 1px; }
         .med-main-trigger:hover { background: linear-gradient(135deg, rgba(126, 200, 255, 0.2), rgba(255, 217, 138, 0.2)); box-shadow: 0 0 30px rgba(255, 217, 138, 0.2); }
         .med-main-trigger.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-color: var(--blue); color: var(--blue); }
@@ -567,28 +513,19 @@
         .player-wrapper.open { border-color: var(--gold); }
         .player-box { padding: 25px 20px; text-align: center; position: relative; }
         .player-controls { display: flex; align-items: center; justify-content: center; gap: 25px; margin-bottom: 20px; }
-        
         .skip-btn { background: transparent; border: none; color: var(--muted); font-size: 20px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; font-family: var(--font-body); }
         .skip-btn:hover { color: var(--gold); }
-        
         .play-btn { width: 65px; height: 65px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: var(--bg); font-size: 26px; transition: 0.2s; box-shadow: 0 5px 20px rgba(255,217,138,0.4); }
         .play-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,217,138,0.6); }
         .play-btn:active { transform: scale(0.95); }
-        
         .play-btn.paused { animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 217, 138, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 217, 138, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 217, 138, 0); }
-        }
-
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 217, 138, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 217, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 217, 138, 0); } }
         .progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; cursor: pointer; position: relative; margin-bottom: 12px; }
         .progress-fill { width: 0%; height: 100%; background: var(--blue); border-radius: 10px; position: absolute; top: 0; left: 0; pointer-events: none; box-shadow: 0 0 10px rgba(126,200,255,0.5); }
         .player-time { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
         .player-error { color: var(--red); font-size: 0.85rem; margin-top: 15px; display: none; }
         .player-error.show { display: block; }
 
-        /* --- 10. ЛЕГЕНДА --- */
         #legend { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: transparent; }
         .book-container-legend { width: 100%; max-width: 550px; height: 500px; background: rgba(26, 17, 37, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--gold); border-radius: var(--r-lg); box-shadow: 0 0 40px rgba(255, 217, 138, 0.2), inset 0 0 20px rgba(0,0,0,0.8); padding: 30px 25px 20px 25px; display: flex; flex-direction: column; justify-content: space-between; position: relative; font-family: 'Georgia', 'Times New Roman', serif; }
         .book-page-legend { color: #F8F5E9; font-size: 1.05rem; line-height: 1.8; overflow-y: auto; text-align: center; flex-grow: 1; display: block; padding: 10px; animation: fadeIn 0.4s ease-out; }
@@ -604,364 +541,154 @@
         .book-btn:disabled { opacity: 0.2; cursor: not-allowed; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.3); }
         .page-num { color: var(--muted); font-style: italic; font-size: 0.9rem; font-family: var(--font-body); }
 
-        /* --- 11. МОДАЛЬНОЕ ОКНО РИТУАЛА --- */
         #ritual-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1a112a 0%, #0d0814 70%); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 500; padding: 20px; text-align: center; transition: opacity 0.8s ease; opacity: 0; }
         #ritual-modal.show { display: flex; opacity: 1; }
+        .ritual-scene { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 500px; position: relative; animation: fadeIn 1s ease-out; }
+        .ritual-text-top { font-family: var(--font-title); color: var(--gold); font-size: 1.3rem; letter-spacing: 2px; margin-bottom: 20px; opacity: 0.9; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .feet-container-ritual { position: relative; width: 320px; height: 260px; margin-bottom: 30px; display: flex; justify-content: center; align-items: center; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .wings-svg-ritual { width: 100%; height: 100%; filter: drop-shadow(0 0 15px rgba(126, 200, 255, 0.4)); transition: all 0.6s ease; }
+        .wing-path-r { stroke: var(--blue); stroke-width: 2; fill: rgba(126, 200, 255, 0.03); stroke-linecap: round; stroke-linejoin: round; transition: all 0.4s ease; }
+        .wing-detail-r { stroke: var(--blue); stroke-width: 1.2; fill: none; stroke-linecap: round; opacity: 0.5; }
+        .foot-path-r { stroke: var(--muted); stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: 0.8; transition: all 0.4s ease; }
+        .gold-string-r { stroke: var(--gold); stroke-width: 2; fill: none; stroke-linecap: round; stroke-dasharray: 4 4; opacity: 0.9; transition: all 0.4s ease; }
+        .ritual-scene.active .feet-container-ritual { transform: translateY(-8px); }
+        .ritual-scene.active .wings-svg-ritual { filter: drop-shadow(0 0 30px rgba(126, 200, 255, 0.9)); }
+        .ritual-scene.active .wing-path-r { fill: rgba(126, 200, 255, 0.15); }
+        .ritual-scene.active .foot-path-r { stroke: var(--blue); }
+        .ritual-scene.active .gold-string-r { stroke-dasharray: 0 100; opacity: 1; }
+        .btn-enter-ritual-new { padding: 16px 40px; background: transparent; border: 1.5px solid var(--blue); color: var(--blue); font-family: var(--font-body); font-size: 1.1rem; cursor: pointer; border-radius: 40px; transition: all 0.4s ease; letter-spacing: 1.5px; box-shadow: 0 0 15px rgba(126, 200, 255, 0.1); position: relative; z-index: 10; }
+        .btn-enter-ritual-new:hover { background: var(--blue); color: var(--bg); box-shadow: 0 0 30px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
+        .ritual-buttons-group { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; z-index: 20; }
+        .btn-ritual-back { padding: 14px 30px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); color: var(--muted); font-family: var(--font-body); font-size: 1rem; cursor: pointer; border-radius: 30px; transition: 0.4s; }
+        .btn-ritual-back:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+        .btn-ritual-forward { padding: 16px 40px; background: var(--gold); border: 1px solid var(--gold); color: var(--bg); font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; cursor: pointer; border-radius: 30px; transition: 0.4s; box-shadow: 0 0 20px rgba(255, 217, 138, 0.4); }
+        .btn-ritual-forward:hover { background: #fff; border-color: #fff; box-shadow: 0 0 30px rgba(255, 217, 138, 0.8); transform: translateY(-2px); }
+        .final-screen-ritual { display: none; flex-direction: column; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 600; animation: fadeIn 1.2s ease-out; }
+        .final-screen-ritual.show { display: flex; }
+        .final-text-ritual { font-family: var(--font-title); color: var(--gold); font-size: 2rem; margin-bottom: 20px; letter-spacing: 3px; text-shadow: 0 0 20px rgba(255, 217, 138, 0.3); }
+        .final-sub-ritual { color: var(--muted); font-size: 1rem; letter-spacing: 1px; }
 
-        .ritual-scene {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 500px;
-            position: relative;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .ritual-text-top {
-            font-family: var(--font-title);
-            color: var(--gold);
-            font-size: 1.3rem;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            opacity: 0.9;
-            text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
-        .feet-container-ritual {
-            position: relative;
-            width: 320px;
-            height: 260px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .wings-svg-ritual {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 15px rgba(126, 200, 255, 0.4));
-            transition: all 0.6s ease;
-        }
-
-        .wing-path-r {
-            stroke: var(--blue);
-            stroke-width: 2;
-            fill: rgba(126, 200, 255, 0.03);
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: all 0.4s ease;
-        }
-        .wing-detail-r {
-            stroke: var(--blue);
-            stroke-width: 1.2;
-            fill: none;
-            stroke-linecap: round;
-            opacity: 0.5;
-        }
-        .foot-path-r {
-            stroke: var(--muted);
-            stroke-width: 1.5;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            opacity: 0.8;
-            transition: all 0.4s ease;
-        }
-        .gold-string-r {
-            stroke: var(--gold);
-            stroke-width: 2;
-            fill: none;
-            stroke-linecap: round;
-            stroke-dasharray: 4 4;
-            opacity: 0.9;
-            transition: all 0.4s ease;
-        }
-
-        .ritual-scene.active .feet-container-ritual {
-            transform: translateY(-8px);
-        }
-        .ritual-scene.active .wings-svg-ritual {
-            filter: drop-shadow(0 0 30px rgba(126, 200, 255, 0.9));
-        }
-        .ritual-scene.active .wing-path-r {
-            fill: rgba(126, 200, 255, 0.15);
-        }
-        .ritual-scene.active .foot-path-r {
-            stroke: var(--blue);
-        }
-        .ritual-scene.active .gold-string-r {
-            stroke-dasharray: 0 100; 
-            opacity: 1;
-        }
-
-        .btn-enter-ritual-new {
-            padding: 16px 40px;
-            background: transparent;
-            border: 1.5px solid var(--blue);
-            color: var(--blue);
-            font-family: var(--font-body);
-            font-size: 1.1rem;
-            cursor: pointer;
-            border-radius: 40px;
-            transition: all 0.4s ease;
-            letter-spacing: 1.5px;
-            box-shadow: 0 0 15px rgba(126, 200, 255, 0.1);
-            position: relative;
-            z-index: 10;
-        }
-        .btn-enter-ritual-new:hover {
-            background: var(--blue);
-            color: var(--bg);
-            box-shadow: 0 0 30px rgba(126, 200, 255, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .ritual-buttons-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
-            z-index: 20;
-        }
-        .btn-ritual-back {
-            padding: 14px 30px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--muted);
-            font-family: var(--font-body);
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 30px;
-            transition: 0.4s;
-        }
-        .btn-ritual-back:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-        .btn-ritual-forward {
-            padding: 16px 40px;
-            background: var(--gold);
-            border: 1px solid var(--gold);
-            color: var(--bg);
-            font-family: var(--font-body);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 30px;
-            transition: 0.4s;
-            box-shadow: 0 0 20px rgba(255, 217, 138, 0.4);
-        }
-        .btn-ritual-forward:hover {
-            background: #fff;
-            border-color: #fff;
-            box-shadow: 0 0 30px rgba(255, 217, 138, 0.8);
-            transform: translateY(-2px);
-        }
-
-        .final-screen-ritual {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg);
-            z-index: 600;
-            animation: fadeIn 1.2s ease-out;
-        }
-        .final-screen-ritual.show {
-            display: flex;
-        }
-        .final-text-ritual {
-            font-family: var(--font-title);
-            color: var(--gold);
-            font-size: 2rem;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(255, 217, 138, 0.3);
-        }
-        .final-sub-ritual {
-            color: var(--muted);
-            font-size: 1rem;
-            letter-spacing: 1px;
-        }
-
-        /* --- НОВЫЙ ПУТЬ (ОСЬ РОСТА) --- */
-        #new-path-section {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a112a 0%, #0d0814 70%);
-            z-index: 550;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            overflow-y: auto;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-        #new-path-section.show {
-            display: flex;
-            opacity: 1;
-        }
-        .new-path-content {
-            max-width: 700px;
-            width: 100%;
-            text-align: center;
-        }
-        .new-path-title {
-            font-family: var(--font-title);
-            color: var(--gold);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(255, 217, 138, 0.3);
-        }
-        .new-path-subtitle {
-            color: var(--blue);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-        .new-path-text {
-            color: #e0d8ec;
-            line-height: 1.8;
-            font-size: 1.05rem;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .axis-visual-new {
-            width: 250px;
-            height: 250px;
-            margin: 0 auto 40px auto;
-            position: relative;
-            perspective: 1000px;
-        }
-        .circle-3d {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .line-down {
-            position: absolute;
-            bottom: 50%; left: 50%;
-            width: 2px; height: 100px;
-            background: linear-gradient(to bottom, var(--red), transparent);
-            transform: translateX(-50%);
-            opacity: 0.5;
-        }
-        .line-up {
-            position: absolute;
-            bottom: 50%; left: 50%;
-            width: 4px; height: 150px;
-            background: linear-gradient(to top, var(--gold), #fff);
-            transform: translateX(-50%);
-            box-shadow: 0 0 20px var(--gold);
-            animation: pulseUp 2s infinite alternate;
-        }
-        @keyframes pulseUp {
-            0% { height: 120px; opacity: 0.8; }
-            100% { height: 160px; opacity: 1; box-shadow: 0 0 30px #fff; }
-        }
-        .zero-point-vis {
-            position: absolute;
-            bottom: 50%; left: 50%;
-            width: 16px; height: 16px;
-            background: #fff;
-            border-radius: 50%;
-            transform: translate(-50%, 50%);
-            box-shadow: 0 0 20px #fff;
-            z-index: 10;
-        }
-
-        .tips-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-        @media (min-width: 600px) {
-            .tips-grid { flex-direction: row; }
-        }
-        .tip-card {
-            flex: 1;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: var(--r-md);
-            padding: 20px;
-            transition: 0.3s;
-        }
-        .tip-card:hover {
-            background: rgba(255,255,255,0.05);
-        }
-        .tip-card h4 {
-            font-family: var(--font-body);
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        .tip-card p {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.5;
-        }
+        #new-path-section { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1a112a 0%, #0d0814 70%); z-index: 550; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; overflow-y: auto; opacity: 0; transition: opacity 0.8s ease; }
+        #new-path-section.show { display: flex; opacity: 1; }
+        .new-path-content { max-width: 700px; width: 100%; text-align: center; }
+        .new-path-title { font-family: var(--font-title); color: var(--gold); font-size: 2.2rem; margin-bottom: 10px; text-shadow: 0 0 20px rgba(255, 217, 138, 0.3); }
+        .new-path-subtitle { color: var(--blue); font-size: 1.1rem; margin-bottom: 30px; font-style: italic; }
+        .new-path-text { color: #e0d8ec; line-height: 1.8; font-size: 1.05rem; margin-bottom: 30px; text-align: center; }
+        .axis-visual-new { width: 250px; height: 250px; margin: 0 auto 40px auto; position: relative; perspective: 1000px; }
+        .circle-3d { width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); position: relative; box-shadow: inset 0 0 50px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; }
+        .line-down { position: absolute; bottom: 50%; left: 50%; width: 2px; height: 100px; background: linear-gradient(to bottom, var(--red), transparent); transform: translateX(-50%); opacity: 0.5; }
+        .line-up { position: absolute; bottom: 50%; left: 50%; width: 4px; height: 150px; background: linear-gradient(to top, var(--gold), #fff); transform: translateX(-50%); box-shadow: 0 0 20px var(--gold); animation: pulseUp 2s infinite alternate; }
+        @keyframes pulseUp { 0% { height: 120px; opacity: 0.8; } 100% { height: 160px; opacity: 1; box-shadow: 0 0 30px #fff; } }
+        .zero-point-vis { position: absolute; bottom: 50%; left: 50%; width: 16px; height: 16px; background: #fff; border-radius: 50%; transform: translate(-50%, 50%); box-shadow: 0 0 20px #fff; z-index: 10; }
+        .tips-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; text-align: left; }
+        @media (min-width: 600px) { .tips-grid { flex-direction: row; } }
+        .tip-card { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-md); padding: 20px; transition: 0.3s; }
+        .tip-card:hover { background: rgba(255,255,255,0.05); }
+        .tip-card h4 { font-family: var(--font-body); font-size: 1.1rem; margin-bottom: 10px; font-weight: 600; }
+        .tip-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
         .tip-logic h4 { color: var(--gold); }
         .tip-emotion h4 { color: var(--blue); }
         .tip-state h4 { color: var(--purple); }
+        .new-path-actions { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .btn-save-new-path { padding: 16px 40px; background: var(--blue); color: var(--bg); border: none; border-radius: 30px; font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: 0.4s; box-shadow: 0 0 20px rgba(126, 200, 255, 0.3); width: 100%; max-width: 350px; }
+        .btn-save-new-path:hover { background: #fff; box-shadow: 0 0 30px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
+        .btn-back-from-new { background: transparent; border: none; color: var(--muted); font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; text-decoration: underline; padding: 10px; transition: 0.3s; }
+        .btn-back-from-new:hover { color: #fff; }
 
-        .new-path-actions {
+        /* --- НОВЫЙ БЛОК: МАНИФЕСТ И ПРЕДУПРЕЖДЕНИЕ --- */
+        #manifest-section {
+            padding: 60px 20px;
+            background: transparent;
             display: flex;
             flex-direction: column;
-            gap: 15px;
             align-items: center;
         }
-        .btn-save-new-path {
-            padding: 16px 40px;
-            background: var(--blue);
-            color: var(--bg);
-            border: none;
-            border-radius: 30px;
-            font-family: var(--font-body);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.4s;
-            box-shadow: 0 0 20px rgba(126, 200, 255, 0.3);
+        .manifest-container {
+            max-width: 800px;
             width: 100%;
-            max-width: 350px;
+            text-align: center;
         }
-        .btn-save-new-path:hover {
-            background: #fff;
-            box-shadow: 0 0 30px rgba(126, 200, 255, 0.6);
-            transform: translateY(-2px);
+        .manifest-title {
+            font-family: var(--font-title);
+            color: var(--gold);
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(255, 217, 138, 0.3);
         }
-        .btn-back-from-new {
-            background: transparent;
-            border: none;
-            color: var(--muted);
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 10px;
-            transition: 0.3s;
+        .manifest-text {
+            color: #e0d8ec;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: left;
         }
-        .btn-back-from-new:hover {
+        .manifest-text strong {
             color: #fff;
         }
+        .manifest-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .manifest-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+            color: #e0d8ec;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        .manifest-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+        .manifest-list li strong {
+            color: var(--gold);
+        }
+        .warning-text {
+            margin-top: 30px;
+            padding: 20px;
+            border-left: 3px solid var(--red);
+            background: rgba(209, 74, 74, 0.05);
+            color: #ffb3b3;
+            font-style: italic;
+            font-size: 1rem;
+            text-align: left;
+            border-radius: 0 var(--r-md) var(--r-md) 0;
+        }
+        .soulmate-text {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            color: #fff;
+            text-align: center;
+            font-weight: 500;
+        }
+        .scroll-arrow-btn {
+            margin-top: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+        }
+        .scroll-arrow-btn svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--teal);
+            filter: drop-shadow(0 0 8px rgba(0, 150, 136, 0.6));
+            animation: floatDown 2s ease-in-out infinite;
+        }
+        @keyframes floatDown {
+            0%, 100% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(8px); opacity: 1; filter: drop-shadow(0 0 15px rgba(0, 150, 136, 1)); }
+        }
 
-        /* --- ПОДВАЛ + КАЛЕНДАРЬ --- */
         #footer { padding: 50px 20px; background: rgba(18, 10, 31, 0.95); backdrop-filter: blur(10px); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); position: relative; }
         .calendar-section { max-width: 600px; margin: 0 auto 40px auto; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 25px 20px; }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 5px; }
@@ -980,7 +707,6 @@
         .cal-day.zero { background: rgba(255, 255, 255, 0.2); color: #fff; border: 1px solid #fff; }
         .cal-day.today { outline: 2px solid var(--blue); outline-offset: 2px; }
         .cal-day.has-diary::after { content: ''; position: absolute; bottom: 2px; width: 4px; height: 4px; background: var(--purple); border-radius: 50%; }
-
         .footer-content h3 { letter-spacing: 1px; margin-bottom: 10px; color: var(--gold); font-size: 1.6rem; }
         .footer-content p { color: var(--muted); margin-bottom: 25px; font-size: 0.9rem; }
         .social-links { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
@@ -990,7 +716,7 @@
 
         @media (max-width: 400px) {
             h1 { font-size: 2rem; }
-            .section-title h2, .c-title h2 { font-size: 1.8rem; }
+            .section-title h2, .c-title h2, .manifest-title { font-size: 1.8rem; }
             .modal-content { padding: 20px 15px; }
             .book-container-legend { height: 520px; padding: 20px 15px; }
             .spiral-container { width: 200px; height: 200px; }
@@ -1006,6 +732,17 @@
     </style>
 </head>
 <body>
+
+    <!-- ЭКРАН БЛОКИРОВКИ -->
+    <div id="lock-screen">
+        <div class="lock-box">
+            <h2>Точка Ноль</h2>
+            <p>Это личное пространство.<br>Пожалуйста, введите код доступа.</p>
+            <input type="password" id="lock-input" class="lock-input" placeholder="••••" maxlength="4" inputmode="numeric">
+            <button class="lock-btn" onclick="checkPassword()">Войти</button>
+            <div class="lock-error" id="lock-error">Неверный код. Попробуйте еще раз.</div>
+        </div>
+    </div>
 
     <!-- КНОПКА ФОНОВОЙ МУЗЫКИ И ГРОМКОСТЬ -->
     <div class="music-control-wrapper" id="music-wrapper">
@@ -1303,7 +1040,6 @@
         </div>
         
         <div class="med-section-wrapper">
-            <!-- НОВЫЙ РЕГУЛЯТОР ГРОМКОСТИ ДЛЯ МЕДИТАЦИЙ -->
             <div class="med-volume-control">
                 <span>Громкость:</span>
                 <input type="range" id="med-volume-slider" min="0" max="1" step="0.01" value="0.8">
@@ -1334,6 +1070,33 @@
                 <span class="page-num" id="page-num-legend">Стр. 1 из 63</span>
                 <button class="book-btn" id="book-next" onclick="nextPageLegend()">Вперед →</button>
             </div>
+        </div>
+    </section>
+
+    <!-- НОВЫЙ БЛОК: МАНИФЕСТ И ПРЕДУПРЕЖДЕНИЕ -->
+    <section id="manifest-section">
+        <div class="manifest-container">
+            <h2 class="manifest-title">Что ты найдешь здесь</h2>
+            <p class="manifest-text">Мы живем в мире, где нас постоянно разрывают на части. Работа требует результатов, близкие — внимания, а наши собственные страхи, старые обиды и чужие ожидания постоянно тянут нас назад. Мы крутимся в этом колесе, теряем ориентиры и в какой-то момент просто застываем, как окаменевшие, не понимая, куда двигаться дальше.</p>
+            <p class="manifest-text">Этот сайт создан не для того, чтобы развлечь тебя. И он не даст тебе волшебную таблетку. <strong>Это твой личный инструмент для возвращения к самому себе.</strong></p>
+            <p class="manifest-text">Здесь ты не найдешь готовых ответов или «гуру», которые будут учить тебя жизни. Здесь только ты и твоя честность. Мы даем тебе удочку, а не рыбу. Мы не тащим тебя на себе, мы лишь даем опору, чтобы ты мог сам сделать свой следующий шаг.</p>
+            <p class="manifest-text">Всё, что здесь есть, создано для того, чтобы помочь тебе увидеть себя настоящего:</p>
+            <ul class="manifest-list">
+                <li><strong>Истории и Легенды</strong> мягко объяснят, что твои страхи и сомнения — это не слабость и не болезнь. Это просто витки твоего пути. Их проходит каждый.</li>
+                <li><strong>Компас и Дневник</strong> позволят тебе честно взглянуть на то, где ты находишься сейчас. Ты сам настраиваешь свой вектор, сам решаешь, что чувствовать, и сам видишь, куда ведет твой выбор.</li>
+                <li><strong>Точка Ноль</strong> покажет, что любое падение — это не конец. Это точка отрыва. Место, где можно оставить тяжелую обувь прошлого за порогом и начать расти над собой.</li>
+            </ul>
+            <p class="manifest-text">Это пространство останется с тобой до тех пор, пока оно тебе нужно. Это твой личный дневник и твой личный путь. Ты сам решаешь, в какую сторону двигаться, и сам увидишь результат своих шагов.</p>
+
+            <div class="warning-text">
+                <strong>Важное предупреждение:</strong> Этот сайт не для всех. Он для тех, кто готов сам стать себе опорой, кто хочет меняться и смотреть в глаза своим теням. Здесь нет «учителей». Здесь только ты и твоя честность. Если ты готов к этому — добро пожаловать. Если нет — это тоже нормально. Всему свое время.
+            </div>
+
+            <p class="soulmate-text">Я — твой единомышленник. Если тебе нужен этот свет, ты знаешь, где меня найти.</p>
+
+            <button class="scroll-arrow-btn" onclick="scrollToContacts()" aria-label="Прокрутить к контактам">
+                <svg viewBox="0 0 24 24"><path d="M12 21l-8-8h6V3h4v10h6l-8 8z"/></svg>
+            </button>
         </div>
     </section>
 
@@ -1561,7 +1324,6 @@
                 <p>Ты в идеальном центре. Твой Ум, Сердце и Состояние звучат в унисон. Только в этом абсолютном триединстве, когда все три вектора равны, ты можешь начать движение строго вверх. Не отклоняясь ни в хаос, ни в холод. По центральной оси. К себе настоящему.</p>
             </div>
 
-            <!-- 3D Визуализация -->
             <div class="axis-visual-new">
                 <div class="circle-3d">
                     <div class="line-down"></div>
@@ -1570,7 +1332,6 @@
                 </div>
             </div>
 
-            <!-- Подсказки -->
             <h3 style="color: #fff; margin-bottom: 20px; font-family: var(--font-body); font-weight: 500;">Как удержаться в Точке Ноль:</h3>
             <div class="tips-grid">
                 <div class="tip-card tip-logic">
@@ -1595,6 +1356,42 @@
     </div>
 
     <script>
+        // === ЛОГИКА БЛОКИРОВКИ ===
+        const CORRECT_PASSWORD = "2046"; 
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const isUnlocked = localStorage.getItem('siteUnlocked');
+            if (isUnlocked === 'true') {
+                document.getElementById('lock-screen').classList.add('hidden');
+            }
+        });
+
+        function checkPassword() {
+            const input = document.getElementById('lock-input').value;
+            const error = document.getElementById('lock-error');
+            
+            if (input === CORRECT_PASSWORD) {
+                localStorage.setItem('siteUnlocked', 'true');
+                document.getElementById('lock-screen').classList.add('hidden');
+                error.style.display = 'none';
+            } else {
+                error.style.display = 'block';
+                document.getElementById('lock-input').value = '';
+            }
+        }
+
+        document.getElementById('lock-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // === ПЛАВНЫЙ СКРОЛЛ К КОНТАКТАМ ===
+        function scrollToContacts() {
+            const footer = document.getElementById('footer');
+            footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         // === ЛОГИКА МУЗЫКИ И ГРОМКОСТИ ===
         const bgMusic = document.getElementById('bg-music');
         const musicToggle = document.getElementById('music-toggle');
@@ -1607,18 +1404,15 @@
         let savedBgVolume = parseFloat(localStorage.getItem('bgVolume')) || 0.5;
         let savedMedVolume = parseFloat(localStorage.getItem('medVolume')) || 0.8;
 
-        // Инициализация громкости при загрузке
         bgMusic.volume = savedBgVolume;
         bgVolumeSlider.value = savedBgVolume;
         medVolumeSlider.value = savedMedVolume;
 
-        // Обработчик для верхнего ползунка
         bgVolumeSlider.addEventListener('input', function(e) {
             const val = parseFloat(e.target.value);
             bgMusic.volume = val;
             localStorage.setItem('bgVolume', val);
             
-            // Если ползунок на 0, показываем перечеркнутую иконку
             if (val === 0 && isMusicPlaying) {
                 musicToggle.classList.add('muted');
                 iconMusicOff.style.display = 'block';
@@ -1630,7 +1424,6 @@
             }
         });
 
-        // Обработчик для ползунка медитаций
         medVolumeSlider.addEventListener('input', function(e) {
             const val = parseFloat(e.target.value);
             audio.volume = val;
@@ -1638,9 +1431,7 @@
         });
 
         function toggleMusic(event) {
-            if (event) {
-                event.stopPropagation();
-            }
+            if (event) event.stopPropagation();
             
             if (isMusicPlaying) {
                 bgMusic.pause();
@@ -1654,7 +1445,6 @@
                     iconMusicOff.style.display = 'none';
                     iconMusicOn.style.display = 'block';
                     isMusicPlaying = true;
-                    // Восстанавливаем громкость, если она была 0
                     if (bgMusic.volume === 0) {
                         bgMusic.volume = 0.5;
                         bgVolumeSlider.value = 0.5;
