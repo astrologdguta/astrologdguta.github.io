@@ -1067,6 +1067,7 @@
                     <button class="btn-ritual-compass" id="btn-ritual-compass" onclick="openRitual()" style="display: none;">
                         ✨ Оставить прошлое за порогом
                     </button>
+					<button class="btn-save-diary" id="btn-save-diary" onclick="saveToDiaryFromCompass()" style="display: none; margin-top: 15px; width: 100%; padding: 16px; background: #7EC8FF; color: #120A1F; border: none; border-radius: 14px; font-weight: bold; font-size: 1rem; cursor: pointer;">✨ Сохранить этот вектор в дневник</button>
                 </div>
             </div>
         </div>
@@ -1235,14 +1236,12 @@
                 </div>
                 <h3 style="color: var(--gold); font-size: 1.2rem; margin-bottom: 10px; text-align: left;">История записей</h3>
                 <div class="scrollable-list"><div id="diary-list"></div></div>
-                <button class="btn-export" onclick="exportDiary()">📥 Экспорт дневника (.txt)</button>
                 <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
 
             <div id="archive-view">
                 <h2>Мой архив</h2>
                 <div class="scrollable-list"><div class="archive-list" id="archive-list"></div></div>
-                <button class="btn-export" onclick="exportArchive()">📥 Экспорт архива (.json)</button>
                 <button class="btn-back" onclick="showCurrent()">← В главное меню</button>
             </div>
 
@@ -1264,6 +1263,7 @@
                 </div>
                 
                 <button class="btn-calc" onclick="calcNumerology()">Рассчитать</button>
+				<button class="btn-save" id="btn-save-num" onclick="saveNumerologyToDiary()" style="display: none; margin-top: 10px; background: var(--purple); color: var(--bg); width: 100%; border: none; border-radius: var(--r-md); padding: 15px; font-weight: 600; cursor: pointer; font-family: var(--font-body); font-size: 1rem; transition: 0.3s;">🔢 Сохранить расчет в дневник</button>
                 
                 <div id="num-result">
                     <div class="result-tabs-nav">
@@ -2030,10 +2030,28 @@
         }
 
         function goToDiaryFromShield() {
-            document.getElementById('modal').classList.add('show'); 
-            showCurrent(); 
-            showDiary(); 
-        }
+    document.getElementById('modal').classList.add('show');
+    showCurrent();
+    showDiary();
+   
+    // АВТОМАТИЧЕСКАЯ ПОДСТАНОВКА ТЕКСТА
+    const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
+    const avg = Math.round((x + y + z) / 3);
+   
+    const textX = balanceData.logic.find(i => i.v === x).t;
+    const textY = balanceData.emotion.find(i => i.v === y).t;
+    const textZ = balanceData.state.find(i => i.v === z).t;
+
+    const autoText = `Логика (${x}): ${textX} Эмоции (${y}): ${textY} Состояние (${z}): ${textZ}`;
+   
+    const diaryText = document.getElementById('diary-text');
+    diaryText.value = autoText;
+   
+    setTimeout(() => {
+        diaryText.focus();
+        diaryText.setSelectionRange(diaryText.value.length, diaryText.value.length);
+    }, 500);
+}
 
         // === 7. КОМПАС ===
         function toggleHelp() {
@@ -2219,6 +2237,7 @@
 
             document.querySelectorAll('.result-tab-btn')[0].click();
             document.getElementById('num-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+			document.getElementById('btn-save-num').style.display = 'block';
         }
 
         // --- СТАТИСТИКА (ГРАФИК) ---
@@ -3010,6 +3029,82 @@
                 requestAnimationFrame(step);
             }
         };
+		function saveToDiaryFromCompass() {
+    const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
+    const avg = Math.round((x + y + z) / 3);
+   
+    const textX = balanceData.logic.find(i => i.v === x).t;
+    const textY = balanceData.emotion.find(i => i.v === y).t;
+    const textZ = balanceData.state.find(i => i.v === z).t;
+
+    const autoText = `Логика (${x}): ${textX} Эмоции (${y}): ${textY} Состояние (${z}): ${textZ}`;
+   
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    const dateKey = now.toISOString().split('T')[0];
+   
+    const newNote = { timestamp: now.getTime(), date: dateStr, text: autoText, x, y, z, avg };
+   
+    let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+    diary.push(newNote);
+    localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
+
+    let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+    if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
+    if (!Array.isArray(calData[dateKey].diary)) calData[dateKey].diary = [];
+    calData[dateKey].diary.push(newNote);
+    localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+
+    alert('Твой вектор сохранен в дневник!');
+    renderCalendar();
+   
+    // Открываем дневник сразу после сохранения
+    showCurrent();
+    showDiary();
+}
+ // ФУНКЦИЯ СОХРАНЕНИЯ НУМЕРОЛОГИИ В ДНЕВНИК
+        function saveNumerologyToDiary() {
+            const titleB = document.getElementById('title-birth').innerText;
+            const titleP = document.getElementById('title-passage').innerText;
+            const titleI = document.getElementById('title-interaction').innerText;
+           
+            const txtB = document.getElementById('text-b-essence').innerText;
+            const txtP = document.getElementById('text-p-essence').innerText;
+            const txtI = document.getElementById('text-i-meaning').innerText;
+
+            const autoText = `Нумерология:\n${titleB} — Суть: ${txtB}\n${titleP} — Суть: ${txtP}\n${titleI} — Смысл: ${txtI}`;
+           
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            const dateKey = now.toISOString().split('T')[0];
+           
+            const newNote = { timestamp: now.getTime(), date: dateStr, text: autoText, x: 0, y: 0, z: 0, avg: 0 };
+           
+            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+            diary.push(newNote);
+            localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
+
+            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+            if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
+            if (!Array.isArray(calData[dateKey].diary)) calData[dateKey].diary = [];
+            calData[dateKey].diary.push(newNote);
+            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+
+            alert('Расчет нумерологии сохранен в дневник!');
+            renderCalendar();
+        }
+// === БЫТОВАЯ ЗАЩИТА ОТ КОПИРОВАНИЯ ===
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('selectstart', function(e) {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); }
+        });
+        document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); return false; }
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) { e.preventDefault(); return false; }
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) { e.preventDefault(); return false; }
+        });
     </script>
 </body>
 </html>
