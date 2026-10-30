@@ -608,13 +608,53 @@
             width: 100%;
             text-align: center;
         }
-        .manifest-title {
-            font-family: var(--font-title);
+        
+        /* Кнопки-двери */
+        .door-btn {
+            width: 100%;
+            background: rgba(26, 17, 37, 0.85);
+            border: 1px solid var(--gold);
+            border-radius: var(--r-lg);
+            padding: 20px 25px;
             color: var(--gold);
-            font-size: 2.2rem;
-            margin-bottom: 25px;
-            text-shadow: 0 0 20px rgba(255, 217, 138, 0.3);
+            font-family: var(--font-title);
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.4s;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(255, 217, 138, 0.1);
         }
+        .door-btn:hover {
+            background: rgba(255, 217, 138, 0.05);
+            box-shadow: 0 0 25px rgba(255, 217, 138, 0.3);
+        }
+        .door-btn .icon {
+            font-size: 1.2rem;
+            transition: transform 0.4s;
+        }
+        .door-btn.open .icon {
+            transform: rotate(180deg);
+        }
+        .door-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            text-align: left;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 0 0 var(--r-lg) var(--r-lg);
+        }
+        .door-wrapper.open {
+            max-height: 2000px; /* Достаточно для любого текста */
+            padding: 20px;
+            border: 1px solid rgba(255,217,138,0.2);
+            border-top: none;
+            margin-top: -15px;
+        }
+        
         .manifest-text {
             color: #e0d8ec;
             font-size: 1.05rem;
@@ -649,7 +689,7 @@
             color: var(--gold);
         }
         .warning-text {
-            margin-top: 30px;
+            margin-top: 10px;
             padding: 20px;
             border-left: 3px solid var(--red);
             background: rgba(209, 74, 74, 0.05);
@@ -690,7 +730,17 @@
         }
 
         #footer { padding: 50px 20px; background: rgba(18, 10, 31, 0.95); backdrop-filter: blur(10px); text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); position: relative; }
-        .calendar-section { max-width: 600px; margin: 0 auto 40px auto; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 25px 20px; }
+        
+        /* Контакты теперь идут первыми в подвале */
+        .footer-content { margin-bottom: 40px; }
+        .footer-content h3 { letter-spacing: 1px; margin-bottom: 10px; color: var(--gold); font-size: 1.6rem; }
+        .footer-content p { color: var(--muted); margin-bottom: 25px; font-size: 0.9rem; }
+        .social-links { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; max-width: 400px; margin-left: auto; margin-right: auto; }
+        .social-btn { padding: 14px 25px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); color: var(--text); text-decoration: none; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; font-weight: 400; }
+        .social-btn:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(126,200,255,0.4); }
+        
+        /* Календарь теперь идет последним */
+        .calendar-section { max-width: 600px; margin: 0 auto; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 25px 20px; }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 5px; }
         .calendar-header h3 { font-size: 1.1rem; flex: 1; text-align: center; letter-spacing: 0; }
         .cal-nav-btn { background: rgba(126,200,255,0.1); border: 1px solid rgba(126,200,255,0.4); color: var(--blue); border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; font-family: var(--font-body); font-weight: bold; }
@@ -707,12 +757,8 @@
         .cal-day.zero { background: rgba(255, 255, 255, 0.2); color: #fff; border: 1px solid #fff; }
         .cal-day.today { outline: 2px solid var(--blue); outline-offset: 2px; }
         .cal-day.has-diary::after { content: ''; position: absolute; bottom: 2px; width: 4px; height: 4px; background: var(--purple); border-radius: 50%; }
-        .footer-content h3 { letter-spacing: 1px; margin-bottom: 10px; color: var(--gold); font-size: 1.6rem; }
-        .footer-content p { color: var(--muted); margin-bottom: 25px; font-size: 0.9rem; }
-        .social-links { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
-        .social-btn { padding: 14px 25px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--r-md); color: var(--text); text-decoration: none; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; font-weight: 400; }
-        .social-btn:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(126,200,255,0.4); }
-        .copyright { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; margin-bottom: 0 !important; }
+        
+        .copyright { color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; margin-top: 30px; margin-bottom: 0 !important; }
 
         @media (max-width: 400px) {
             h1 { font-size: 2rem; }
@@ -728,6 +774,7 @@
             .feet-container-ritual { width: 280px; height: 210px; }
             .volume-slider-container { width: 80px; }
             .med-volume-control input[type="range"] { width: 120px; }
+            .door-btn { font-size: 1.1rem; padding: 15px; }
         }
     </style>
 </head>
@@ -1076,24 +1123,39 @@
     <!-- НОВЫЙ БЛОК: МАНИФЕСТ И ПРЕДУПРЕЖДЕНИЕ -->
     <section id="manifest-section">
         <div class="manifest-container">
-            <h2 class="manifest-title">Что ты найдешь здесь</h2>
-            <p class="manifest-text">Мы живем в мире, где нас постоянно разрывают на части. Работа требует результатов, близкие — внимания, а наши собственные страхи, старые обиды и чужие ожидания постоянно тянут нас назад. Мы крутимся в этом колесе, теряем ориентиры и в какой-то момент просто застываем, как окаменевшие, не понимая, куда двигаться дальше.</p>
-            <p class="manifest-text">Этот сайт создан не для того, чтобы развлечь тебя. И он не даст тебе волшебную таблетку. <strong>Это твой личный инструмент для возвращения к самому себе.</strong></p>
-            <p class="manifest-text">Здесь ты не найдешь готовых ответов или «гуру», которые будут учить тебя жизни. Здесь только ты и твоя честность. Мы даем тебе удочку, а не рыбу. Мы не тащим тебя на себе, мы лишь даем опору, чтобы ты мог сам сделать свой следующий шаг.</p>
-            <p class="manifest-text">Всё, что здесь есть, создано для того, чтобы помочь тебе увидеть себя настоящего:</p>
-            <ul class="manifest-list">
-                <li><strong>Истории и Легенды</strong> мягко объяснят, что твои страхи и сомнения — это не слабость и не болезнь. Это просто витки твоего пути. Их проходит каждый.</li>
-                <li><strong>Компас и Дневник</strong> позволят тебе честно взглянуть на то, где ты находишься сейчас. Ты сам настраиваешь свой вектор, сам решаешь, что чувствовать, и сам видишь, куда ведет твой выбор.</li>
-                <li><strong>Точка Ноль</strong> покажет, что любое падение — это не конец. Это точка отрыва. Место, где можно оставить тяжелую обувь прошлого за порогом и начать расти над собой.</li>
-            </ul>
-            <p class="manifest-text">Это пространство останется с тобой до тех пор, пока оно тебе нужно. Это твой личный дневник и твой личный путь. Ты сам решаешь, в какую сторону двигаться, и сам увидишь результат своих шагов.</p>
-
-            <div class="warning-text">
-                <strong>Важное предупреждение:</strong> Этот сайт не для всех. Он для тех, кто готов сам стать себе опорой, кто хочет меняться и смотреть в глаза своим теням. Здесь нет «учителей». Здесь только ты и твоя честность. Если ты готов к этому — добро пожаловать. Если нет — это тоже нормально. Всему свое время.
+            
+            <!-- Кнопка 1: Манифест -->
+            <button class="door-btn" onclick="toggleDoor('manifest-content', this)">
+                <span>📖 Что ты найдешь здесь</span>
+                <span class="icon">🔽</span>
+            </button>
+            <div class="door-wrapper" id="manifest-content">
+                <p class="manifest-text">Мы живем в мире, где нас постоянно разрывают на части. Работа требует результатов, близкие — внимания, а наши собственные страхи, старые обиды и чужие ожидания постоянно тянут нас назад. Мы крутимся в этом колесе, теряем ориентиры и в какой-то момент просто застываем, как окаменевшие, не понимая, куда двигаться дальше.</p>
+                <p class="manifest-text">Этот сайт создан не для того, чтобы развлечь тебя. И он не даст тебе волшебную таблетку. <strong>Это твой личный инструмент для возвращения к самому себе.</strong></p>
+                <p class="manifest-text">Здесь ты не найдешь готовых ответов или «гуру», которые будут учить тебя жизни. Здесь только ты и твоя честность. Мы даем тебе удочку, а не рыбу. Мы не тащим тебя на себе, мы лишь даем опору, чтобы ты мог сам сделать свой следующий шаг.</p>
+                <p class="manifest-text">Всё, что здесь есть, создано для того, чтобы помочь тебе увидеть себя настоящего:</p>
+                <ul class="manifest-list">
+                    <li><strong>Истории и Легенды</strong> мягко объяснят, что твои страхи и сомнения — это не слабость и не болезнь. Это просто витки твоего пути. Их проходит каждый.</li>
+                    <li><strong>Компас и Дневник</strong> позволят тебе честно взглянуть на то, где ты находишься сейчас. Ты сам настраиваешь свой вектор, сам решаешь, что чувствовать, и сам видишь, куда ведет твой выбор.</li>
+                    <li><strong>Точка Ноль</strong> покажет, что любое падение — это не конец. Это точка отрыва. Место, где можно оставить тяжелую обувь прошлого за порогом и начать расти над собой.</li>
+                </ul>
+                <p class="manifest-text">Это пространство останется с тобой до тех пор, пока оно тебе нужно. Это твой личный дневник и твой личный путь. Ты сам решаешь, в какую сторону двигаться, и сам увидишь результат своих шагов.</p>
             </div>
 
-            <p class="soulmate-text">Я — твой единомышленник. Если тебе нужен этот свет, ты знаешь, где меня найти.</p>
+            <!-- Кнопка 2: Предупреждение -->
+            <button class="door-btn" style="border-color: var(--red); color: #ffb3b3;" onclick="toggleDoor('warning-content', this)">
+                <span>⚠️ Это пространство не для всех</span>
+                <span class="icon">🔽</span>
+            </button>
+            <div class="door-wrapper" id="warning-content">
+                <div class="warning-text" style="margin-top: 0;">
+                    Этот сайт не для всех. Он для тех, кто готов сам стать себе опорой, кто хочет меняться и смотреть в глаза своим теням. Здесь нет «учителей». Здесь только ты и твоя честность. Если ты готов к этому — добро пожаловать. Если нет — это тоже нормально. Всему свое время.
+                </div>
+            </div>
 
+            <!-- Текст про единомышленника и стрелочка -->
+            <p class="soulmate-text">Я — твой единомышленник. Если тебе нужен этот свет, ты знаешь, где меня найти.</p>
+            
             <button class="scroll-arrow-btn" onclick="scrollToContacts()" aria-label="Прокрутить к контактам">
                 <svg viewBox="0 0 24 24"><path d="M12 21l-8-8h6V3h4v10h6l-8 8z"/></svg>
             </button>
@@ -1102,6 +1164,18 @@
 
     <!-- ПОДВАЛ -->
     <footer id="footer">
+        <!-- КОНТАКТЫ (ТЕПЕРЬ ПЕРВЫМИ) -->
+        <div class="footer-content">
+            <h3>Оставайся на связи</h3>
+            <p>Присоединяйся к сообществу</p>
+            <div class="social-links">
+                <a href="https://t.me/+oMTfYpgxSRM0NWYy" target="_blank" class="social-btn">✈️ Telegram</a>
+                <a href="https://vk.me/join/c_fdhoiWhbmBQ0fwvjvXrxO46FvrP3a4Jrs=" target="_blank" class="social-btn">🌐 ВКонтакте</a>
+                <a href="https://max.ru/join/63ize0fmEqHm90qU6HT0oVQarULGRLqRwr4RU2MuQwA" target="_blank" class="social-btn">⚡ MAX</a>
+            </div>
+        </div>
+
+        <!-- КАЛЕНДАРЬ (ТЕПЕРЬ ВНИЗУ) -->
         <div class="calendar-section">
             <div class="calendar-header">
                 <button class="cal-nav-btn" onclick="changeYear(-1)" title="Год назад">‹‹</button>
@@ -1112,16 +1186,8 @@
             </div>
             <div class="calendar-grid" id="calendar-grid"></div>
         </div>
-        <div class="footer-content">
-            <h3>Оставайся на связи</h3>
-            <p>Присоединяйся к сообществу</p>
-            <div class="social-links">
-                <a href="https://t.me/+oMTfYpgxSRM0NWYy" target="_blank" class="social-btn">✈️ Telegram</a>
-                <a href="https://vk.me/join/c_fdhoiWhbmBQ0fwvjvXrxO46FvrP3a4Jrs=" target="_blank" class="social-btn">🌐 ВКонтакте</a>
-                <a href="https://max.ru/join/63ize0fmEqHm90qU6HT0oVQarULGRLqRwr4RU2MuQwA" target="_blank" class="social-btn">⚡ MAX</a>
-            </div>
-            <p class="copyright">© 2026 Школа «Точка Ноль».</p>
-        </div>
+
+        <p class="copyright">© 2026 Школа «Точка Ноль».</p>
     </footer>
 
     <!-- МОДАЛЬНОЕ ОКНО "МОЙ ПУТЬ" -->
@@ -1390,6 +1456,21 @@
         function scrollToContacts() {
             const footer = document.getElementById('footer');
             footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // === ЛОГИКА КНОПОК-ДВЕРЕЙ ===
+        function toggleDoor(contentId, btnElement) {
+            const content = document.getElementById(contentId);
+            const isOpen = content.classList.contains('open');
+            
+            // Закрываем все остальные двери (опционально, чтобы открывалась только одна)
+            document.querySelectorAll('.door-wrapper').forEach(w => w.classList.remove('open'));
+            document.querySelectorAll('.door-btn').forEach(b => b.classList.remove('open'));
+
+            if (!isOpen) {
+                content.classList.add('open');
+                btnElement.classList.add('open');
+            }
         }
 
         // === ЛОГИКА МУЗЫКИ И ГРОМКОСТИ ===
