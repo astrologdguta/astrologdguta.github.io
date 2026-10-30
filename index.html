@@ -1185,6 +1185,7 @@
                 <button class="cal-nav-btn" onclick="changeYear(1)" title="Год вперёд">››</button>
             </div>
             <div class="calendar-grid" id="calendar-grid"></div>
+			<button class="btn-submit" style="margin-top: 20px;" onclick="openPrintPicker()">🖨️ Распечатать за период</button>
         </div>
 
         <p class="copyright">© 2026 Школа «Точка Ноль».</p>
@@ -1197,12 +1198,7 @@
             <div id="current-view">
                 <h2>Личный кабинет</h2>
                 
-                <div class="mini-calendar">
-                    <div class="mini-cal-header">
-                        <h4 id="mini-cal-title">Октябрь 2026</h4>
-                    </div>
-                    <div class="mini-cal-grid" id="mini-cal-grid"></div>
-                </div>
+                
 
                 <div class="tabs-grid" style="margin-top: 20px;">
                     <button class="tab-btn tab-path" onclick="showPath()">✨ Твой текущий путь</button>
@@ -2095,162 +2091,51 @@
         }
 
         function updateBalance() {
-            const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
-            
-            const avgVal = Math.round((x + y + z) / 3);
-            document.getElementById('ci-avg').innerText = 'Вектор: ' + (avgVal > 0 ? '+' : '') + avgVal;
+    const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
+    const avgVal = Math.round((x + y + z) / 3);
+    document.getElementById('ci-avg').innerText = 'Вектор: ' + (avgVal > 0 ? '+' : '') + avgVal;
 
-            let resultTitle = "";
-            let resultText = "";
-            let className = "";
-            
-            const btnRitualCompass = document.getElementById('btn-ritual-compass');
+    let resultTitle = "", resultText = "", className = "";
+    const btnRitualCompass = document.getElementById('btn-ritual-compass');
+    const btnSaveDiary = document.getElementById('btn-save-diary');
+   
+    if (btnSaveDiary) btnSaveDiary.style.display = 'block';
 
-            const pX = Math.sign(x), pY = Math.sign(y), pZ = Math.sign(z);
+    const pX = Math.sign(x), pY = Math.sign(y), pZ = Math.sign(z);
 
-            if (pX > 0 && pY > 0 && pZ > 0) {
-                resultTitle = "Ты в потоке";
-                resultText = "Все три вектора в плюсе. Твоя Горгона отступила. Ум ясен, Сердце открыто, Тело полно сил. Персей держит Щит уверенно. Алиса говорит: «Это время действовать. Запомни это чувство».";
-                className = "res-ideal";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            } 
-            else if (pX < 0 && pY < 0 && pZ < 0) {
-                resultTitle = "Ты уходишь от себя";
-                resultText = "Горгона атакует со всех сторон. Ум в тумане, Сердце болит, Тело обессилено. Но помни: даже на дне Персей рядом. Алиса шепчет: «Сейчас не время для подвигов. Просто выживи и пережди эту ночь».";
-                className = "res-unbalance";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX === 0 && pY === 0 && pZ === 0) {
-                resultTitle = "Абсолютная Точка Ноль";
-                resultText = "Ты в идеальном центре. Всё затихло. Ум, Сердце и Тело отдыхают. Горгона молчит. Персей опустил Щит. Алиса улыбается. Сейчас не нужно ничего исправлять. Просто побудь в этой тишине.";
-                className = "res-neutral";
-                // ПОКАЗЫВАЕМ КНОПКУ РИТУАЛА
-                if(btnRitualCompass) btnRitualCompass.style.display = 'block';
-            }
-            else if (pX > 0 && pY > 0 && pZ < 0) {
-                resultTitle = "Импульс на двоих";
-                resultText = "Ум и Сердце в огне! Но Горгона забрала твою физическую силу. Тело просит остановки. Алиса предупреждает: «Ты можешь перегореть, если не остановишься. Сделай паузу, иначе твой огонь сожжет тебя».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX > 0 && pY < 0 && pZ > 0) {
-                resultTitle = "Бунт эмоций";
-                resultText = "Снаружи ты сильный: ум четкий, тело в тонусе. Но Горгона ударила в самое сердце. Твои эмоции в глубоком минусе. Алиса говорит: «Ты запер себя в броню. Позволь себе быть уязвимым. Поговори с кем-то о том, что чувствуешь».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX < 0 && pY > 0 && pZ > 0) {
-                resultTitle = "Туман в голове";
-                resultText = "Тело чувствует себя хорошо, эмоции ровные. Но Горгона затуманила твой разум. Алиса советует: «Не пытайся решать важные вопросы прямо сейчас. Доверься телу. Займись рутиной. Ясность вернется, когда ум отдохнет».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX < 0 && pY < 0 && pZ > 0) {
-                resultTitle = "Опора на тело";
-                resultText = "Внутри шторм: Горгона путает мысли и сжимает сердце. Но твой Персей — это Тело. Оно еще полно сил. Алиса говорит: «Не пытайся решить всё в голове. Иди в движение! Спорт, прогулка — это твой якорь. Через тело ты сбросишь напряжение».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX < 0 && pY > 0 && pZ < 0) {
-                resultTitle = "Опора на сердце";
-                resultText = "Горгона атакует ум и тело. Ум окутан туманом, тело просит пощады. Но твой Персей — это Эмоции. Алиса подсказывает: «Не напрягай ум. Сейчас твой главный ресурс — чувства. Поговори с тем, кому доверяешь. Когда сердце согреется, ум и тело подтянутся».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX > 0 && pY < 0 && pZ < 0) {
-                resultTitle = "Опора на разум";
-                resultText = "Горгона забрала тепло и энергию. Но твой Персей — это Логика. Твой ум ясен, он видит ситуацию трезво. Алиса советует: «Используй свой ясный ум, чтобы структурировать день. Опираясь на логику, ты дашь себе время, пока тело и эмоции не восстановятся».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX > 0 && pY === 0 && pZ === 0) {
-                resultTitle = "Ясный ум";
-                resultText = "Твое тело и эмоции в покое, но Ум проснулся и рвется в бой. Горгона не может тебя достать. Персей дает тебе ясность. Алиса говорит: «Это хорошее время, чтобы подумать и спланировать». ";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX < 0 && pY === 0 && pZ === 0) {
-                resultTitle = "Мысли в тумане";
-                resultText = "Эмоции и тело спокойны, но Ум окутан туманом. Горгона путает твои мысли. Алиса говорит: «Не принимай важных решений сегодня. Дай уму отдохнуть».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX === 0 && pY > 0 && pZ === 0) {
-                resultTitle = "Тепло в сердце";
-                resultText = "Ум и Тело нейтральны, но Сердце наполнено теплом. Горгона не может пробить эту защиту. Алиса говорит: «Поделись этим теплом с близкими».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX === 0 && pY < 0 && pZ === 0) {
-                resultTitle = "Холод в сердце";
-                resultText = "Ум ясен, Тело в порядке, но внутри Сердца холод. Горгона задела твои чувства. Алиса советует: «Не закрывайся. Позволь себе погрустить, но не оставайся в этом одиночестве надолго».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX === 0 && pY === 0 && pZ > 0) {
-                resultTitle = "Прилив сил";
-                resultText = "Ум и Эмоции в покое, но Тело полно энергии. Горгона не может тебя остановить. Алиса говорит: «Используй эту силу с умом. Сделай то, что давно откладывал».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else if (pX === 0 && pY === 0 && pZ < 0) {
-                resultTitle = "Упадок сил";
-                resultText = "Ум и Эмоции нейтральны, но Тело обессилено. Горгона забрала твою энергию. Алиса советует: «Сейчас твой главный друг — отдых. Не заставляй себя делать подвиги».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
-            else {
-                resultTitle = "Внутренний конфликт";
-                resultText = "Твоя внутренняя система в хаосе. Горгона и Персей бьются не на жизнь, а на смерть. Ум кричит одно, Сердце чувствует противоположное. Алиса говорит: «Остановись. Признай, что сейчас ты не можешь найти ответ. Побудь в тишине. Позволь буре утихнуть».";
-                className = "res-mixed";
-                if(btnRitualCompass) btnRitualCompass.style.display = 'none';
-            }
+    if (pX > 0 && pY > 0 && pZ > 0) { resultTitle = "Ты в потоке"; resultText = "Все три вектора в плюсе. Твоя Горгона отступила. Ум ясен, Сердце открыто, Тело полно сил. Персей держит Щит уверенно. Алиса говорит: «Это время действовать. Запомни это чувство»."; className = "res-ideal"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX < 0 && pY < 0 && pZ < 0) { resultTitle = "Ты уходишь от себя"; resultText = "Горгона атакует со всех сторон. Ум в тумане, Сердце болит, Тело обессилено. Но помни: даже на дне Персей рядом. Алиса шепчет: «Сейчас не время для подвигов. Просто выживи и пережди эту ночь»."; className = "res-unbalance"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX === 0 && pY === 0 && pZ === 0) { resultTitle = "Абсолютная Точка Ноль"; resultText = "Ты в идеальном центре. Всё затихло. Ум, Сердце и Тело отдыхают. Горгона молчит. Персей опустил Щит. Алиса улыбается. Сейчас не нужно ничего исправлять. Просто побудь в этой тишине."; className = "res-neutral"; if(btnRitualCompass) btnRitualCompass.style.display = 'block'; }
+    else if (pX > 0 && pY > 0 && pZ < 0) { resultTitle = "Импульс на двоих"; resultText = "Ум и Сердце в огне! Но Горгона забрала твою физическую силу. Тело просит остановки. Алиса предупреждает: «Ты можешь перегореть, если не остановишься. Сделай паузу, иначе твой огонь сожжет тебя»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX > 0 && pY < 0 && pZ > 0) { resultTitle = "Бунт эмоций"; resultText = "Снаружи ты сильный: ум четкий, тело в тонусе. Но Горгона ударила в самое сердце. Твои эмоции в глубоком минусе. Алиса говорит: «Ты запер себя в броню. Позволь себе быть уязвимым. Поговори с кем-то о том, что чувствуешь»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX < 0 && pY > 0 && pZ > 0) { resultTitle = "Туман в голове"; resultText = "Тело чувствует себя хорошо, эмоции ровные. Но Горгона затуманила твой разум. Алиса советует: «Не пытайся решать важные вопросы прямо сейчас. Доверься телу. Займись рутиной. Ясность вернется, когда ум отдохнет»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX < 0 && pY < 0 && pZ > 0) { resultTitle = "Опора на тело"; resultText = "Внутри шторм: Горгона путает мысли и сжимает сердце. Но твой Персей — это Тело. Оно еще полно сил. Алиса говорит: «Не пытайся решить всё в голове. Иди в движение! Спорт, прогулка — это твой якорь. Через тело ты сбросишь напряжение»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX < 0 && pY > 0 && pZ < 0) { resultTitle = "Опора на сердце"; resultText = "Горгона атакует ум и тело. Ум окутан туманом, тело просит пощады. Но твой Персей — это Эмоции. Алиса подсказывает: «Не напрягай ум. Сейчас твой главный ресурс — чувства. Поговори с тем, кому доверяешь. Когда сердце согреется, ум и тело подтянутся»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX > 0 && pY < 0 && pZ < 0) { resultTitle = "Опора на разум"; resultText = "Горгона забрала тепло и энергию. Но твой Персей — это Логика. Твой ум ясен, он видит ситуацию трезво. Алиса советует: «Используй свой ясный ум, чтобы структурировать день. Опираясь на логику, ты дашь себе время, пока тело и эмоции не восстановятся»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX > 0 && pY === 0 && pZ === 0) { resultTitle = "Ясный ум"; resultText = "Твое тело и эмоции в покое, но Ум проснулся и рвется в бой. Горгона не может тебя достать. Персей дает тебе ясность. Алиса говорит: «Это хорошее время, чтобы подумать и спланировать». "; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX < 0 && pY === 0 && pZ === 0) { resultTitle = "Мысли в тумане"; resultText = "Эмоции и тело спокойны, но Ум окутан туманом. Горгона путает твои мысли. Алиса говорит: «Не принимай важных решений сегодня. Дай уму отдохнуть»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX === 0 && pY > 0 && pZ === 0) { resultTitle = "Тепло в сердце"; resultText = "Ум и Тело нейтральны, но Сердце наполнено теплом. Горгона не может пробить эту защиту. Алиса говорит: «Поделись этим теплом с близкими»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX === 0 && pY < 0 && pZ === 0) { resultTitle = "Холод в сердце"; resultText = "Ум ясен, Тело в порядке, но внутри Сердца холод. Горгона задела твои чувства. Алиса советует: «Не закрывайся. Позволь себе погрустить, но не оставайся в этом одиночестве надолго»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX === 0 && pY === 0 && pZ > 0) { resultTitle = "Прилив сил"; resultText = "Ум и Эмоции в покое, но Тело полно энергии. Горгона не может тебя остановить. Алиса говорит: «Используй эту силу с умом. Сделай то, что давно откладывал»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else if (pX === 0 && pY === 0 && pZ < 0) { resultTitle = "Упадок сил"; resultText = "Ум и Эмоции нейтральны, но Тело обессилено. Горгона забрала твою энергию. Алиса советует: «Сейчас твой главный друг — отдых. Не заставляй себя делать подвиги»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
+    else { resultTitle = "Внутренний конфликт"; resultText = "Твоя внутренняя система в хаосе. Горгона и Персей бьются не на жизнь, а на смерть. Ум кричит одно, Сердце чувствует противоположное. Алиса говорит: «Остановись. Признай, что сейчас ты не можешь найти ответ. Побудь в тишине. Позволь буре утихнуть»."; className = "res-mixed"; if(btnRitualCompass) btnRitualCompass.style.display = 'none'; }
 
-            document.getElementById('balance-title').innerText = resultTitle;
-            document.getElementById('balance-text').innerText = resultText;
-            
-            const contentBox = document.getElementById('vector-result-content');
-            contentBox.className = "vector-result-content " + className;
+    document.getElementById('balance-title').innerText = resultTitle;
+    document.getElementById('balance-text').innerText = resultText;
+    document.getElementById('vector-result-content').className = "vector-result-content " + className;
 
-            const arrowX = document.getElementById('vis-x');
-            const arrowY = document.getElementById('vis-y');
-            const arrowZ = document.getElementById('vis-z');
-            const arrowAvg = document.getElementById('vis-avg');
-
-            const angleX = x >= 0 ? 90 : -90;
-            const lengthX = 60 + Math.abs(x) * 5;
-            arrowX.style.height = lengthX + 'px';
-            arrowX.style.transform = `translateX(-50%) rotate(${angleX}deg)`;
-
-            const angleY = y >= 0 ? 0 : 180;
-            const lengthY = 60 + Math.abs(y) * 5;
-            arrowY.style.height = lengthY + 'px';
-            arrowY.style.transform = `translateX(-50%) rotate(${angleY}deg)`;
-
-            const angleZ = z >= 0 ? 45 : -135;
-            const lengthZ = 60 + Math.abs(z) * 5;
-            arrowZ.style.height = lengthZ + 'px';
-            arrowZ.style.transform = `translateX(-50%) rotate(${angleZ}deg)`;
-
-            let avgAngle = 0;
-            if (avgVal >= 4) {
-                avgAngle = 0;
-            } else if (avgVal <= -4) {
-                avgAngle = 180;
-            } else {
-                avgAngle = avgVal >= 0 ? 90 : -90; 
-            }
-            
-            const finalAvgLength = 80 + Math.abs(avgVal) * 5; 
-            arrowAvg.style.height = finalAvgLength + 'px';
-            arrowAvg.style.transform = `translateX(-50%) rotate(${avgAngle}deg)`;
-        }
+    const arrowX = document.getElementById('vis-x'), arrowY = document.getElementById('vis-y'), arrowZ = document.getElementById('vis-z'), arrowAvg = document.getElementById('vis-avg');
+    const angleX = x >= 0 ? 90 : -90; const lengthX = 60 + Math.abs(x) * 5; arrowX.style.height = lengthX + 'px'; arrowX.style.transform = `translateX(-50%) rotate(${angleX}deg)`;
+    const angleY = y >= 0 ? 0 : 180; const lengthY = 60 + Math.abs(y) * 5; arrowY.style.height = lengthY + 'px'; arrowY.style.transform = `translateX(-50%) rotate(${angleY}deg)`;
+    const angleZ = z >= 0 ? 45 : -135; const lengthZ = 60 + Math.abs(z) * 5; arrowZ.style.height = lengthZ + 'px'; arrowZ.style.transform = `translateX(-50%) rotate(${angleZ}deg)`;
+    let avgAngle = avgVal >= 4 ? 0 : (avgVal <= -4 ? 180 : (avgVal >= 0 ? 90 : -90));
+    arrowAvg.style.height = (80 + Math.abs(avgVal) * 5) + 'px'; arrowAvg.style.transform = `translateX(-50%) rotate(${avgAngle}deg)`;
+}
 
         // === 8. МОЙ ПУТЬ ===
         function openModal() { 
             showCurrent(); 
-            document.getElementById('modal').classList.add('show'); 
-            renderMiniCalendar();
+            document.getElementById('modal').classList.add('show');     
             renderGoal();
         }
         
@@ -2265,7 +2150,6 @@
             document.getElementById('numerology-view').style.display = 'none';
             document.getElementById('day-view').style.display = 'none';
             document.getElementById('current-view').style.display = 'block';
-            renderMiniCalendar();
             renderGoal();
         }
 
@@ -2420,54 +2304,7 @@
         }
 
         // --- МИНИ-КАЛЕНДАРЬ ---
-        function renderMiniCalendar() {
-            const grid = document.getElementById('mini-cal-grid');
-            grid.innerHTML = '';
-            const title = document.getElementById('mini-cal-title');
-            
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
-            const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-            title.innerText = `${monthNames[month]} ${year}`;
-            
-            ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].forEach(d => {
-                let div = document.createElement('div');
-                div.style.fontSize = '0.7rem';
-                div.style.color = 'var(--muted)';
-                div.innerText = d;
-                grid.appendChild(div);
-            });
-            
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
-            
-            for (let i = 0; i < startOffset; i++) {
-                grid.appendChild(document.createElement('div'));
-            }
-            
-            let calendarData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
-            
-            for (let i = 1; i <= daysInMonth; i++) {
-                let dayStr = i < 10 ? '0' + i : i;
-                let monthStr = (month + 1) < 10 ? '0' + (month + 1) : (month + 1);
-                let dateKey = `${year}-${monthStr}-${dayStr}`;
-                
-                let div = document.createElement('div');
-                div.className = 'mini-cal-day';
-                div.innerText = i;
-                
-                if (i === now.getDate()) div.classList.add('today');
-                
-                if (calendarData[dateKey]) {
-                    div.classList.add('has-data');
-                    div.onclick = () => showDayDetails(calendarData[dateKey], `${i}.${monthStr}.${year}`);
-                }
-                
-                grid.appendChild(div);
-            }
-        }
+        
 
         function showDayDetails(dayData, dateLabel) {
             document.getElementById('current-view').style.display = 'none';
@@ -2627,31 +2464,39 @@
         }
 
         function saveDiaryNote() {
-            const text = document.getElementById('diary-text').value.trim();
-            if (!text) { alert('Напиши что-нибудь перед сохранением.'); return; }
-            const x = 0, y = 0, z = 0; 
-            const avg = Math.round((x + y + z) / 3);
-            let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
-            let currentVitok = history.length > 0 ? history[history.length - 1].vitok : null;
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
-            const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            const timestamp = now.getTime();
-            const dateKey = now.toISOString().split('T')[0];
-            const newNote = { timestamp, date: `${dateStr} ${timeStr}`, text, x, y, z, avg, vitok: currentVitok };
-            let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
-            diary.push(newNote);
-            localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
-            let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
-            if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
-            if (!Array.isArray(calData[dateKey].diary)) calData[dateKey].diary = [];
-            calData[dateKey].diary.push(newNote);
-            localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
-            updateGoalProgress();
-            document.getElementById('diary-text').value = '';
-            alert('Запись сохранена!');
-            showDiary(); 
-        }
+    const text = document.getElementById('diary-text').value.trim();
+    if (!text) { alert('Напиши что-нибудь перед сохранением.'); return; }
+   
+    const x = currentVals.logic;
+    const y = currentVals.emotion;
+    const z = currentVals.state;
+    const avg = Math.round((x + y + z) / 3);
+   
+    let history = JSON.parse(localStorage.getItem('tochkaNolHistory')) || [];
+    let currentVitok = history.length > 0 ? history[history.length - 1].vitok : null;
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+    const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    const timestamp = now.getTime();
+    const dateKey = now.toISOString().split('T')[0];
+   
+    const newNote = { timestamp, date: `${dateStr} ${timeStr}`, text, x, y, z, avg, vitok: currentVitok };
+   
+    let diary = JSON.parse(localStorage.getItem('tochkaNolDiary')) || [];
+    diary.push(newNote);
+    localStorage.setItem('tochkaNolDiary', JSON.stringify(diary));
+   
+    let calData = JSON.parse(localStorage.getItem('tochkaNolCalendar')) || {};
+    if (!calData[dateKey]) calData[dateKey] = { vitok: [], compass: [], diary: [] };
+    if (!Array.isArray(calData[dateKey].diary)) calData[dateKey].diary = [];
+    calData[dateKey].diary.push(newNote);
+    localStorage.setItem('tochkaNolCalendar', JSON.stringify(calData));
+   
+    updateGoalProgress();
+    document.getElementById('diary-text').value = '';
+    alert('Запись сохранена!');
+    showDiary();
+}
 
         function deleteDiaryNote(index) {
             if (!confirm('Удалить эту запись?')) return;
